@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "materialsgraph"
+version = "0.1.0"
+description = "Personal knowledge graph over battery-materials data."
+requires-python = ">=3.11"
+dependencies = [
+    "mp-api",
+    "pymatgen",
+    "neo4j",
+    "langgraph",
+    "sentence-transformers",
+    "requests",
+    "python-dotenv",
+    "openai",
+    "anthropic",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
