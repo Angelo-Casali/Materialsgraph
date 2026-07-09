@@ -17,6 +17,7 @@ dependencies = [
     "python-dotenv",
     "openai",
     "anthropic",
+    "pydantic",
 ]
 
 [project.optional-dependencies]

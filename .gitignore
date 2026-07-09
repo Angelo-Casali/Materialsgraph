@@ -11,6 +11,9 @@ venv/
 # Environment secrets
 .env
 
+# Pulled/generated data (regenerable via ingestion scripts)
+data/
+
 # Jupyter
 .ipynb_checkpoints/
 
