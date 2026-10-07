@@ -39,58 +39,61 @@ Properties are **nodes**, not fields on `Material` — this is what makes proven
 
 | Label | Key properties |
 |---|---|
-| `Material` | `mp_id` (unique), `formula`, `structure_type`, `created_at` |
-| `Element` | `symbol` (unique), `name`, `atomic_number` |
+| `Material` | `material_key` (unique, namespaced: `mp:<mp_id>` \| `oqmd:<id>` \| `lit:<reduced_formula>[\|<spacegroup>]` \| `mol:<inchikey>`), `mp_id` (unique when present), `formula`, `reduced_formula`, `kind` (`crystal`\|`molecule`), `spacegroup`, `spacegroup_number`, `structure_type`, `smiles`, `inchikey`, `common_name`, `external_ids`, `data_source`, `license`, `provider`, `created_at` |
+| `Element` | `symbol` (unique), `name`, `atomic_number`, `eu_crm_2023`, `usgs_2022`, `supply_risk_note` (public critical-raw-material lists) |
 | `Domain` | `name` (unique) — e.g. `"Battery"` |
-| `Application` | `name` (unique) — e.g. `"Li-ion cathode"`, `"solid electrolyte"` |
-| `PropertyType` | `name` (unique), `unit`, `description` — e.g. `"ionic_conductivity"` (S/cm) |
-| `PropertyValue` | `value`, `unit`, `source_type` (`measured`\|`dft`\|`mlip_predicted`\|`literature_asserted`), `confidence`, `computed_at` |
-| `Source` | `source_id` (unique), `title`, `type` (`paper`\|`book`\|`video`), `authors`, `year`, `url_or_doi`, `ingested_at` |
-| `Gap` | `gap_id` (unique), `description`, `identified_date` |
+| `Application` | `name` (unique), `description`, `aliases` — e.g. `"Li-ion cathode"`, `"solid electrolyte"`, `"electrolyte salt"` |
+| `PropertyType` | `name` (unique), `unit`, `description`, `plausible_min`, `plausible_max` — e.g. `"ionic_conductivity"` (S/cm) |
+| `PropertyValue` | `value`, `unit`, `property_type`, `source_id`, `conditions` (JSON string, `""` = unspecified), `source_type` (`measured`\|`dft`\|`mlip_predicted`\|`literature_asserted`), `confidence`, `confirmed` (bool), `extraction_method`, `quote`, `computed_at` |
+| `Source` | `source_id` (unique), `title`, `type` (`paper`\|`preprint`\|`book`\|`video`\|`database`), `authors`, `year`, `url_or_doi`, `doi`, `abstract`, `abstract_embedding` (384 floats), `license`, `openalex_id`, `is_oa`, `oa_pdf_url`, `provider`, `ingested_at` |
+| `Chunk` | `chunk_id` (unique), `text`, `embedding` (384 floats), `section`, `page`, `ordinal`, `source_id` — full-text passages of **CC-licensed open-access** sources only |
+| `Gap` | `gap_id` (unique), `description`, `status` (`open`\|`addressed`), `application`, `extraction_method`, `confirmed`, `identified_date` |
+
+`Chunk` is the one label added since the first draft. It exists because open-access full text is in scope (see §3): a paper's passages need their own vector index and their own provenance link, and overloading `Source` with hundreds of text fields would break the one-node-per-document rule. Chunk text is never redistributed with the code (same boundary as the personal-library rule in strategy.md).
 
 ### Relationships
 
 ```
-(Material)-[:COMPOSED_OF {stoichiometry}]->(Element)
+(Material)-[:COMPOSED_OF {stoichiometry, fraction}]->(Element)
 (Material)-[:HAS_PROPERTY]->(PropertyValue)
 (PropertyValue)-[:OF_TYPE]->(PropertyType)
 (PropertyValue)-[:SOURCED_FROM]->(Source)
-(Material)-[:USED_IN {confirmed: bool}]->(Application)
+(Material)-[:USED_IN {source_id, confirmed: bool, basis (computed|literature|curated), quote, extraction_method}]->(Application)
 (Application)-[:TAGGED_BY]->(Source)
 (Application)-[:BELONGS_TO]->(Domain)
 (Domain)-[:REQUIRES_PROPERTY {target_min, target_max, importance}]->(PropertyType)
-(Material)-[:SIMILAR_TO {method, score, confirmed: bool}]->(Material)
+(Application)-[:REQUIRES_PROPERTY {target_min, target_max, importance}]->(PropertyType)   // preferred by the feasibility tool; Domain-level is the fallback
+(Material)-[:SIMILAR_TO {method, score, confirmed: bool, computed_at}]->(Material)
 (Domain)-[:HAS_GAP]->(Gap)
 (Gap)-[:DOCUMENTED_IN]->(Source)
+(Chunk)-[:PART_OF]->(Source)
 ```
 
-### Constraints & indexes (Cypher, run once against the database)
+### 2.1 Provenance and confirmation semantics
 
-```cypher
-CREATE CONSTRAINT material_mp_id IF NOT EXISTS FOR (m:Material) REQUIRE m.mp_id IS UNIQUE;
-CREATE CONSTRAINT element_symbol IF NOT EXISTS FOR (e:Element) REQUIRE e.symbol IS UNIQUE;
-CREATE CONSTRAINT domain_name IF NOT EXISTS FOR (d:Domain) REQUIRE d.name IS UNIQUE;
-CREATE CONSTRAINT application_name IF NOT EXISTS FOR (a:Application) REQUIRE a.name IS UNIQUE;
-CREATE CONSTRAINT proptype_name IF NOT EXISTS FOR (p:PropertyType) REQUIRE p.name IS UNIQUE;
-CREATE CONSTRAINT source_id IF NOT EXISTS FOR (s:Source) REQUIRE s.source_id IS UNIQUE;
-CREATE CONSTRAINT gap_id IF NOT EXISTS FOR (g:Gap) REQUIRE g.gap_id IS UNIQUE;
+Three independent flags describe how much to trust an edge or value; the GraphRAG layer reports all three.
 
-CREATE INDEX propvalue_type IF NOT EXISTS FOR (pv:PropertyValue) ON (pv.property_type);
-CREATE INDEX propvalue_source_type IF NOT EXISTS FOR (pv:PropertyValue) ON (pv.source_type);
-CREATE INDEX source_type_idx IF NOT EXISTS FOR (s:Source) ON (s.type);
-CREATE INDEX source_year IF NOT EXISTS FOR (s:Source) ON (s.year);
-```
+| Flag | Lives on | Meaning |
+|---|---|---|
+| `source_type` | `PropertyValue` | *Epistemic basis* of the number: `measured` (experiment), `dft` (computed database), `mlip_predicted`, `literature_asserted` (a paper states it, provenance of the measurement unknown). |
+| `basis` | `USED_IN` | How the application tag arose: `computed` (Materials Project enumerated the electrode — **not** an experimentally demonstrated application), `literature` (a paper says so), `curated` (hand-entered reference data, e.g. the electrolyte-molecule table). |
+| `confirmed` | `PropertyValue`, `USED_IN`, `SIMILAR_TO`, `Gap` | A human accepted it (or it came from a deterministic database load). Everything produced by an LLM is written `confirmed=false` and stays so until `mg harvest review` accepts it. |
 
-### Battery-domain seed data (what Phase 1–2 actually populates first)
+Merge keys: a `PropertyValue` is unique per `(Material, property_type, source_id, conditions)`, so two sources asserting the same property coexist as two nodes and the feasibility tool can report "sources disagree". A `USED_IN` edge is unique per `(Material, Application, source_id)`.
+
+Material keys: Materials Project entries are `mp:<id>`; OPTIMADE entries that match an existing node on `(reduced_formula, spacegroup_number)` are attached to it (their id goes into `external_ids`), otherwise they become `oqmd:<id>` etc.; literature-only compositions become `lit:<reduced_formula>` stubs, with `SIMILAR_TO {method:'doped_variant_of'}` to the parent phase when the resolver recognises a doped variant; molecules are `mol:<inchikey>`.
+
+### Constraints & indexes
+
+The authoritative list is `src/materialsgraph/graph/schema.cypher` (one statement per line; the loader runs it verbatim and it is safe to re-run). Beyond the uniqueness constraints on every key above it defines lookup indexes on `Material.reduced_formula/kind/inchikey`, `PropertyValue.property_type/source_type/source_id/confirmed`, `Source.type/year/doi/openalex_id`, a full-text index over `Source.title+abstract` and `Chunk.text`, and two 384-dimensional cosine vector indexes (`source_abstract_embedding`, `chunk_embedding`). Vector indexes need Neo4j >= 5.15; `docker-compose.yml` pins `neo4j:5.26-community`.
+
+### Battery-domain seed data (`src/materialsgraph/graph/reference.py`)
 
 **Domain:** `Battery`
-**PropertyTypes to seed:** `ionic_conductivity` (S/cm), `voltage` (V), `specific_capacity` (mAh/g), `formation_energy` (eV/atom), `band_gap` (eV), `cycling_stability` (% capacity retention @ N cycles)
-**Applications to seed:** `"Li-ion cathode"`, `"Na-ion cathode"`, `"solid electrolyte"`, `"anode material"`
-**Domain requirements (illustrative):**
-```cypher
-MATCH (d:Domain {name: "Battery"}), (p:PropertyType {name: "ionic_conductivity"})
-MERGE (d)-[:REQUIRES_PROPERTY {target_min: 1e-4, target_max: null, importance: "high"}]->(p);
-```
+**PropertyTypes:** `ionic_conductivity` (S/cm), `voltage` (V), `specific_capacity` (mAh/g), `formation_energy` (eV/atom), `energy_above_hull` (eV/atom), `band_gap` (eV), `cycling_stability` (% retention), `electrochemical_window` (V), `activation_energy` (eV), `density` (g/cm3); for molecules `melting_point` (K), `boiling_point` (K), `dielectric_constant`, `viscosity` (mPa.s), `oxidation_potential` (V vs Li/Li+), `molecular_weight` (g/mol). Each carries a *plausible* range used by the harvester validator to reject unit/exponent mistakes.
+**Applications:** `<ion>-ion insertion electrode` for Li/Na/K/Mg (computed, from MP), `Li-ion cathode`, `Na-ion cathode`, `anode material`, `solid electrolyte`, `polymer electrolyte host`, `liquid electrolyte solvent`, `electrolyte salt`, `electrolyte additive`. Each has aliases (for the resolver) and illustrative, reviewer-editable `REQUIRES_PROPERTY` targets, e.g. solid electrolyte: `ionic_conductivity >= 1e-4` (high), `energy_above_hull <= 0.05` (high), `band_gap >= 3.0` (medium).
+**Elements:** the periodic table from pymatgen, flagged against the EU CRM 2023 and USGS 2022 critical lists.
+**Seed Sources:** `materials-project`, `oqmd`, `liverpool-liion-database`, `pubchem`, `eu-crm-2023`, `usgs-critical-minerals-2022`.
 
 ### Example query this schema enables (the actual payoff)
 
@@ -107,65 +110,92 @@ This single query is the "identify what's missing" feature from the brief, runni
 
 ---
 
-## 3. Literature & book scout (new-books-priority)
+## 3. Data harvester (structured sources + literature) and the review gate
 
-A separate, small tool — not part of core ingestion.
+"Scrape the internet" is deliberately **not** how more data gets in. General crawling is legally fragile (publisher terms, Google Scholar forbids it, copyright on full text), noisy, and produces facts nobody can verify. The harvester instead works three tiers of legitimate sources, each with provenance, and nothing an LLM produced reaches the graph as `confirmed=true` without a human.
 
-**Sources (legitimate metadata only, no full-text piracy):**
-- Papers: Semantic Scholar API, arXiv API, CrossRef API
-- Books: Google Books API, Open Library API
+| Tier | Source | What it yields | Access / licence notes |
+|---|---|---|---|
+| 1 | Materials Project (`mp-api`) | crystals, DFT `band_gap`, `formation_energy`, `energy_above_hull`, electrode `voltage`/`specific_capacity`, composition, spacegroup, for Li/Na/K/Mg | API key; CC-BY, GNoME subsets BY-NC (tagged) |
+| 1 | OPTIMADE providers (OQMD first; JARVIS; AFLOW/NOMAD structures) | more crystals and a second DFT opinion; attached to MP nodes when `(reduced_formula, spacegroup)` matches | no key; 1 req/s; per-provider licence recorded from `/v1/info` |
+| 1 | Liverpool Li-ion conductivity dataset (Hargreaves et al. 2023) | **measured** `ionic_conductivity` with temperature and a DOI per entry | open data; licence file recorded at ingest |
+| 1 | PubChem PUG-REST | identifiers for electrolyte molecules (InChIKey, SMILES, MW) | public domain; <= 5 req/s |
+| 2 | OpenAlex (primary), Semantic Scholar, CrossRef, arXiv | paper metadata + abstracts | OpenAlex CC0, `mailto` polite pool; S2 non-commercial research terms; arXiv 1 req/3 s |
+| 2 | Unpaywall, Europe PMC, arXiv PDFs | open-access full text, **only when the licence is CC** | `pypdf` text extraction; PDFs cached under `data/fulltext/` (gitignored) |
+| 3 | EU CRM 2023, USGS 2022 lists | `Element` criticality flags | public documents, hand-encoded |
 
-**Ranking logic:** two buckets, not one blind recency sort —
-- **Recent (last ~18 months), prioritized** — matches the "new books first" instruction
-- **Foundational, for reference** — so a genuinely excellent older text isn't buried under thin new content
+Pipeline (`mg harvest ...`): **discover** (keywords x connectors -> de-duplicated `SourceRecord`s) -> **fulltext** (licence-gated PDF -> `Chunk`s) -> **extract** (local LLM via LM Studio, JSON-schema constrained: materials, property values with units/conditions/quote, `USED_IN` tags, `Gap` statements) -> **validate** (quote must appear verbatim in the text; unit normalisable; value within the PropertyType's plausible range; formula resolves; application resolves; optional Claude pass on survivors) -> **stage** (JSONL queue under `data/harvest/queue/`) -> **review** (`mg harvest review`: accept / reject / edit, no auto-accept) -> **commit** (accepted -> `confirmed=true`; optionally validated-pending -> `confirmed=false`; rejected -> removed). Accepted candidates are mirrored to `curated/<batch>.accepted.jsonl`, which is git-tracked and is the project's real dataset.
 
-**What it outputs:** title, authors, year, link, and (via the local LLM) a one-line "why this looks relevant" note — for you to review before acquiring anything. No LLM needed for the search/ranking itself, only for the annotation.
+Entity resolution (`harvest/resolve.py`) is shared by the harvester, the dataset loaders and the query layer: alias tables (LLZO, NMC811, LiPF6...) -> variable detection (`x`, `δ`) -> pymatgen parse -> canonical reduced formula -> graph lookup with polymorph disambiguation -> doped-variant heuristic -> `lit:` stub.
 
-### Real starter shortlist for battery materials (pulled just now, to seed the tool's first run)
+### Literature & book scout (unchanged, discovery-only)
 
-**Recent / prioritized:**
-- *Computational Design of Battery Materials* — Springer, softcover ed. published July 2025. Directly matches the AI-driven angle of this project.
-- Strauss et al., "2026 roadmap on next-generation solid electrolytes for battery applications," *Materials Futures*, 2026 (DOI: 10.1088/2752-5724/ae5120) — a roadmap paper; these explicitly discuss open challenges, ideal for seeding `Gap` nodes.
-- Zaghib, "Comparative Advances in Sulfide and Halide Electrolytes for Commercialization of All-Solid-State Lithium Batteries," *Advanced Materials*, 2026 (DOI: 10.1002/adma.202513255).
-- Armand et al., "Toward a Unified Mechanistic Understanding of Polymer Electrolytes for Advanced Solid-State Batteries," *Advanced Materials*, 2026 (DOI: 10.1002/adma.73750) — Armand is one of the founding figures in battery electrolyte chemistry, so this carries real authority despite being brand new.
+`enrichment/book_scout.py` still ranks recent vs foundational books/papers for the reader; its Semantic Scholar helpers are reused by the harvester's S2 connector. Starter shortlist: *Computational Design of Battery Materials* (Springer 2025); Strauss et al., "2026 roadmap on next-generation solid electrolytes" (DOI 10.1088/2752-5724/ae5120) — roadmap papers are the richest seed for `Gap` nodes; Zaghib 2026 (DOI 10.1002/adma.202513255); Armand et al. 2026 (DOI 10.1002/adma.73750).
 
-**Foundational (older, still worth having):** search your library/university access for standard solid-state ionics and lithium battery materials handbooks predating 2020 — the scout tool should surface these once built; this list is deliberately left short here since a proper run of the tool will do this systematically rather than ad hoc.
+## 3.5 GraphRAG query layer (`query/`)
 
----
+A LangGraph agent (`query/graphrag.py`): `route -> run_tool -> retrieve -> synthesize`. The router (local LLM, typed `RouteDecision`) picks one use case and extracts its parameters; each use case is a tool whose Cypher is assembled from allow-listed fragments with user input passed only as parameters:
 
-## 4. Repo structure (hand this to Claude Code as the target layout)
+1. **screening** — materials identification: element include/exclude, stability cap, N property constraints, optional application; ranked rows carry `source_type`/`confirmed`/`source_id` per value.
+2. **feasibility** — one material vs one application's `REQUIRES_PROPERTY` targets: each requirement is `met | unmet | missing | conflicting` (sources disagree by > 1 order of magnitude on log-scale properties); the verdict is computed deterministically, the LLM only narrates it; `USED_IN` basis, `SIMILAR_TO` neighbours and `Gap`s are attached.
+3. **composition** — element breakdown with critical-element fraction, single-site substitution candidates, similarity neighbours; for molecules, identifiers, roles and co-occurring species.
+4. **literature** — hybrid retrieval (vector over `Source.abstract_embedding` and `Chunk.embedding` + full-text index, reciprocal-rank fusion) expanded into the values, tags and gaps those sources support.
+5. **gaps** — coverage per required property plus `Gap` nodes for an application or the domain.
+6. **freeform** — the LLM writes Cypher, `query/cypher_safety.validate_read_only` rejects writes/procedures and bounds `LIMIT`, the statement is `EXPLAIN`ed and run in a read transaction.
+
+Every numeric claim in an answer must carry a `[source_id]`; citations not present in the retrieved set are stripped and reported. Answers end with a Confidence block (source type + confirmed per cited value).
+
+## 4. Repo structure
 
 ```
 materialsgraph/
 ├── CLAUDE.md
-├── docs/
-│   ├── strategy.md
-│   ├── full_vision.md
-│   └── technical_buildplan.md
+├── README.md
+├── Makefile
+├── docs/                          # strategy.md, full_vision.md, technical_buildplan.md, harvester_graphrag_plan.md
+├── curated/                       # accepted harvest candidates (JSONL, git-tracked)
 ├── src/materialsgraph/
-│   ├── ingestion/
-│   │   ├── mp_client.py        # Materials Project pull (no LLM)
-│   │   └── schema_loader.py    # loads into Neo4j against schema.cypher
-│   ├── enrichment/
-│   │   ├── literature_agent.py # RAG enrichment -> USED_IN, Gap nodes (local LLM)
-│   │   └── book_scout.py       # literature/book discovery, recency-ranked
+│   ├── cli.py                     # `mg` entrypoint: schema | ingest | load | harvest | embed | similar | ask | query | summary
+│   ├── chem.py                    # pymatgen helpers: canonical reduced formula, composition parsing, variable detection
 │   ├── graph/
-│   │   ├── schema.cypher       # constraints/indexes from Section 2
-│   │   └── queries.py          # reusable Cypher, incl. the gap-query above
+│   │   ├── schema.cypher          # constraints / indexes (one statement per line)
+│   │   ├── reference.py           # Domain, PropertyTypes (+plausible ranges), Applications (+aliases, targets), critical elements, seed Sources
+│   │   ├── connection.py          # driver / session helpers
+│   │   ├── writers.py             # every MERGE in the codebase, keyed 1:1 to constraints
+│   │   └── queries.py             # read templates incl. the gap query, material_profile, requirements_for, expand_sources
+│   ├── ingestion/
+│   │   ├── models.py              # RawMaterialRecord, ExternalPropertyRecord, MeasuredPropertyRecord, MoleculeRecord
+│   │   ├── mp_client.py           # Materials Project pull, Li/Na/K/Mg, composition + spacegroup
+│   │   ├── optimade_client.py     # OQMD / JARVIS / AFLOW / NOMAD via OPTIMADE
+│   │   ├── liverpool_ionics.py    # measured Li solid-electrolyte conductivities
+│   │   ├── pubchem_client.py      # molecule identifiers
+│   │   ├── elements.py            # periodic table + criticality flags
+│   │   └── schema_loader.py       # apply schema, seed reference data, load all record types
+│   ├── harvest/
+│   │   ├── models.py              # SourceRecord, Candidate* staging models, LLM extraction schema
+│   │   ├── connectors/            # openalex, semantic_scholar, crossref, arxiv, unpaywall, europepmc (+ base: rate limits, licence gate)
+│   │   ├── discover.py, fulltext.py, extract.py, validate.py, stage.py, review_cli.py, commit.py
+│   │   ├── resolve.py, aliases.py, units.py, normalize.py
+│   │   └── prompts/extract_v1.md
+│   ├── enrichment/
+│   │   ├── literature_agent.py    # run_harvest: discover -> fulltext -> extract -> validate -> stage
+│   │   ├── embeddings.py          # sentence-transformers (384-d) for Sources and Chunks
+│   │   ├── similarity.py          # composition-cosine SIMILAR_TO (confirmed=false)
+│   │   └── book_scout.py
 │   ├── query/
-│   │   └── nl_to_cypher.py     # LangGraph NL query agent
+│   │   ├── graphrag.py            # LangGraph agent
+│   │   ├── tools.py               # screening, feasibility, composition, literature, gaps
+│   │   ├── schemas.py             # typed params, RouteDecision, Answer
+│   │   ├── cypher_safety.py       # read-only validator + executor
+│   │   └── nl_to_cypher.py        # freeform fallback + `mg ask` CLI
 │   └── llm/
-│       ├── local_client.py     # LM Studio wrapper (OpenAI-compatible, localhost:1234)
-│       └── cloud_client.py     # Claude API wrapper — validation/complex reasoning only
-├── notebooks/
-│   └── 01_explore_mp_data.ipynb
-├── tests/
-├── docker-compose.yml           # Neo4j Community container
+│       ├── local_client.py        # LM Studio StructuredLLM (pydantic-constrained JSON, retries)
+│       └── cloud_client.py        # Claude validation pass only
+├── tests/                         # unit (no services), integration (skipped without Neo4j), eval/questions.jsonl
+├── docker-compose.yml             # neo4j:5.26-community
 ├── pyproject.toml
 └── .env.example
 ```
-
----
 
 ## 5. CLAUDE.md (starter template — trim after `/init`)
 

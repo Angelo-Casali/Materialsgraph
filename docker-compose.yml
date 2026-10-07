@@ -1,6 +1,7 @@
 services:
   neo4j:
-    image: neo4j:5-community
+    # pinned: vector indexes with IF NOT EXISTS need >= 5.15
+    image: neo4j:5.26-community
     ports:
       - "7474:7474"
       - "7687:7687"
@@ -8,6 +9,11 @@ services:
       NEO4J_AUTH: "${NEO4J_USER}/${NEO4J_PASSWORD}"
     volumes:
       - neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
 
 volumes:
   neo4j_data:

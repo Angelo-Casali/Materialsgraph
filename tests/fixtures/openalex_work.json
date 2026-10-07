@@ -1,0 +1,18 @@
+{
+  "id": "https://openalex.org/W4390000001",
+  "doi": "https://doi.org/10.1000/EXAMPLE.2024.001",
+  "title": "High ionic conductivity in a chloride-based lithium solid electrolyte",
+  "display_name": "High ionic conductivity in a chloride-based lithium solid electrolyte",
+  "publication_year": 2024,
+  "type": "article",
+  "authorships": [{"author": {"display_name": "A. Author"}}, {"author": {"display_name": "B. Writer"}}],
+  "abstract_inverted_index": {
+    "Li3YCl6": [0], "is": [1], "a": [2], "promising": [3], "solid": [4], "electrolyte": [5], "with": [6],
+    "an": [7], "ionic": [8], "conductivity": [9], "of": [10], "0.5": [11], "mS/cm": [12], "at": [13], "25": [14], "°C.": [15]
+  },
+  "open_access": {"is_oa": true, "oa_url": "https://example.org/paper.pdf"},
+  "best_oa_location": {"license": "cc-by", "pdf_url": "https://example.org/paper.pdf"},
+  "primary_location": {"source": {"display_name": "Journal of Example Science"}, "license": null},
+  "cited_by_count": 12,
+  "ids": {}
+}

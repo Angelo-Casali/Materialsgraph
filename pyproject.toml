@@ -4,24 +4,44 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "materialsgraph"
-version = "0.1.0"
-description = "Personal knowledge graph over battery-materials data."
+version = "0.2.0"
+description = "Personal knowledge graph over battery-materials data, with a literature harvester and a GraphRAG query layer."
 requires-python = ">=3.11"
 dependencies = [
     "mp-api",
     "pymatgen",
-    "neo4j",
+    "neo4j>=5.15",
     "langgraph",
     "sentence-transformers",
     "requests",
     "python-dotenv",
     "openai",
     "anthropic",
-    "pydantic",
+    "pydantic>=2",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest", "ruff"]
+fulltext = ["pypdf"]
+
+[project.scripts]
+mg = "materialsgraph.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+materialsgraph = ["graph/schema.cypher", "harvest/prompts/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["neo4j: requires a reachable Neo4j instance (skipped otherwise)"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["E501", "E702", "E701", "B008"]
