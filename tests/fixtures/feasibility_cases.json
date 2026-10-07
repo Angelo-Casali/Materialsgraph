@@ -1,0 +1,23 @@
+{
+  "classify": [
+    {"name": "no values -> missing", "req": {"property_type": "ionic_conductivity", "target_min": 1e-4, "target_max": null, "importance": "high"}, "values": [], "expected": "missing"},
+    {"name": "above min -> met", "req": {"property_type": "ionic_conductivity", "target_min": 1e-4, "target_max": null, "importance": "high"}, "values": [{"value": 2e-3, "source_type": "measured", "confirmed": true}], "expected": "met"},
+    {"name": "below min -> unmet", "req": {"property_type": "ionic_conductivity", "target_min": 1e-4, "target_max": null, "importance": "high"}, "values": [{"value": 2e-6, "source_type": "measured", "confirmed": true}], "expected": "unmet"},
+    {"name": "log-scale > 1 decade apart -> conflicting", "req": {"property_type": "ionic_conductivity", "target_min": 1e-4, "target_max": null, "importance": "high"}, "values": [{"value": 1e-6, "source_type": "measured", "confirmed": true}, {"value": 4e-4, "source_type": "measured", "confirmed": true}], "expected": "conflicting"},
+    {"name": "log-scale < 1 decade apart -> uses best", "req": {"property_type": "ionic_conductivity", "target_min": 1e-4, "target_max": null, "importance": "high"}, "values": [{"value": 2e-4, "source_type": "literature_asserted", "confirmed": false}, {"value": 9e-4, "source_type": "measured", "confirmed": true}], "expected": "met"},
+    {"name": "linear > 25% apart -> conflicting", "req": {"property_type": "voltage", "target_min": 3.0, "target_max": 4.6, "importance": "high"}, "values": [{"value": 3.0, "source_type": "dft", "confirmed": true}, {"value": 4.2, "source_type": "measured", "confirmed": true}], "expected": "conflicting"},
+    {"name": "linear within 25% -> best wins", "req": {"property_type": "voltage", "target_min": 3.0, "target_max": 4.6, "importance": "high"}, "values": [{"value": 3.45, "source_type": "dft", "confirmed": true}, {"value": 3.4, "source_type": "measured", "confirmed": true}], "expected": "met"},
+    {"name": "above max -> unmet", "req": {"property_type": "energy_above_hull", "target_min": null, "target_max": 0.05, "importance": "high"}, "values": [{"value": 0.12, "source_type": "dft", "confirmed": true}], "expected": "unmet"},
+    {"name": "confirmed ranks before measured", "req": {"property_type": "specific_capacity", "target_min": 150, "target_max": null, "importance": "high"}, "values": [{"value": 140, "source_type": "measured", "confirmed": false}, {"value": 160, "source_type": "dft", "confirmed": true}], "expected": "met"},
+    {"name": "measured ranks before dft when both confirmed", "req": {"property_type": "specific_capacity", "target_min": 150, "target_max": null, "importance": "high"}, "values": [{"value": 160, "source_type": "dft", "confirmed": true}, {"value": 140, "source_type": "measured", "confirmed": true}], "expected": "unmet"},
+    {"name": "no targets -> met", "req": {"property_type": "band_gap", "target_min": null, "target_max": null, "importance": "low"}, "values": [{"value": 1.0, "source_type": "dft", "confirmed": true}], "expected": "met"}
+  ],
+  "verdict": [
+    {"name": "all high met", "assessment": [{"importance": "high", "status": "met"}, {"importance": "medium", "status": "missing"}], "expected": "feasible on available data (all high-importance targets met)"},
+    {"name": "high unmet wins", "assessment": [{"importance": "high", "status": "unmet"}, {"importance": "high", "status": "missing"}], "expected": "requirements not met on available data"},
+    {"name": "conflicting", "assessment": [{"importance": "high", "status": "met"}, {"importance": "high", "status": "conflicting"}], "expected": "sources disagree on a key requirement; review before concluding"},
+    {"name": "missing high", "assessment": [{"importance": "high", "status": "met"}, {"importance": "high", "status": "missing"}], "expected": "insufficient data: key requirement has no value in the graph"},
+    {"name": "no high requirements", "assessment": [{"importance": "medium", "status": "met"}], "expected": "no requirement targets defined for this application"},
+    {"name": "empty", "assessment": [], "expected": "no requirement targets defined for this application"}
+  ]
+}

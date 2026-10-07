@@ -9,7 +9,7 @@ from neo4j import Session
 
 from materialsgraph.graph import queries
 from materialsgraph.graph.reference import LOG_SCALE_PROPERTIES, PROPERTY_UNITS, resolve_application_name
-from materialsgraph.harvest.resolve import resolve_formula
+from materialsgraph.harvest.resolve import resolve_for_query
 from materialsgraph.query.schemas import CompositionParams, FeasibilityParams, GapParams, LiteratureParams, ScreeningParams
 
 
@@ -143,14 +143,14 @@ def _classify(req: dict, values: list[dict]) -> str:
     return "met"
 
 
-def feasibility(session: Session, p: FeasibilityParams) -> ToolResult:
+def feasibility(session: Session, p: FeasibilityParams, *, material_key: str | None = None) -> ToolResult:
     res = ToolResult()
     application = resolve_application_name(p.application)
     if not application:
         res.notes.append(f"application {p.application!r} not recognised")
         return res
-    resolution = resolve_formula(p.material, session)
-    if resolution.material_key is None or resolution.status in {"new_crystal", "new_molecule", "unparseable", "unresolved_variable"} and not _exists(session, resolution.material_key):
+    resolution = resolve_for_query(session, p.material, material_key=material_key)
+    if not _exists(session, resolution.material_key):
         res.notes.append(f"material {p.material!r} is not in the graph ({resolution.status}); no data to assess")
         res.extra = {"application": application, "resolution": resolution.model_dump()}
         return res
@@ -206,9 +206,9 @@ def _verdict(assessment: list[dict]) -> str:
 # 3. Composition / molecular analysis
 # ---------------------------------------------------------------------------
 
-def composition_analysis(session: Session, p: CompositionParams) -> ToolResult:
+def composition_analysis(session: Session, p: CompositionParams, *, material_key: str | None = None) -> ToolResult:
     res = ToolResult()
-    resolution = resolve_formula(p.material, session)
+    resolution = resolve_for_query(session, p.material, material_key=material_key)
     if not _exists(session, resolution.material_key):
         res.notes.append(f"material {p.material!r} not in the graph ({resolution.status})")
         res.extra = {"resolution": resolution.model_dump()}

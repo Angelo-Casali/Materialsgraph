@@ -69,21 +69,21 @@ def validate_read_only(cypher: str, *, max_limit: int = MAX_LIMIT_DEFAULT) -> st
 
 
 def run_read_only(session, cypher: str, params: dict | None = None, *, max_limit: int = MAX_LIMIT_DEFAULT, timeout_s: float = 15.0) -> list[dict]:
+    """Validate, then execute inside a read transaction with a server-side timeout.
+
+    `neo4j.unit_of_work(timeout=...)` is how the 5.x/6.x drivers attach a
+    transaction timeout to a managed transaction function; passing `timeout=`
+    to `execute_read` itself is silently ignored.
+    """
+    from neo4j import unit_of_work
+
     safe = validate_read_only(cypher, max_limit=max_limit)
     params = dict(params or {})
     if "max_limit" in params:
         params["max_limit"] = min(int(params["max_limit"]), max_limit)
 
+    @unit_of_work(timeout=timeout_s)
     def work(tx):
         return [dict(r) for r in tx.run(safe, **params)]
 
-    return session.execute_read(work, timeout=timeout_s) if _supports_timeout(session) else session.execute_read(work)
-
-
-def _supports_timeout(session) -> bool:
-    try:
-        import inspect
-
-        return "timeout" in inspect.signature(session.execute_read).parameters
-    except (TypeError, ValueError):
-        return False
+    return session.execute_read(work)

@@ -21,3 +21,13 @@ data/
 .vscode/
 .idea/
 .DS_Store
+
+# API deploy bundle (scripts/assemble_api_bundle.py)
+.build/
+
+# Web app
+web/node_modules/
+web/dist/
+web/test-results/
+web/playwright-report/
+web/dist-e2e/

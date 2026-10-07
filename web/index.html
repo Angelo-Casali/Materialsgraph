@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Periodic Atlas · MaterialsGraph</title>
+    <meta name="description" content="An explorable atlas of battery materials: every value with its provenance, every AI suggestion behind a human review gate." />
+    <meta name="theme-color" content="#fbf6ea" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      // apply saved theme before first paint (no flash); storage may be unavailable
+      try {
+        var t = localStorage.getItem('mg.theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        if (localStorage.getItem('mg.plain') === '1') document.documentElement.setAttribute('data-plain', '1');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="app"></div>
+    <noscript>The Periodic Atlas needs JavaScript. The data lives in <a href="./data/snapshot.json">data/snapshot.json</a>.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

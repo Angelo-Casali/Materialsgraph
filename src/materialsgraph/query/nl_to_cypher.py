@@ -89,11 +89,11 @@ def main(argv: list[str] | None = None) -> None:
 
     embedder = None
     if not args.no_embeddings:
-        from materialsgraph.enrichment.embeddings import Embedder
+        from materialsgraph.enrichment.embeddings import make_embedder
 
-        embedder = Embedder()
+        embedder = make_embedder()
     with open_session() as s:
-        agent = GraphRAGAgent(s, StructuredLLM(), embedder)
+        agent = GraphRAGAgent(s, StructuredLLM(profile="query"), embedder)
         answer = agent.answer(args.question, use_case=args.use_case)
     if args.json:
         print(answer.model_dump_json(indent=2))
