@@ -1,0 +1,10 @@
+{
+  "materials": [{"formula": "Li3YCl6", "material_kind": "crystal", "common_name": "LYC"}],
+  "property_values": [{
+    "formula": "Li3YCl6", "property_type": "ionic_conductivity", "value": 0.5, "unit": "mS/cm",
+    "conditions": "25 °C", "source_type": "measured",
+    "quote": "ionic conductivity of 0.5 mS/cm at 25 °C", "confidence": 0.9
+  }],
+  "used_in": [{"formula": "Li3YCl6", "application": "solid electrolyte", "quote": "a promising solid electrolyte", "confidence": 0.95}],
+  "gaps": [{"description": "Long-term interfacial stability against lithium metal remains unresolved for chloride electrolytes.", "application": "solid electrolyte", "quote": "interfacial stability against lithium metal remains unresolved", "confidence": 0.8}]
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:arxiv="http://arxiv.org/schemas/atom">
+  <entry>
+    <id>http://arxiv.org/abs/2501.01234v2</id>
+    <published>2025-01-03T00:00:00Z</published>
+    <title>Argyrodite  Li6PS5Cl electrolytes:
+      a review</title>
+    <summary>We review sulfide argyrodites.  Conductivities above 1 mS/cm are common.</summary>
+    <author><name>C. Person</name></author>
+    <arxiv:doi>10.1000/arxiv.example</arxiv:doi>
+    <link title="pdf" href="http://arxiv.org/pdf/2501.01234v2"/>
+  </entry>
+</feed>
