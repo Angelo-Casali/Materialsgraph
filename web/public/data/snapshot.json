@@ -1,9 +1,9 @@
 {
  "meta": {
   "schema_version": 1,
-  "generated_at": "2026-10-07T13:59:09+00:00",
+  "generated_at": "2026-10-13T15:28:16+00:00",
   "generator": "materialsgraph.site.build_sample_snapshot",
-  "git_sha": "f265675",
+  "git_sha": "65f8574",
   "sample": true,
   "notice": "Illustrative sample: rounded, commonly reported values for well-known battery materials, hand-curated to demonstrate the atlas. Not for citation. Replace with your own graph via `mg export site`.",
   "counts": {
@@ -701,7 +701,7 @@
      "value": 3.45,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated",
@@ -712,7 +712,7 @@
      "value": 160.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"rate\": \"C/10\"}",
      "extraction_method": "sample:hand-curated",
@@ -723,7 +723,7 @@
      "value": 3.7,
      "unit": "eV",
      "source_type": "dft",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"functional\": \"GGA+U\"}",
      "extraction_method": "sample:hand-curated"
@@ -733,7 +733,7 @@
      "value": 0.0,
      "unit": "eV/atom",
      "source_type": "dft",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated",
@@ -744,7 +744,7 @@
     {
      "application": "Li-ion cathode",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -802,7 +802,7 @@
      "value": 3.9,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -812,7 +812,7 @@
      "value": 140.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"cutoff_V\": 4.2}",
      "extraction_method": "sample:hand-curated",
@@ -823,7 +823,7 @@
      "value": 2.7,
      "unit": "eV",
      "source_type": "dft",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"functional\": \"GGA+U\"}",
      "extraction_method": "sample:hand-curated"
@@ -833,7 +833,7 @@
      "value": 0.0,
      "unit": "eV/atom",
      "source_type": "dft",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -843,7 +843,7 @@
     {
      "application": "Li-ion cathode",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -892,7 +892,7 @@
      "value": 3.8,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -902,7 +902,7 @@
      "value": 200.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"cutoff_V\": 4.3}",
      "extraction_method": "sample:hand-curated"
@@ -912,7 +912,7 @@
      "value": 85.0,
      "unit": "% retention",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"cycles\": 500}",
      "extraction_method": "sample:hand-curated",
@@ -923,7 +923,7 @@
     {
      "application": "Li-ion cathode",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -991,7 +991,7 @@
      "value": 3.7,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1001,7 +1001,7 @@
      "value": 190.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1011,7 +1011,7 @@
     {
      "application": "Li-ion cathode",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1063,7 +1063,7 @@
      "value": 4.0,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1073,7 +1073,7 @@
      "value": 120.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated",
@@ -1084,7 +1084,7 @@
      "value": 0.0,
      "unit": "eV/atom",
      "source_type": "dft",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1094,7 +1094,7 @@
     {
      "application": "Li-ion cathode",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1151,7 +1151,7 @@
      "value": 4.7,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1161,7 +1161,7 @@
      "value": 135.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1171,7 +1171,7 @@
     {
      "application": "Li-ion cathode",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1234,7 +1234,7 @@
      "value": 4.1,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1244,7 +1244,7 @@
      "value": 145.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"form\": \"carbon-coated nanoparticles\"}",
      "extraction_method": "sample:hand-curated"
@@ -1317,7 +1317,7 @@
      "value": 3.4,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"reference\": \"Na/Na+\"}",
      "extraction_method": "sample:hand-curated"
@@ -1327,7 +1327,7 @@
      "value": 110.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated",
@@ -1338,7 +1338,7 @@
     {
      "application": "Na-ion cathode",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1401,7 +1401,7 @@
      "value": 3.6,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"reference\": \"Na/Na+\"}",
      "extraction_method": "sample:hand-curated"
@@ -1411,7 +1411,7 @@
      "value": 150.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"window_V\": \"2.0-4.3\"}",
      "extraction_method": "sample:hand-curated"
@@ -1473,7 +1473,7 @@
      "value": 1.55,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1483,7 +1483,7 @@
      "value": 165.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated",
@@ -1494,7 +1494,7 @@
      "value": 95.0,
      "unit": "% retention",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"cycles\": 5000}",
      "extraction_method": "sample:hand-curated"
@@ -1504,7 +1504,7 @@
     {
      "application": "anode material",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1533,7 +1533,7 @@
      "value": 0.1,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1543,7 +1543,7 @@
      "value": 360.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated",
@@ -1554,7 +1554,7 @@
     {
      "application": "anode material",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1583,7 +1583,7 @@
      "value": 0.4,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1593,7 +1593,7 @@
      "value": 3000.0,
      "unit": "mAh/g",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"cycles\": \"initial\"}",
      "extraction_method": "sample:hand-curated",
@@ -1604,7 +1604,7 @@
      "value": 1.1,
      "unit": "eV",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated",
@@ -1615,7 +1615,7 @@
     {
      "application": "anode material",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1659,7 +1659,7 @@
      "value": 1e-6,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"phase\": \"tetragonal\", \"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated",
@@ -1670,7 +1670,7 @@
      "value": 0.0004,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"phase\": \"cubic, Al-doped\", \"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated",
@@ -1681,7 +1681,7 @@
      "value": 6.0,
      "unit": "eV",
      "source_type": "dft",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1691,7 +1691,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1748,7 +1748,7 @@
      "value": 0.012,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -1758,7 +1758,7 @@
      "value": 0.25,
      "unit": "eV",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1768,7 +1768,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1820,7 +1820,7 @@
      "value": 0.017,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -1887,7 +1887,7 @@
      "value": 0.002,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated",
@@ -1898,7 +1898,7 @@
      "value": 0.3,
      "unit": "eV",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -1908,7 +1908,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -1947,7 +1947,7 @@
      "value": 0.00016,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -1957,7 +1957,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2009,7 +2009,7 @@
      "value": 0.0005,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2019,7 +2019,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2065,7 +2065,7 @@
      "value": 0.0015,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2075,7 +2075,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2131,7 +2131,7 @@
      "value": 0.0007,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated",
@@ -2142,7 +2142,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2204,7 +2204,7 @@
      "value": 2.3e-6,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2214,7 +2214,7 @@
      "value": 5.5,
      "unit": "V",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2224,7 +2224,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2273,7 +2273,7 @@
      "value": 0.00067,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2283,7 +2283,7 @@
     {
      "application": "solid electrolyte",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2335,7 +2335,7 @@
      "value": 89.8,
      "unit": "",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 313}",
      "extraction_method": "sample:hand-curated"
@@ -2345,7 +2345,7 @@
      "value": 309.5,
      "unit": "K",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2355,7 +2355,7 @@
      "value": 88.06,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2365,7 +2365,7 @@
     {
      "application": "liquid electrolyte solvent",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2423,7 +2423,7 @@
      "value": 64.9,
      "unit": "",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2433,7 +2433,7 @@
      "value": 224.0,
      "unit": "K",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2443,7 +2443,7 @@
      "value": 515.0,
      "unit": "K",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2453,7 +2453,7 @@
      "value": 102.09,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2463,7 +2463,7 @@
     {
      "application": "liquid electrolyte solvent",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2521,7 +2521,7 @@
      "value": 3.1,
      "unit": "",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2531,7 +2531,7 @@
      "value": 0.59,
      "unit": "mPa.s",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2541,7 +2541,7 @@
      "value": 363.0,
      "unit": "K",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2551,7 +2551,7 @@
      "value": 90.08,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2561,7 +2561,7 @@
     {
      "application": "liquid electrolyte solvent",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2619,7 +2619,7 @@
      "value": 3.0,
      "unit": "",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2629,7 +2629,7 @@
      "value": 0.65,
      "unit": "mPa.s",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2639,7 +2639,7 @@
      "value": 104.1,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2649,7 +2649,7 @@
     {
      "application": "liquid electrolyte solvent",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2707,7 +2707,7 @@
      "value": 7.2,
      "unit": "",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2717,7 +2717,7 @@
      "value": 0.46,
      "unit": "mPa.s",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298}",
      "extraction_method": "sample:hand-curated"
@@ -2727,7 +2727,7 @@
      "value": 90.12,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2737,7 +2737,7 @@
     {
      "application": "liquid electrolyte solvent",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2800,7 +2800,7 @@
      "value": 106.05,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2810,7 +2810,7 @@
     {
      "application": "electrolyte additive",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2849,7 +2849,7 @@
      "value": 86.05,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2859,7 +2859,7 @@
     {
      "application": "electrolyte additive",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2911,7 +2911,7 @@
      "value": 151.91,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2921,7 +2921,7 @@
     {
      "application": "electrolyte salt",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -2975,7 +2975,7 @@
      "value": 287.09,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -2985,7 +2985,7 @@
     {
      "application": "electrolyte salt",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -3034,7 +3034,7 @@
      "value": 187.07,
      "unit": "g/mol",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "",
      "extraction_method": "sample:hand-curated"
@@ -3044,7 +3044,7 @@
     {
      "application": "electrolyte salt",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],
@@ -3082,7 +3082,7 @@
      "value": 0.0001,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 333, \"salt\": \"LiTFSI\"}",
      "extraction_method": "sample:hand-curated",
@@ -3093,7 +3093,7 @@
      "value": 1e-6,
      "unit": "S/cm",
      "source_type": "measured",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative",
      "conditions": "{\"temperature_K\": 298, \"salt\": \"LiTFSI\"}",
      "extraction_method": "sample:hand-curated",
@@ -3104,7 +3104,7 @@
     {
      "application": "polymer electrolyte host",
      "basis": "curated",
-     "confirmed": true,
+     "confirmed": false,
      "source_id": "sample:illustrative"
     }
    ],

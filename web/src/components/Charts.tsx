@@ -72,6 +72,7 @@ export function CriticalMeter({ fraction }: { fraction: number }) {
 /** Coverage per required property, drawn as "fog" lifting: the solid part is charted, the hatched remainder is missing. */
 export function CoverageBars({ rows, unitLabel = 'tagged materials' }: { rows: CoverageRow[]; unitLabel?: string }) {
   if (!rows.length) return <p class="muted">No requirement targets defined.</p>;
+  if (rows.every((r) => r.total === 0)) return <p class="muted">No reviewed {unitLabel} yet: coverage only counts application tags a person has confirmed.</p>;
   return (
     <div class="coverage">
       {rows.map((r) => (

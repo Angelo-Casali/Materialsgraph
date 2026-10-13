@@ -63,7 +63,9 @@ describe('coverage and fog', () => {
     const rows = applicationCoverage(a, 'solid electrolyte');
     const sig = rows.find((r) => r.property_type === 'ionic_conductivity')!;
     expect(sig.total).toBe(SNAP.materials.filter((m) => m.used_in.some((u) => u.application === 'solid electrolyte' && u.confirmed)).length);
-    expect(sig.coverage_pct).toBe(100);
+    // the illustrative sample is unreviewed, so none of its tags count yet
+    expect(sig.total).toBe(0);
+    expect(sig.coverage_pct).toBe(0);
   });
   it('fog is null where nothing is charted', () => {
     const fog = elementFog(a, 'ionic_conductivity');
