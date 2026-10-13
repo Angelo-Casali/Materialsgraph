@@ -1,0 +1,8 @@
+# Deployed API only. Deliberately excludes torch, pymatgen and mp-api (too large for free tiers).
+fastapi>=0.110
+neo4j>=5.15
+pydantic>=2
+langgraph
+openai>=1.40
+python-dotenv
+# fastembed   # uncomment for vector search once real abstracts exist (EMBEDDING_BACKEND=fastembed)

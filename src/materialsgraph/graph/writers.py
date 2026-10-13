@@ -526,3 +526,27 @@ def reset_graph(s: Session, *, confirm: bool = False) -> None:
     if not confirm:
         raise RuntimeError("reset_graph requires confirm=True")
     s.run("MATCH (n) DETACH DELETE n")
+
+
+def purge_sample(s: Session, *, source_id: str = "sample:illustrative", key_prefix: str = "sample:", confirm: bool = False) -> dict:
+    """Remove everything the illustrative sample snapshot wrote, leaving real data untouched."""
+    if not confirm:
+        raise RuntimeError("purge_sample requires confirm=True")
+    counts = {}
+    counts["property_values"] = s.run(
+        "MATCH (pv:PropertyValue {source_id: $sid}) WITH pv, count(pv) AS c DETACH DELETE pv RETURN sum(c) AS n", sid=source_id
+    ).single()["n"] or 0
+    counts["used_in"] = s.run("MATCH ()-[u:USED_IN {source_id: $sid}]->() DELETE u RETURN count(u) AS n", sid=source_id).single()["n"]
+    counts["gaps"] = s.run(
+        """
+        MATCH (g:Gap)-[:DOCUMENTED_IN]->(:Source {source_id: $sid})
+        WHERE NOT EXISTS { MATCH (g)-[:DOCUMENTED_IN]->(o:Source) WHERE o.source_id <> $sid }
+        DETACH DELETE g RETURN count(g) AS n
+        """,
+        sid=source_id,
+    ).single()["n"]
+    counts["materials"] = s.run(
+        "MATCH (m:Material) WHERE m.material_key STARTS WITH $p DETACH DELETE m RETURN count(m) AS n", p=key_prefix
+    ).single()["n"]
+    s.run("MATCH (src:Source {source_id: $sid}) DETACH DELETE src", sid=source_id)
+    return counts

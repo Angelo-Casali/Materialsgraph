@@ -8,6 +8,9 @@
     mg similar
     mg ask "question" [--use-case ...] [--show-cypher]
     mg summary
+    mg site build-sample | purge-sample --yes | json-schema
+    mg export site [--out web/public/data/snapshot.json]
+    mg import snapshot PATH [--force]
 """
 
 from __future__ import annotations
@@ -190,6 +193,51 @@ def cmd_query(args) -> None:
     print(json.dumps(out, indent=2, default=str))
 
 
+DEFAULT_SNAPSHOT = "web/public/data/snapshot.json"
+DEFAULT_SCHEMA = "web/src/data/snapshot.schema.json"
+
+
+def cmd_site(args) -> None:
+    if args.action == "build-sample":
+        from materialsgraph.site.build import build_sample_snapshot
+
+        snap = build_sample_snapshot()
+        path = snap.write(args.out)
+        print(f"sample snapshot -> {path} {snap.meta.counts}")
+    elif args.action == "json-schema":
+        from materialsgraph.site.snapshot_models import main as schema_main
+
+        schema_main(["--json-schema", args.out if args.out != DEFAULT_SNAPSHOT else DEFAULT_SCHEMA])
+    elif args.action == "purge-sample":
+        if not args.yes:
+            sys.exit("refusing to purge without --yes")
+        from materialsgraph.graph import writers
+
+        with _session() as s:
+            print(writers.purge_sample(s, confirm=True))
+
+
+def cmd_export(args) -> None:
+    from materialsgraph.site.export import export_snapshot
+
+    with _session() as s:
+        snap = export_snapshot(s, include_quotes=args.include_quotes, max_materials=args.max_materials, recompute_similar=args.recompute_similar)
+    path = snap.write(args.out)
+    print(f"snapshot -> {path} {snap.meta.counts} (sample={snap.meta.sample})")
+
+
+def cmd_import(args) -> None:
+    from materialsgraph.site.import_snapshot import ImportRefused, import_snapshot
+    from materialsgraph.site.snapshot_models import Snapshot
+
+    snap = Snapshot.read(args.path)
+    with _session() as s:
+        try:
+            print(import_snapshot(s, snap, force=args.force))
+        except ImportRefused as exc:
+            sys.exit(str(exc))
+
+
 # ---------------------------------------------------------------------------
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="mg", description="MaterialsGraph pipeline")
@@ -241,6 +289,21 @@ def build_parser() -> argparse.ArgumentParser:
     q.set_defaults(func=cmd_query)
 
     sub.add_parser("summary", help="node/edge counts").set_defaults(func=cmd_summary)
+
+    st = sub.add_parser("site", help="showcase website data")
+    st.add_argument("action", choices=["build-sample", "purge-sample", "json-schema"])
+    st.add_argument("--out", default=DEFAULT_SNAPSHOT); st.add_argument("--yes", action="store_true")
+    st.set_defaults(func=cmd_site)
+
+    ex = sub.add_parser("export", help="export the graph for the website")
+    ex.add_argument("what", choices=["site"]); ex.add_argument("--out", default=DEFAULT_SNAPSHOT)
+    ex.add_argument("--include-quotes", action="store_true", help="include short supporting quotes (never abstracts or chunks)")
+    ex.add_argument("--max-materials", type=int); ex.add_argument("--recompute-similar", action="store_true")
+    ex.set_defaults(func=cmd_export)
+
+    im = sub.add_parser("import", help="load a snapshot into Neo4j (e.g. seed AuraDB Free)")
+    im.add_argument("what", choices=["snapshot"]); im.add_argument("path"); im.add_argument("--force", action="store_true")
+    im.set_defaults(func=cmd_import)
     return p
 
 

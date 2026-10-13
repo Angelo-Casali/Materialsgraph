@@ -1,0 +1,35 @@
+name: Deploy API to Vercel (manual)
+
+# Secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID (from `vercel link`, see README "Deploying for free").
+# Runtime env vars (NEO4J_*, QUERY_LLM_*, PUBLIC_MODE...) live in the Vercel project settings, not here.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          pip install -e . --no-deps
+          pip install pymatgen neo4j pydantic python-dotenv requests openai anthropic langgraph pytest fastapi httpx
+      - run: pytest -q tests/api tests/unit/test_site_and_backend_prep.py
+      - run: python scripts/assemble_api_bundle.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Deploy
+        working-directory: .build/api
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx --yes vercel@latest deploy --prod --yes --token "${{ secrets.VERCEL_TOKEN }}"
+      - name: Health check
+        if: ${{ vars.API_URL != '' }}
+        run: curl -fsS "${{ vars.API_URL }}/api/health?deep=1"

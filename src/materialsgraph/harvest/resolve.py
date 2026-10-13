@@ -161,3 +161,53 @@ def _safe_composition(formula: str) -> dict[str, float]:
         return chem.parse_composition(formula)
     except chem.FormulaError:
         return {}
+
+
+def resolve_for_query(session, raw: str | None, *, material_key: str | None = None) -> Resolution:
+    """Resolution for user-typed names in the query layer; works without pymatgen.
+
+    1. an explicit material_key that exists in the graph
+    2. graph match on material_key / formula / reduced_formula / common_name (case-insensitive),
+       after expanding acronyms through the alias tables
+    3. full resolve_formula (pymatgen) when it is importable
+    The deployed API ships without pymatgen, so steps 1-2 must cover the UI's pickers.
+    """
+    if material_key:
+        row = session.run("MATCH (m:Material {material_key: $k}) RETURN m.material_key AS k, m.kind AS kind, m.reduced_formula AS rf", k=material_key).single()
+        if row:
+            return Resolution(status="matched", material_key=row["k"], kind=row["kind"] or "crystal", reduced_formula=row["rf"])
+    text = (raw or "").strip()
+    if not text:
+        return Resolution(status="unparseable", note="empty")
+    needles = {text.lower()}
+    alias = lookup_formula_alias(text)
+    if alias:
+        needles.add(alias.lower())
+    mol = lookup_molecule(text)
+    if mol:
+        needles.update({mol["common_name"].lower(), mol["formula"].lower()})
+    rows = session.run(
+        """
+        MATCH (m:Material)
+        WHERE toLower(m.material_key) IN $n OR toLower(m.formula) IN $n
+           OR toLower(coalesce(m.reduced_formula, '')) IN $n OR toLower(coalesce(m.common_name, '')) IN $n
+        OPTIONAL MATCH (m)-[:HAS_PROPERTY]->(pv:PropertyValue {property_type: 'energy_above_hull'})
+        RETURN m.material_key AS k, m.kind AS kind, m.reduced_formula AS rf, min(pv.value) AS eah
+        ORDER BY eah, k
+        """,
+        n=sorted(needles),
+    ).data()
+    if len(rows) == 1:
+        r = rows[0]
+        return Resolution(status="matched", material_key=r["k"], kind=r["kind"] or "crystal", reduced_formula=r["rf"])
+    if len(rows) > 1:
+        r = rows[0]
+        return Resolution(
+            status="ambiguous", material_key=r["k"], kind=r["kind"] or "crystal", reduced_formula=r["rf"],
+            candidates=[x["k"] for x in rows], note="several materials match; defaulted to lowest energy_above_hull",
+        )
+    try:
+        import pymatgen.core  # noqa: F401
+    except ImportError:
+        return Resolution(status="unresolved", note=f"{raw!r} is not in the graph; pick a material from the list")
+    return resolve_formula(text, session)

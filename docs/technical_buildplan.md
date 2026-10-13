@@ -81,7 +81,7 @@ Three independent flags describe how much to trust an edge or value; the GraphRA
 
 Merge keys: a `PropertyValue` is unique per `(Material, property_type, source_id, conditions)`, so two sources asserting the same property coexist as two nodes and the feasibility tool can report "sources disagree". A `USED_IN` edge is unique per `(Material, Application, source_id)`.
 
-Material keys: Materials Project entries are `mp:<id>`; OPTIMADE entries that match an existing node on `(reduced_formula, spacegroup_number)` are attached to it (their id goes into `external_ids`), otherwise they become `oqmd:<id>` etc.; literature-only compositions become `lit:<reduced_formula>` stubs, with `SIMILAR_TO {method:'doped_variant_of'}` to the parent phase when the resolver recognises a doped variant; molecules are `mol:<inchikey>`.
+Material keys: the illustrative website sample uses `sample:<formula>` / `sample:mol:<name>` (never mixed with real data); Materials Project entries are `mp:<id>`; OPTIMADE entries that match an existing node on `(reduced_formula, spacegroup_number)` are attached to it (their id goes into `external_ids`), otherwise they become `oqmd:<id>` etc.; literature-only compositions become `lit:<reduced_formula>` stubs, with `SIMILAR_TO {method:'doped_variant_of'}` to the parent phase when the resolver recognises a doped variant; molecules are `mol:<inchikey>`.
 
 ### Constraints & indexes
 
@@ -235,8 +235,9 @@ NL query layer. Nothing past that is in scope for this repo yet.
 
 ---
 
-## 6. Deployment (cheapest path, recap)
+## 6. Deployment (zero cost)
 
 1. **Build:** fully local, $0 — Neo4j Community in Docker, LM Studio on your own GPU.
-2. **MVP demo, if/when wanted:** Neo4j AuraDB Free (verify current cap in-console) + small FastAPI app on a free host tier (Render/Fly.io).
-3. **Live query layer in that demo:** cheap hosted API call per query (Claude Haiku-class or similar) — your RTX 5080 won't be present in the cloud, so this is the one place local stops being free once it's public.
+2. **Showcase site:** `web/` (Vite + TypeScript + Preact) on GitHub Pages, reading a JSON snapshot exported with `mg export site`. Works with no backend at all.
+3. **Live query layer:** `api/` (FastAPI, read-only) on Vercel Hobby, Neo4j AuraDB Free seeded with `mg import snapshot`, and a free OpenAI-compatible model (Groq free tier, OpenRouter `:free` fallback) configured through `QUERY_LLM_*`. Extraction stays on LM Studio. Hugging Face Docker Spaces stopped being free in 2026, and Render's 512 MB free instances cannot hold torch/pymatgen; the API bundle therefore ships without them (`harvest/resolve.resolve_for_query` resolves names from the graph instead).
+4. **Free-tier caveats:** AuraDB Free pauses when idle (daily keep-alive workflow) and has node/relationship caps; LLM free tiers are limited by tokens per minute (public mode caps context and output, plus a daily budget); in-memory rate limits are per serverless instance. Never attach a card, so abuse can only exhaust a free quota. See README "Deploying for free".

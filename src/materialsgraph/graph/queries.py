@@ -243,6 +243,22 @@ def expand_sources(session: Session, source_ids: list[str]) -> list[dict]:
     ]
 
 
+def citations_for(session: Session, source_ids: list[str]) -> list[dict]:
+    if not source_ids:
+        return []
+    return [
+        dict(r)
+        for r in session.run(
+            """
+            UNWIND $ids AS id
+            MATCH (s:Source {source_id: id})
+            RETURN s.source_id AS source_id, s.title AS title, s.year AS year, s.doi AS doi
+            """,
+            ids=source_ids,
+        )
+    ]
+
+
 def find_materials_by_formula(session: Session, reduced_formula: str) -> list[dict]:
     return [
         dict(r)
