@@ -117,5 +117,7 @@ describe('router', () => {
     expect(q.params.app).toBe('solid electrolyte');
     expect(q.query.get('m')).toBe('sample:LiFePO4');
     expect(parseHash('#/nowhere').name).toBe('notfound');
+    expect(parseHash('#/q/100%').name).toBe('notfound');
+    expect(parseHash('#/m/LiFePO4%E0%A4%A').name).toBe('notfound');
   });
 });

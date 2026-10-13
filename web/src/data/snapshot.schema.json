@@ -1,0 +1,776 @@
+{
+ "$defs": {
+  "CompositionEntry": {
+   "properties": {
+    "symbol": {
+     "title": "Symbol",
+     "type": "string"
+    },
+    "stoichiometry": {
+     "title": "Stoichiometry",
+     "type": "number"
+    },
+    "fraction": {
+     "title": "Fraction",
+     "type": "number"
+    }
+   },
+   "required": [
+    "symbol",
+    "stoichiometry",
+    "fraction"
+   ],
+   "title": "CompositionEntry",
+   "type": "object"
+  },
+  "Domain": {
+   "properties": {
+    "name": {
+     "title": "Name",
+     "type": "string"
+    },
+    "requires": {
+     "items": {
+      "$ref": "#/$defs/Requirement"
+     },
+     "title": "Requires",
+     "type": "array"
+    }
+   },
+   "required": [
+    "name"
+   ],
+   "title": "Domain",
+   "type": "object"
+  },
+  "Meta": {
+   "properties": {
+    "schema_version": {
+     "default": 1,
+     "title": "Schema Version",
+     "type": "integer"
+    },
+    "generated_at": {
+     "title": "Generated At",
+     "type": "string"
+    },
+    "generator": {
+     "title": "Generator",
+     "type": "string"
+    },
+    "git_sha": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Git Sha"
+    },
+    "sample": {
+     "title": "Sample",
+     "type": "boolean"
+    },
+    "notice": {
+     "title": "Notice",
+     "type": "string"
+    },
+    "counts": {
+     "additionalProperties": {
+      "type": "integer"
+     },
+     "title": "Counts",
+     "type": "object"
+    }
+   },
+   "required": [
+    "generated_at",
+    "generator",
+    "sample",
+    "notice"
+   ],
+   "title": "Meta",
+   "type": "object"
+  },
+  "Requirement": {
+   "properties": {
+    "property_type": {
+     "title": "Property Type",
+     "type": "string"
+    },
+    "target_min": {
+     "anyOf": [
+      {
+       "type": "number"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Target Min"
+    },
+    "target_max": {
+     "anyOf": [
+      {
+       "type": "number"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Target Max"
+    },
+    "importance": {
+     "default": "medium",
+     "enum": [
+      "high",
+      "medium",
+      "low"
+     ],
+     "title": "Importance",
+     "type": "string"
+    }
+   },
+   "required": [
+    "property_type"
+   ],
+   "title": "Requirement",
+   "type": "object"
+  },
+  "Similar": {
+   "properties": {
+    "key": {
+     "title": "Key",
+     "type": "string"
+    },
+    "method": {
+     "title": "Method",
+     "type": "string"
+    },
+    "score": {
+     "title": "Score",
+     "type": "number"
+    },
+    "confirmed": {
+     "title": "Confirmed",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "key",
+    "method",
+    "score",
+    "confirmed"
+   ],
+   "title": "Similar",
+   "type": "object"
+  },
+  "SnapApplication": {
+   "properties": {
+    "name": {
+     "title": "Name",
+     "type": "string"
+    },
+    "description": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Description"
+    },
+    "aliases": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Aliases",
+     "type": "array"
+    },
+    "kinds": {
+     "items": {
+      "enum": [
+       "crystal",
+       "molecule"
+      ],
+      "type": "string"
+     },
+     "title": "Kinds",
+     "type": "array"
+    },
+    "requires": {
+     "items": {
+      "$ref": "#/$defs/Requirement"
+     },
+     "title": "Requires",
+     "type": "array"
+    }
+   },
+   "required": [
+    "name"
+   ],
+   "title": "SnapApplication",
+   "type": "object"
+  },
+  "SnapElement": {
+   "properties": {
+    "symbol": {
+     "title": "Symbol",
+     "type": "string"
+    },
+    "eu_crm_2023": {
+     "default": false,
+     "title": "Eu Crm 2023",
+     "type": "boolean"
+    },
+    "usgs_2022": {
+     "default": false,
+     "title": "Usgs 2022",
+     "type": "boolean"
+    },
+    "note": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Note"
+    }
+   },
+   "required": [
+    "symbol"
+   ],
+   "title": "SnapElement",
+   "type": "object"
+  },
+  "SnapGap": {
+   "properties": {
+    "gap_id": {
+     "title": "Gap Id",
+     "type": "string"
+    },
+    "description": {
+     "title": "Description",
+     "type": "string"
+    },
+    "application": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Application"
+    },
+    "status": {
+     "default": "open",
+     "enum": [
+      "open",
+      "addressed"
+     ],
+     "title": "Status",
+     "type": "string"
+    },
+    "confirmed": {
+     "default": false,
+     "title": "Confirmed",
+     "type": "boolean"
+    },
+    "source_id": {
+     "title": "Source Id",
+     "type": "string"
+    }
+   },
+   "required": [
+    "gap_id",
+    "description",
+    "source_id"
+   ],
+   "title": "SnapGap",
+   "type": "object"
+  },
+  "SnapMaterial": {
+   "properties": {
+    "key": {
+     "title": "Key",
+     "type": "string"
+    },
+    "formula": {
+     "title": "Formula",
+     "type": "string"
+    },
+    "reduced_formula": {
+     "title": "Reduced Formula",
+     "type": "string"
+    },
+    "kind": {
+     "enum": [
+      "crystal",
+      "molecule"
+     ],
+     "title": "Kind",
+     "type": "string"
+    },
+    "common_name": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Common Name"
+    },
+    "spacegroup": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Spacegroup"
+    },
+    "structure_type": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Structure Type"
+    },
+    "mp_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Mp Id"
+    },
+    "smiles": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Smiles"
+    },
+    "inchikey": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Inchikey"
+    },
+    "license": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "License"
+    },
+    "blurb": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Blurb"
+    },
+    "composition": {
+     "items": {
+      "$ref": "#/$defs/CompositionEntry"
+     },
+     "title": "Composition",
+     "type": "array"
+    },
+    "properties": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/SnapPropertyValue"
+     },
+     "title": "Properties"
+    },
+    "used_in": {
+     "items": {
+      "$ref": "#/$defs/UsedIn"
+     },
+     "title": "Used In",
+     "type": "array"
+    },
+    "similar": {
+     "items": {
+      "$ref": "#/$defs/Similar"
+     },
+     "title": "Similar",
+     "type": "array"
+    }
+   },
+   "required": [
+    "key",
+    "formula",
+    "reduced_formula",
+    "kind"
+   ],
+   "title": "SnapMaterial",
+   "type": "object"
+  },
+  "SnapPropertyType": {
+   "properties": {
+    "name": {
+     "title": "Name",
+     "type": "string"
+    },
+    "unit": {
+     "title": "Unit",
+     "type": "string"
+    },
+    "description": {
+     "title": "Description",
+     "type": "string"
+    },
+    "plausible": {
+     "maxItems": 2,
+     "minItems": 2,
+     "prefixItems": [
+      {
+       "type": "number"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "title": "Plausible",
+     "type": "array"
+    },
+    "log_scale": {
+     "default": false,
+     "title": "Log Scale",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "name",
+    "unit",
+    "description",
+    "plausible"
+   ],
+   "title": "SnapPropertyType",
+   "type": "object"
+  },
+  "SnapPropertyValue": {
+   "properties": {
+    "property_type": {
+     "title": "Property Type",
+     "type": "string"
+    },
+    "value": {
+     "title": "Value",
+     "type": "number"
+    },
+    "unit": {
+     "title": "Unit",
+     "type": "string"
+    },
+    "source_type": {
+     "enum": [
+      "measured",
+      "dft",
+      "mlip_predicted",
+      "literature_asserted"
+     ],
+     "title": "Source Type",
+     "type": "string"
+    },
+    "confirmed": {
+     "title": "Confirmed",
+     "type": "boolean"
+    },
+    "source_id": {
+     "title": "Source Id",
+     "type": "string"
+    },
+    "conditions": {
+     "default": "",
+     "title": "Conditions",
+     "type": "string"
+    },
+    "extraction_method": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Extraction Method"
+    },
+    "quote": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Quote"
+    },
+    "note": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Note"
+    }
+   },
+   "required": [
+    "property_type",
+    "value",
+    "unit",
+    "source_type",
+    "confirmed",
+    "source_id"
+   ],
+   "title": "SnapPropertyValue",
+   "type": "object"
+  },
+  "SnapSource": {
+   "properties": {
+    "source_id": {
+     "title": "Source Id",
+     "type": "string"
+    },
+    "title": {
+     "title": "Title",
+     "type": "string"
+    },
+    "type": {
+     "enum": [
+      "paper",
+      "preprint",
+      "book",
+      "video",
+      "database"
+     ],
+     "title": "Type",
+     "type": "string"
+    },
+    "year": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Year"
+    },
+    "doi": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Doi"
+    },
+    "url": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Url"
+    },
+    "license": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "License"
+    },
+    "citable": {
+     "default": true,
+     "title": "Citable",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "source_id",
+    "title",
+    "type"
+   ],
+   "title": "SnapSource",
+   "type": "object"
+  },
+  "UsedIn": {
+   "properties": {
+    "application": {
+     "title": "Application",
+     "type": "string"
+    },
+    "basis": {
+     "enum": [
+      "computed",
+      "literature",
+      "curated"
+     ],
+     "title": "Basis",
+     "type": "string"
+    },
+    "confirmed": {
+     "title": "Confirmed",
+     "type": "boolean"
+    },
+    "source_id": {
+     "title": "Source Id",
+     "type": "string"
+    }
+   },
+   "required": [
+    "application",
+    "basis",
+    "confirmed",
+    "source_id"
+   ],
+   "title": "UsedIn",
+   "type": "object"
+  }
+ },
+ "properties": {
+  "meta": {
+   "$ref": "#/$defs/Meta"
+  },
+  "domain": {
+   "$ref": "#/$defs/Domain"
+  },
+  "property_types": {
+   "items": {
+    "$ref": "#/$defs/SnapPropertyType"
+   },
+   "title": "Property Types",
+   "type": "array"
+  },
+  "applications": {
+   "items": {
+    "$ref": "#/$defs/SnapApplication"
+   },
+   "title": "Applications",
+   "type": "array"
+  },
+  "elements": {
+   "items": {
+    "$ref": "#/$defs/SnapElement"
+   },
+   "title": "Elements",
+   "type": "array"
+  },
+  "sources": {
+   "items": {
+    "$ref": "#/$defs/SnapSource"
+   },
+   "title": "Sources",
+   "type": "array"
+  },
+  "materials": {
+   "items": {
+    "$ref": "#/$defs/SnapMaterial"
+   },
+   "title": "Materials",
+   "type": "array"
+  },
+  "gaps": {
+   "items": {
+    "$ref": "#/$defs/SnapGap"
+   },
+   "title": "Gaps",
+   "type": "array"
+  },
+  "aliases": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "title": "Aliases",
+   "type": "object"
+  }
+ },
+ "required": [
+  "meta",
+  "domain",
+  "property_types",
+  "applications",
+  "elements",
+  "sources",
+  "materials"
+ ],
+ "title": "Snapshot",
+ "type": "object"
+}

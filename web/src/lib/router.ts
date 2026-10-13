@@ -21,7 +21,12 @@ export function parseHash(hash: string): Route {
     const m = path.match(re);
     if (m) {
       const params: Record<string, string> = {};
-      keys.forEach((k, i) => (params[k] = decodeURIComponent(m[i + 1])));
+      try {
+        keys.forEach((k, i) => (params[k] = decodeURIComponent(m[i + 1])));
+      } catch {
+        // malformed percent-escape in a shared or hand-typed link (e.g. "#/q/100%"): show the 404 view
+        return { name: 'notfound', params: {}, query };
+      }
       return { name, params, query };
     }
   }

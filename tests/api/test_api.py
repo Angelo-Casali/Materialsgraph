@@ -200,3 +200,46 @@ def test_meta_and_materials():
 def test_docs_available(path):
     client, _ = make_client()
     assert client.get(path).status_code == 200
+
+
+def test_spoofed_leading_forwarded_for_entries_do_not_bypass_limits(monkeypatch):
+    """The client controls the left of X-Forwarded-For; only the proxy-appended rightmost entry is trusted."""
+    monkeypatch.setattr(tools, "gap_report", lambda s, p: ToolResult())
+    client, _ = make_client(settings=ApiSettings(tools_per_min=1, tools_burst=1))
+    assert client.post("/api/tools/gaps", json={}, headers={"x-forwarded-for": "9.9.9.1, 1.1.1.1"}).status_code == 200
+    assert client.post("/api/tools/gaps", json={}, headers={"x-forwarded-for": "9.9.9.2, 1.1.1.1"}).status_code == 429
+
+
+def test_untrusted_proxy_ignores_forwarded_headers():
+    from mg_api.ratelimit import client_ip
+
+    assert client_ip({"x-forwarded-for": "6.6.6.6"}, "10.0.0.5", trust_proxy=False) == "10.0.0.5"
+    assert client_ip({"x-vercel-forwarded-for": "7.7.7.7", "x-forwarded-for": "6.6.6.6"}, "p", trust_proxy=True) == "7.7.7.7"
+
+
+def test_daily_counters_are_bounded():
+    limiter = RateLimiter(max_keys=50, wall=lambda: datetime(2026, 10, 7, tzinfo=timezone.utc))
+    for i in range(500):
+        assert limiter.daily(f"ask-day:{i}", limit=5)
+    assert len(limiter._daily) == 50
+
+
+def test_timeout_session_wraps_every_query():
+    import neo4j
+    from mg_api.app import TimeoutSession
+
+    seen = {}
+
+    class Inner:
+        def run(self, query, parameters=None, **kw):
+            seen["query"], seen["params"] = query, kw
+            return R([])
+
+        def close(self):
+            seen["closed"] = True
+
+    s = TimeoutSession(Inner(), 7.5)
+    s.run("MATCH (n) RETURN n", k=1)
+    assert isinstance(seen["query"], neo4j.Query) and seen["query"].timeout == 7.5 and seen["params"] == {"k": 1}
+    s.close()  # other attributes delegate to the wrapped session
+    assert seen["closed"]

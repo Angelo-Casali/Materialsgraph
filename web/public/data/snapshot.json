@@ -1,0 +1,3271 @@
+{
+ "meta": {
+  "schema_version": 1,
+  "generated_at": "2026-10-07T13:59:09+00:00",
+  "generator": "materialsgraph.site.build_sample_snapshot",
+  "git_sha": "f265675",
+  "sample": true,
+  "notice": "Illustrative sample: rounded, commonly reported values for well-known battery materials, hand-curated to demonstrate the atlas. Not for citation. Replace with your own graph via `mg export site`.",
+  "counts": {
+   "materials": 33,
+   "property_values": 71,
+   "sources": 1,
+   "gaps": 0,
+   "used_in": 33,
+   "similar": 56
+  }
+ },
+ "domain": {
+  "name": "Battery",
+  "requires": [
+   {
+    "property_type": "ionic_conductivity",
+    "target_min": 0.0001,
+    "importance": "high"
+   },
+   {
+    "property_type": "voltage",
+    "importance": "high"
+   },
+   {
+    "property_type": "specific_capacity",
+    "importance": "high"
+   }
+  ]
+ },
+ "property_types": [
+  {
+   "name": "band_gap",
+   "unit": "eV",
+   "description": "electronic band gap",
+   "plausible": [
+    0.0,
+    15.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "formation_energy",
+   "unit": "eV/atom",
+   "description": "formation energy per atom",
+   "plausible": [
+    -6.0,
+    2.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "energy_above_hull",
+   "unit": "eV/atom",
+   "description": "distance above the convex hull; 0 = ground-state stable",
+   "plausible": [
+    0.0,
+    2.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "voltage",
+   "unit": "V",
+   "description": "average (dis)charge voltage vs the working ion",
+   "plausible": [
+    -1.0,
+    6.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "specific_capacity",
+   "unit": "mAh/g",
+   "description": "gravimetric specific capacity",
+   "plausible": [
+    0.0,
+    4000.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "ionic_conductivity",
+   "unit": "S/cm",
+   "description": "ionic conductivity (room temperature unless conditions say otherwise)",
+   "plausible": [
+    1e-12,
+    1.0
+   ],
+   "log_scale": true
+  },
+  {
+   "name": "cycling_stability",
+   "unit": "% retention",
+   "description": "capacity retention after N cycles",
+   "plausible": [
+    0.0,
+    100.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "electrochemical_window",
+   "unit": "V",
+   "description": "electrochemical stability window width",
+   "plausible": [
+    0.0,
+    10.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "activation_energy",
+   "unit": "eV",
+   "description": "activation energy for ion migration",
+   "plausible": [
+    0.0,
+    3.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "density",
+   "unit": "g/cm3",
+   "description": "mass density",
+   "plausible": [
+    0.1,
+    25.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "melting_point",
+   "unit": "K",
+   "description": "melting point",
+   "plausible": [
+    0.0,
+    2000.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "boiling_point",
+   "unit": "K",
+   "description": "boiling point",
+   "plausible": [
+    0.0,
+    2000.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "dielectric_constant",
+   "unit": "",
+   "description": "relative permittivity",
+   "plausible": [
+    1.0,
+    200.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "viscosity",
+   "unit": "mPa.s",
+   "description": "dynamic viscosity",
+   "plausible": [
+    0.0,
+    10000.0
+   ],
+   "log_scale": true
+  },
+  {
+   "name": "oxidation_potential",
+   "unit": "V vs Li/Li+",
+   "description": "anodic stability limit",
+   "plausible": [
+    0.0,
+    8.0
+   ],
+   "log_scale": false
+  },
+  {
+   "name": "molecular_weight",
+   "unit": "g/mol",
+   "description": "molecular weight",
+   "plausible": [
+    1.0,
+    100000.0
+   ],
+   "log_scale": false
+  }
+ ],
+ "applications": [
+  {
+   "name": "Li-ion insertion electrode",
+   "description": "Computationally enumerated Li insertion electrode (Materials Project).",
+   "aliases": [
+    "li-ion electrode",
+    "Li insertion electrode"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": []
+  },
+  {
+   "name": "Na-ion insertion electrode",
+   "description": "Computationally enumerated Na insertion electrode (Materials Project).",
+   "aliases": [
+    "na-ion electrode",
+    "Na insertion electrode"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": []
+  },
+  {
+   "name": "K-ion insertion electrode",
+   "description": "Computationally enumerated K insertion electrode (Materials Project).",
+   "aliases": [
+    "k-ion electrode",
+    "K insertion electrode"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": []
+  },
+  {
+   "name": "Mg-ion insertion electrode",
+   "description": "Computationally enumerated Mg insertion electrode (Materials Project).",
+   "aliases": [
+    "mg-ion electrode",
+    "Mg insertion electrode"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": []
+  },
+  {
+   "name": "Li-ion cathode",
+   "aliases": [
+    "lithium-ion cathode",
+    "li-ion cathode material",
+    "cathode",
+    "positive electrode",
+    "lithium cathode"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": [
+    {
+     "property_type": "voltage",
+     "target_min": 3.0,
+     "target_max": 4.6,
+     "importance": "high"
+    },
+    {
+     "property_type": "specific_capacity",
+     "target_min": 150.0,
+     "importance": "high"
+    },
+    {
+     "property_type": "energy_above_hull",
+     "target_max": 0.05,
+     "importance": "medium"
+    }
+   ]
+  },
+  {
+   "name": "Na-ion cathode",
+   "aliases": [
+    "sodium-ion cathode",
+    "na-ion cathode material",
+    "sodium cathode"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": [
+    {
+     "property_type": "voltage",
+     "target_min": 2.5,
+     "target_max": 4.3,
+     "importance": "high"
+    },
+    {
+     "property_type": "specific_capacity",
+     "target_min": 100.0,
+     "importance": "high"
+    },
+    {
+     "property_type": "energy_above_hull",
+     "target_max": 0.05,
+     "importance": "medium"
+    }
+   ]
+  },
+  {
+   "name": "anode material",
+   "aliases": [
+    "anode",
+    "negative electrode",
+    "li-ion anode",
+    "lithium anode material"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": [
+    {
+     "property_type": "voltage",
+     "target_max": 1.0,
+     "importance": "high"
+    },
+    {
+     "property_type": "specific_capacity",
+     "target_min": 300.0,
+     "importance": "high"
+    }
+   ]
+  },
+  {
+   "name": "solid electrolyte",
+   "aliases": [
+    "solid-state electrolyte",
+    "solid state electrolyte",
+    "sse",
+    "inorganic solid electrolyte",
+    "superionic conductor",
+    "lithium superionic conductor",
+    "li-ion conductor",
+    "sulfide electrolyte",
+    "halide electrolyte",
+    "oxide electrolyte",
+    "garnet electrolyte",
+    "argyrodite"
+   ],
+   "kinds": [
+    "crystal"
+   ],
+   "requires": [
+    {
+     "property_type": "ionic_conductivity",
+     "target_min": 0.0001,
+     "importance": "high"
+    },
+    {
+     "property_type": "energy_above_hull",
+     "target_max": 0.05,
+     "importance": "high"
+    },
+    {
+     "property_type": "band_gap",
+     "target_min": 3.0,
+     "importance": "medium"
+    }
+   ]
+  },
+  {
+   "name": "polymer electrolyte host",
+   "aliases": [
+    "polymer electrolyte",
+    "solid polymer electrolyte",
+    "spe",
+    "peo electrolyte"
+   ],
+   "kinds": [
+    "molecule"
+   ],
+   "requires": [
+    {
+     "property_type": "ionic_conductivity",
+     "target_min": 0.0001,
+     "importance": "high"
+    }
+   ]
+  },
+  {
+   "name": "liquid electrolyte solvent",
+   "aliases": [
+    "electrolyte solvent",
+    "carbonate solvent",
+    "solvent",
+    "co-solvent"
+   ],
+   "kinds": [
+    "molecule"
+   ],
+   "requires": [
+    {
+     "property_type": "dielectric_constant",
+     "target_min": 20.0,
+     "importance": "medium"
+    },
+    {
+     "property_type": "oxidation_potential",
+     "target_min": 4.5,
+     "importance": "medium"
+    }
+   ]
+  },
+  {
+   "name": "electrolyte salt",
+   "aliases": [
+    "lithium salt",
+    "conducting salt",
+    "salt",
+    "li salt"
+   ],
+   "kinds": [
+    "molecule"
+   ],
+   "requires": []
+  },
+  {
+   "name": "electrolyte additive",
+   "aliases": [
+    "additive",
+    "sei-forming additive",
+    "film-forming additive",
+    "flame retardant additive"
+   ],
+   "kinds": [
+    "molecule"
+   ],
+   "requires": []
+  }
+ ],
+ "elements": [
+  {
+   "symbol": "Al",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "bauxite/alumina"
+  },
+  {
+   "symbol": "B",
+   "eu_crm_2023": true,
+   "usgs_2022": false,
+   "note": "borates"
+  },
+  {
+   "symbol": "Bi",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "C",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "natural graphite"
+  },
+  {
+   "symbol": "Ce",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "rare earth"
+  },
+  {
+   "symbol": "Cl",
+   "eu_crm_2023": false,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "Co",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "EU strategic"
+  },
+  {
+   "symbol": "Cr",
+   "eu_crm_2023": false,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Cu",
+   "eu_crm_2023": true,
+   "usgs_2022": false,
+   "note": "EU strategic (2023 addition)"
+  },
+  {
+   "symbol": "F",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "fluorspar"
+  },
+  {
+   "symbol": "Fe",
+   "eu_crm_2023": false,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "Ga",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Ge",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "H",
+   "eu_crm_2023": false,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "In",
+   "eu_crm_2023": false,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "La",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "rare earth"
+  },
+  {
+   "symbol": "Li",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "battery-grade lithium; EU strategic"
+  },
+  {
+   "symbol": "Mg",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Mn",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "battery-grade manganese; EU strategic"
+  },
+  {
+   "symbol": "N",
+   "eu_crm_2023": false,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "Na",
+   "eu_crm_2023": false,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "Nb",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Nd",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "rare earth"
+  },
+  {
+   "symbol": "Ni",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "battery-grade nickel; EU strategic"
+  },
+  {
+   "symbol": "O",
+   "eu_crm_2023": false,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "P",
+   "eu_crm_2023": true,
+   "usgs_2022": false,
+   "note": "phosphorus / phosphate rock (EU)"
+  },
+  {
+   "symbol": "S",
+   "eu_crm_2023": false,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "Sb",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Sc",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Si",
+   "eu_crm_2023": true,
+   "usgs_2022": false,
+   "note": "silicon metal (EU)"
+  },
+  {
+   "symbol": "Sn",
+   "eu_crm_2023": false,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Sr",
+   "eu_crm_2023": true,
+   "usgs_2022": false
+  },
+  {
+   "symbol": "Ta",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Te",
+   "eu_crm_2023": false,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Ti",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "titanium metal"
+  },
+  {
+   "symbol": "V",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "W",
+   "eu_crm_2023": true,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Y",
+   "eu_crm_2023": true,
+   "usgs_2022": true,
+   "note": "rare earth"
+  },
+  {
+   "symbol": "Zn",
+   "eu_crm_2023": false,
+   "usgs_2022": true
+  },
+  {
+   "symbol": "Zr",
+   "eu_crm_2023": false,
+   "usgs_2022": true
+  }
+ ],
+ "sources": [
+  {
+   "source_id": "sample:illustrative",
+   "title": "MaterialsGraph illustrative sample (hand-curated, approximate, not for citation)",
+   "type": "database",
+   "license": "illustrative-not-for-citation",
+   "citable": false
+  }
+ ],
+ "materials": [
+  {
+   "key": "sample:LiFePO4",
+   "formula": "LiFePO4",
+   "reduced_formula": "LiFePO4",
+   "kind": "crystal",
+   "common_name": "LFP",
+   "spacegroup": "Pnma",
+   "structure_type": "olivine",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Olivine cathode: modest voltage, outstanding safety and cycle life, no cobalt or nickel.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "Fe",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 4.0,
+     "fraction": 0.57143
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 3.45,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated",
+     "note": "flat plateau vs Li/Li+"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 160.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"rate\": \"C/10\"}",
+     "extraction_method": "sample:hand-curated",
+     "note": "practical; ~170 theoretical"
+    },
+    {
+     "property_type": "band_gap",
+     "value": 3.7,
+     "unit": "eV",
+     "source_type": "dft",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"functional\": \"GGA+U\"}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "energy_above_hull",
+     "value": 0.0,
+     "unit": "eV/atom",
+     "source_type": "dft",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated",
+     "note": "ground state"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Li-ion cathode",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9555,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiMnPO4",
+     "method": "composition_cosine_v1",
+     "score": 0.9474,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Na3V2(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9081,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:LiCoO2",
+   "formula": "LiCoO2",
+   "reduced_formula": "LiCoO2",
+   "kind": "crystal",
+   "common_name": "LCO",
+   "spacegroup": "R-3m",
+   "structure_type": "layered (α-NaFeO2)",
+   "license": "illustrative-not-for-citation",
+   "blurb": "The original commercial Li-ion cathode; cobalt-heavy.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "Co",
+     "stoichiometry": 1.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 2.0,
+     "fraction": 0.5
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 3.9,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 140.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"cutoff_V\": 4.2}",
+     "extraction_method": "sample:hand-curated",
+     "note": "about half the Li is cycled"
+    },
+    {
+     "property_type": "band_gap",
+     "value": 2.7,
+     "unit": "eV",
+     "source_type": "dft",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"functional\": \"GGA+U\"}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "energy_above_hull",
+     "value": 0.0,
+     "unit": "eV/atom",
+     "source_type": "dft",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Li-ion cathode",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:LiNi0.8Mn0.1Co0.1O2",
+   "formula": "LiNi0.8Mn0.1Co0.1O2",
+   "reduced_formula": "Li1Mn0.1Co0.1Ni0.8O2",
+   "kind": "crystal",
+   "common_name": "NMC811",
+   "spacegroup": "R-3m",
+   "structure_type": "layered",
+   "license": "illustrative-not-for-citation",
+   "blurb": "High-nickel layered oxide: high capacity, less cobalt, harder to stabilise.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "Ni",
+     "stoichiometry": 0.8,
+     "fraction": 0.2
+    },
+    {
+     "symbol": "Mn",
+     "stoichiometry": 0.1,
+     "fraction": 0.025
+    },
+    {
+     "symbol": "Co",
+     "stoichiometry": 0.1,
+     "fraction": 0.025
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 2.0,
+     "fraction": 0.5
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 3.8,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 200.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"cutoff_V\": 4.3}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "cycling_stability",
+     "value": 85.0,
+     "unit": "% retention",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"cycles\": 500}",
+     "extraction_method": "sample:hand-curated",
+     "note": "typical full-cell retention, varies widely"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Li-ion cathode",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:LiNi0.8Co0.15Al0.05O2",
+     "method": "composition_cosine_v1",
+     "score": 0.9987,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiNi0.5Mn1.5O4",
+     "method": "composition_cosine_v1",
+     "score": 0.909,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Li7La3Zr2O12",
+     "method": "composition_cosine_v1",
+     "score": 0.9079,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:LiNi0.8Co0.15Al0.05O2",
+   "formula": "LiNi0.8Co0.15Al0.05O2",
+   "reduced_formula": "Li1Al0.05Co0.15Ni0.8O2",
+   "kind": "crystal",
+   "common_name": "NCA",
+   "spacegroup": "R-3m",
+   "structure_type": "layered",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Nickel-cobalt-aluminium layered oxide used in long-range EV cells.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "Ni",
+     "stoichiometry": 0.8,
+     "fraction": 0.2
+    },
+    {
+     "symbol": "Co",
+     "stoichiometry": 0.15,
+     "fraction": 0.0375
+    },
+    {
+     "symbol": "Al",
+     "stoichiometry": 0.05,
+     "fraction": 0.0125
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 2.0,
+     "fraction": 0.5
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 3.7,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 190.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Li-ion cathode",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:LiNi0.8Mn0.1Co0.1O2",
+     "method": "composition_cosine_v1",
+     "score": 0.9987,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Li7La3Zr2O12",
+     "method": "composition_cosine_v1",
+     "score": 0.9075,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:LiMn2O4",
+   "formula": "LiMn2O4",
+   "reduced_formula": "LiMn2O4",
+   "kind": "crystal",
+   "common_name": "LMO",
+   "spacegroup": "Fd-3m",
+   "structure_type": "spinel",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Manganese spinel: cheap and fast, but capacity fades at elevated temperature.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "Mn",
+     "stoichiometry": 2.0,
+     "fraction": 0.28571
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 4.0,
+     "fraction": 0.57143
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 4.0,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 120.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated",
+     "note": "~148 theoretical"
+    },
+    {
+     "property_type": "energy_above_hull",
+     "value": 0.0,
+     "unit": "eV/atom",
+     "source_type": "dft",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Li-ion cathode",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:LiNi0.5Mn1.5O4",
+     "method": "composition_cosine_v1",
+     "score": 0.9883,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Na0.67Ni0.33Mn0.67O2",
+     "method": "composition_cosine_v1",
+     "score": 0.9109,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:LiNi0.5Mn1.5O4",
+   "formula": "LiNi0.5Mn1.5O4",
+   "reduced_formula": "Li1Mn1.5Ni0.5O4",
+   "kind": "crystal",
+   "common_name": "LNMO",
+   "spacegroup": "P4_332",
+   "structure_type": "spinel",
+   "license": "illustrative-not-for-citation",
+   "blurb": "High-voltage cobalt-free spinel; needs electrolytes that survive ~4.7 V.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "Ni",
+     "stoichiometry": 0.5,
+     "fraction": 0.07143
+    },
+    {
+     "symbol": "Mn",
+     "stoichiometry": 1.5,
+     "fraction": 0.21429
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 4.0,
+     "fraction": 0.57143
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 4.7,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 135.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Li-ion cathode",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:LiMn2O4",
+     "method": "composition_cosine_v1",
+     "score": 0.9883,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Na0.67Ni0.33Mn0.67O2",
+     "method": "composition_cosine_v1",
+     "score": 0.9281,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiNi0.8Mn0.1Co0.1O2",
+     "method": "composition_cosine_v1",
+     "score": 0.909,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:LiMnPO4",
+   "formula": "LiMnPO4",
+   "reduced_formula": "LiMnPO4",
+   "kind": "crystal",
+   "common_name": "LMP",
+   "spacegroup": "Pnma",
+   "structure_type": "olivine",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Higher-voltage cousin of LFP, held back by poor electronic conductivity.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "Mn",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 4.0,
+     "fraction": 0.57143
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 4.1,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 145.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"form\": \"carbon-coated nanoparticles\"}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Li-ion cathode",
+     "basis": "literature",
+     "confirmed": false,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9555,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiFePO4",
+     "method": "composition_cosine_v1",
+     "score": 0.9474,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Na3V2(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9081,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Na3V2(PO4)3",
+   "formula": "Na3V2(PO4)3",
+   "reduced_formula": "Na3V2(PO4)3",
+   "kind": "crystal",
+   "common_name": "NVP",
+   "spacegroup": "R-3c",
+   "structure_type": "NASICON",
+   "license": "illustrative-not-for-citation",
+   "blurb": "NASICON-type sodium cathode with a flat 3.4 V plateau.",
+   "composition": [
+    {
+     "symbol": "Na",
+     "stoichiometry": 3.0,
+     "fraction": 0.15
+    },
+    {
+     "symbol": "V",
+     "stoichiometry": 2.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 3.0,
+     "fraction": 0.15
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 12.0,
+     "fraction": 0.6
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 3.4,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"reference\": \"Na/Na+\"}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 110.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated",
+     "note": "~117 theoretical"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Na-ion cathode",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Na3Zr2Si2PO12",
+     "method": "composition_cosine_v1",
+     "score": 0.9513,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9457,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiMnPO4",
+     "method": "composition_cosine_v1",
+     "score": 0.9081,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Na0.67Ni0.33Mn0.67O2",
+   "formula": "Na0.67Ni0.33Mn0.67O2",
+   "reduced_formula": "Na0.67Mn0.67Ni0.33O2",
+   "kind": "crystal",
+   "common_name": "P2-NNM",
+   "spacegroup": "P6_3/mmc",
+   "structure_type": "P2 layered",
+   "license": "illustrative-not-for-citation",
+   "blurb": "P2-type layered sodium oxide, nickel-manganese, cobalt-free.",
+   "composition": [
+    {
+     "symbol": "Na",
+     "stoichiometry": 0.67,
+     "fraction": 0.18256
+    },
+    {
+     "symbol": "Ni",
+     "stoichiometry": 0.33,
+     "fraction": 0.08992
+    },
+    {
+     "symbol": "Mn",
+     "stoichiometry": 0.67,
+     "fraction": 0.18256
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 2.0,
+     "fraction": 0.54496
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 3.6,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"reference\": \"Na/Na+\"}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 150.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"window_V\": \"2.0-4.3\"}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "Na-ion cathode",
+     "basis": "literature",
+     "confirmed": false,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:LiNi0.5Mn1.5O4",
+     "method": "composition_cosine_v1",
+     "score": 0.9281,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiMn2O4",
+     "method": "composition_cosine_v1",
+     "score": 0.9109,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li4Ti5O12",
+   "formula": "Li4Ti5O12",
+   "reduced_formula": "Li4Ti5O12",
+   "kind": "crystal",
+   "common_name": "LTO",
+   "spacegroup": "Fd-3m",
+   "structure_type": "spinel",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Zero-strain titanate anode: very long life, low energy (high voltage vs Li).",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 4.0,
+     "fraction": 0.19048
+    },
+    {
+     "symbol": "Ti",
+     "stoichiometry": 5.0,
+     "fraction": 0.2381
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 12.0,
+     "fraction": 0.57143
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 1.55,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 165.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated",
+     "note": "~175 theoretical"
+    },
+    {
+     "property_type": "cycling_stability",
+     "value": 95.0,
+     "unit": "% retention",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"cycles\": 5000}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "anode material",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:C",
+   "formula": "C",
+   "reduced_formula": "C",
+   "kind": "crystal",
+   "common_name": "graphite",
+   "spacegroup": "P6_3/mmc",
+   "structure_type": "graphite",
+   "license": "illustrative-not-for-citation",
+   "blurb": "The workhorse anode, intercalating Li to LiC6.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 1.0,
+     "fraction": 1.0
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 0.1,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 360.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated",
+     "note": "372 theoretical (LiC6)"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "anode material",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:Si",
+   "formula": "Si",
+   "reduced_formula": "Si",
+   "kind": "crystal",
+   "common_name": "silicon",
+   "spacegroup": "Fd-3m",
+   "structure_type": "diamond cubic",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Alloying anode with ~10x graphite's capacity and ~300% volume swing.",
+   "composition": [
+    {
+     "symbol": "Si",
+     "stoichiometry": 1.0,
+     "fraction": 1.0
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "voltage",
+     "value": 0.4,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "specific_capacity",
+     "value": 3000.0,
+     "unit": "mAh/g",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"cycles\": \"initial\"}",
+     "extraction_method": "sample:hand-curated",
+     "note": "~3579 theoretical (Li15Si4); fades fast"
+    },
+    {
+     "property_type": "band_gap",
+     "value": 1.1,
+     "unit": "eV",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated",
+     "note": "indirect"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "anode material",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:Li7La3Zr2O12",
+   "formula": "Li7La3Zr2O12",
+   "reduced_formula": "Li7La3Zr2O12",
+   "kind": "crystal",
+   "common_name": "LLZO",
+   "spacegroup": "Ia-3d",
+   "structure_type": "garnet",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Garnet oxide electrolyte, stable against Li metal. Conductivity depends dramatically on phase.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 7.0,
+     "fraction": 0.29167
+    },
+    {
+     "symbol": "La",
+     "stoichiometry": 3.0,
+     "fraction": 0.125
+    },
+    {
+     "symbol": "Zr",
+     "stoichiometry": 2.0,
+     "fraction": 0.08333
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 12.0,
+     "fraction": 0.5
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 1e-6,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"phase\": \"tetragonal\", \"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated",
+     "note": "undoped, tetragonal"
+    },
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.0004,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"phase\": \"cubic, Al-doped\", \"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated",
+     "note": "dopant-stabilised cubic phase"
+    },
+    {
+     "property_type": "band_gap",
+     "value": 6.0,
+     "unit": "eV",
+     "source_type": "dft",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:LiNi0.8Mn0.1Co0.1O2",
+     "method": "composition_cosine_v1",
+     "score": 0.9079,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiNi0.8Co0.15Al0.05O2",
+     "method": "composition_cosine_v1",
+     "score": 0.9075,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li10GeP2S12",
+   "formula": "Li10GeP2S12",
+   "reduced_formula": "Li10Ge(PS6)2",
+   "kind": "crystal",
+   "common_name": "LGPS",
+   "spacegroup": "P4_2/nmc",
+   "structure_type": "LGPS-type",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Sulfide superionic conductor rivalling liquid electrolytes; germanium is costly.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 10.0,
+     "fraction": 0.4
+    },
+    {
+     "symbol": "Ge",
+     "stoichiometry": 1.0,
+     "fraction": 0.04
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 2.0,
+     "fraction": 0.08
+    },
+    {
+     "symbol": "S",
+     "stoichiometry": 12.0,
+     "fraction": 0.48
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.012,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "activation_energy",
+     "value": 0.25,
+     "unit": "eV",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Li3PS4",
+     "method": "composition_cosine_v1",
+     "score": 0.9943,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Li7P3S11",
+     "method": "composition_cosine_v1",
+     "score": 0.9852,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li7P3S11",
+   "formula": "Li7P3S11",
+   "reduced_formula": "Li7P3S11",
+   "kind": "crystal",
+   "common_name": "LPS glass-ceramic",
+   "spacegroup": "P-1",
+   "structure_type": "glass-ceramic",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Glass-ceramic thiophosphate with liquid-like conductivity, moisture sensitive.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 7.0,
+     "fraction": 0.33333
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 3.0,
+     "fraction": 0.14286
+    },
+    {
+     "symbol": "S",
+     "stoichiometry": 11.0,
+     "fraction": 0.52381
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.017,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "literature",
+     "confirmed": false,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Li3PS4",
+     "method": "composition_cosine_v1",
+     "score": 0.9968,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Li10GeP2S12",
+     "method": "composition_cosine_v1",
+     "score": 0.9852,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li6PS5Cl",
+   "formula": "Li6PS5Cl",
+   "reduced_formula": "Li6PS5Cl",
+   "kind": "crystal",
+   "common_name": "argyrodite",
+   "spacegroup": "F-43m",
+   "structure_type": "argyrodite",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Halide-substituted argyrodite: the most widely studied sulfide electrolyte today.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 6.0,
+     "fraction": 0.46154
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 1.0,
+     "fraction": 0.07692
+    },
+    {
+     "symbol": "S",
+     "stoichiometry": 5.0,
+     "fraction": 0.38462
+    },
+    {
+     "symbol": "Cl",
+     "stoichiometry": 1.0,
+     "fraction": 0.07692
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.002,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated",
+     "note": "cold-pressed pellet"
+    },
+    {
+     "property_type": "activation_energy",
+     "value": 0.3,
+     "unit": "eV",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:Li3PS4",
+   "formula": "Li3PS4",
+   "reduced_formula": "Li3PS4",
+   "kind": "crystal",
+   "common_name": "β-LPS",
+   "spacegroup": "Pnma",
+   "structure_type": "thiophosphate",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Nanoporous β-Li3PS4, a classic sulfide baseline.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 3.0,
+     "fraction": 0.375
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 1.0,
+     "fraction": 0.125
+    },
+    {
+     "symbol": "S",
+     "stoichiometry": 4.0,
+     "fraction": 0.5
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.00016,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Li7P3S11",
+     "method": "composition_cosine_v1",
+     "score": 0.9968,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Li10GeP2S12",
+     "method": "composition_cosine_v1",
+     "score": 0.9943,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li3YCl6",
+   "formula": "Li3YCl6",
+   "reduced_formula": "Li3YCl6",
+   "kind": "crystal",
+   "common_name": "LYC",
+   "spacegroup": "P-3m1",
+   "structure_type": "halide",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Chloride electrolyte with good oxidation stability for high-voltage cathodes.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 3.0,
+     "fraction": 0.3
+    },
+    {
+     "symbol": "Y",
+     "stoichiometry": 1.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "Cl",
+     "stoichiometry": 6.0,
+     "fraction": 0.6
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.0005,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Li3InCl6",
+     "method": "composition_cosine_v1",
+     "score": 0.9783,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li3InCl6",
+   "formula": "Li3InCl6",
+   "reduced_formula": "Li3InCl6",
+   "kind": "crystal",
+   "common_name": "LIC",
+   "spacegroup": "C2/m",
+   "structure_type": "halide",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Water-processable chloride electrolyte; indium is a scarce element.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 3.0,
+     "fraction": 0.3
+    },
+    {
+     "symbol": "In",
+     "stoichiometry": 1.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "Cl",
+     "stoichiometry": 6.0,
+     "fraction": 0.6
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.0015,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Li3YCl6",
+     "method": "composition_cosine_v1",
+     "score": 0.9783,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+   "formula": "Li1.3Al0.3Ti1.7(PO4)3",
+   "reduced_formula": "Li1.3Ti1.7Al0.3P3O12",
+   "kind": "crystal",
+   "common_name": "LATP",
+   "spacegroup": "R-3c",
+   "structure_type": "NASICON",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Air-stable NASICON oxide; Ti4+ is reduced by lithium metal.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.3,
+     "fraction": 0.07104
+    },
+    {
+     "symbol": "Al",
+     "stoichiometry": 0.3,
+     "fraction": 0.01639
+    },
+    {
+     "symbol": "Ti",
+     "stoichiometry": 1.7,
+     "fraction": 0.0929
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 3.0,
+     "fraction": 0.16393
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 12.0,
+     "fraction": 0.65574
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.0007,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated",
+     "note": "total (bulk + grain boundary)"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:LiMnPO4",
+     "method": "composition_cosine_v1",
+     "score": 0.9555,
+     "confirmed": false
+    },
+    {
+     "key": "sample:LiFePO4",
+     "method": "composition_cosine_v1",
+     "score": 0.9555,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Na3V2(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9457,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:Li2.9PO3.3N0.46",
+   "formula": "Li2.9PO3.3N0.46",
+   "reduced_formula": "Li2.9P1N0.46O3.3",
+   "kind": "crystal",
+   "common_name": "LiPON",
+   "structure_type": "amorphous thin film",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Amorphous thin-film electrolyte behind commercial micro-batteries.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 2.9,
+     "fraction": 0.37859
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 1.0,
+     "fraction": 0.13055
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 3.3,
+     "fraction": 0.43081
+    },
+    {
+     "symbol": "N",
+     "stoichiometry": 0.46,
+     "fraction": 0.06005
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 2.3e-6,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "electrochemical_window",
+     "value": 5.5,
+     "unit": "V",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:Na3Zr2Si2PO12",
+   "formula": "Na3Zr2Si2PO12",
+   "reduced_formula": "Na3Zr2Si2PO12",
+   "kind": "crystal",
+   "common_name": "NZSP",
+   "spacegroup": "C2/c",
+   "structure_type": "NASICON",
+   "license": "illustrative-not-for-citation",
+   "blurb": "The original NASICON sodium superionic conductor.",
+   "composition": [
+    {
+     "symbol": "Na",
+     "stoichiometry": 3.0,
+     "fraction": 0.15
+    },
+    {
+     "symbol": "Zr",
+     "stoichiometry": 2.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "Si",
+     "stoichiometry": 2.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 1.0,
+     "fraction": 0.05
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 12.0,
+     "fraction": 0.6
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.00067,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "solid electrolyte",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:Na3V2(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9513,
+     "confirmed": false
+    },
+    {
+     "key": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+     "method": "composition_cosine_v1",
+     "score": 0.9198,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:mol:ec",
+   "formula": "C3H4O3",
+   "reduced_formula": "H4(CO)3",
+   "kind": "molecule",
+   "common_name": "EC",
+   "smiles": "C1COC(=O)O1",
+   "inchikey": "KMTRUDSVKNLOMY-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "High-permittivity cyclic carbonate; forms the graphite SEI. Solid at room temperature.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 3.0,
+     "fraction": 0.3
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 4.0,
+     "fraction": 0.4
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 3.0,
+     "fraction": 0.3
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "dielectric_constant",
+     "value": 89.8,
+     "unit": "",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 313}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "melting_point",
+     "value": 309.5,
+     "unit": "K",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "molecular_weight",
+     "value": 88.06,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "liquid electrolyte solvent",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:mol:pc",
+     "method": "composition_cosine_v1",
+     "score": 0.9881,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:dmc",
+     "method": "composition_cosine_v1",
+     "score": 0.9802,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:emc",
+     "method": "composition_cosine_v1",
+     "score": 0.9635,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:mol:pc",
+   "formula": "C4H6O3",
+   "reduced_formula": "H6C4O3",
+   "kind": "molecule",
+   "common_name": "PC",
+   "smiles": "CC1COC(=O)O1",
+   "inchikey": "RUOJZAUFBMNUDX-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Liquid cyclic carbonate; exfoliates graphite without additives.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 4.0,
+     "fraction": 0.30769
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 6.0,
+     "fraction": 0.46154
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 3.0,
+     "fraction": 0.23077
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "dielectric_constant",
+     "value": 64.9,
+     "unit": "",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "melting_point",
+     "value": 224.0,
+     "unit": "K",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "boiling_point",
+     "value": 515.0,
+     "unit": "K",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "molecular_weight",
+     "value": 102.09,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "liquid electrolyte solvent",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:mol:dmc",
+     "method": "composition_cosine_v1",
+     "score": 0.9931,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:emc",
+     "method": "composition_cosine_v1",
+     "score": 0.9907,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:ec",
+     "method": "composition_cosine_v1",
+     "score": 0.9881,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:mol:dmc",
+   "formula": "C3H6O3",
+   "reduced_formula": "H2CO",
+   "kind": "molecule",
+   "common_name": "DMC",
+   "smiles": "COC(=O)OC",
+   "inchikey": "IEJIGPNLZYLLBP-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Low-viscosity linear carbonate co-solvent.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 3.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 6.0,
+     "fraction": 0.5
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 3.0,
+     "fraction": 0.25
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "dielectric_constant",
+     "value": 3.1,
+     "unit": "",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "viscosity",
+     "value": 0.59,
+     "unit": "mPa.s",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "boiling_point",
+     "value": 363.0,
+     "unit": "K",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "molecular_weight",
+     "value": 90.08,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "liquid electrolyte solvent",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:mol:emc",
+     "method": "composition_cosine_v1",
+     "score": 0.9953,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:pc",
+     "method": "composition_cosine_v1",
+     "score": 0.9931,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:ec",
+     "method": "composition_cosine_v1",
+     "score": 0.9802,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:mol:emc",
+   "formula": "C4H8O3",
+   "reduced_formula": "H8C4O3",
+   "kind": "molecule",
+   "common_name": "EMC",
+   "smiles": "CCOC(=O)OC",
+   "inchikey": "JBTWLSYIZRCDFO-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Asymmetric linear carbonate, wider liquid range than DMC.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 4.0,
+     "fraction": 0.26667
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 8.0,
+     "fraction": 0.53333
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 3.0,
+     "fraction": 0.2
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "dielectric_constant",
+     "value": 3.0,
+     "unit": "",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "viscosity",
+     "value": 0.65,
+     "unit": "mPa.s",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "molecular_weight",
+     "value": 104.1,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "liquid electrolyte solvent",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:mol:dmc",
+     "method": "composition_cosine_v1",
+     "score": 0.9953,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:peo",
+     "method": "composition_cosine_v1",
+     "score": 0.9946,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:pc",
+     "method": "composition_cosine_v1",
+     "score": 0.9907,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:mol:dme",
+   "formula": "C4H10O2",
+   "reduced_formula": "H5C2O",
+   "kind": "molecule",
+   "common_name": "DME",
+   "smiles": "COCCOC",
+   "inchikey": "XTHFKEDIFFGKHM-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Ether solvent favoured for lithium-metal and Li-S cells.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 4.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 10.0,
+     "fraction": 0.625
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 2.0,
+     "fraction": 0.125
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "dielectric_constant",
+     "value": 7.2,
+     "unit": "",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "viscosity",
+     "value": 0.46,
+     "unit": "mPa.s",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298}",
+     "extraction_method": "sample:hand-curated"
+    },
+    {
+     "property_type": "molecular_weight",
+     "value": 90.12,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "liquid electrolyte solvent",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:mol:peo",
+     "method": "composition_cosine_v1",
+     "score": 0.996,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:emc",
+     "method": "composition_cosine_v1",
+     "score": 0.987,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:dmc",
+     "method": "composition_cosine_v1",
+     "score": 0.969,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:mol:fec",
+   "formula": "C3H3FO3",
+   "reduced_formula": "H3C3O3F",
+   "kind": "molecule",
+   "common_name": "FEC",
+   "smiles": "C1C(OC(=O)O1)F",
+   "inchikey": "SBLRHMKNNHXPHG-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Fluorinated additive that builds a LiF-rich SEI, key for silicon anodes.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 3.0,
+     "fraction": 0.3
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 3.0,
+     "fraction": 0.3
+    },
+    {
+     "symbol": "F",
+     "stoichiometry": 1.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 3.0,
+     "fraction": 0.3
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "molecular_weight",
+     "value": 106.05,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "electrolyte additive",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:mol:vc",
+   "formula": "C3H2O3",
+   "reduced_formula": "H2(CO)3",
+   "kind": "molecule",
+   "common_name": "VC",
+   "smiles": "C1=COC(=O)O1",
+   "inchikey": "VAYTZRYEBVHVLE-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Classic SEI-forming additive that polymerises on graphite.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 3.0,
+     "fraction": 0.375
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 2.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 3.0,
+     "fraction": 0.375
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "molecular_weight",
+     "value": 86.05,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "electrolyte additive",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:mol:ec",
+     "method": "composition_cosine_v1",
+     "score": 0.9507,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:pc",
+     "method": "composition_cosine_v1",
+     "score": 0.9008,
+     "confirmed": false
+    }
+   ]
+  },
+  {
+   "key": "sample:mol:lipf6",
+   "formula": "LiPF6",
+   "reduced_formula": "LiPF6",
+   "kind": "molecule",
+   "common_name": "LiPF6",
+   "smiles": "[Li+].F[P-](F)(F)(F)(F)F",
+   "inchikey": "AXPLOJNSKRXQPA-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "The standard Li-ion salt: balanced properties, hydrolyses to HF.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.125
+    },
+    {
+     "symbol": "P",
+     "stoichiometry": 1.0,
+     "fraction": 0.125
+    },
+    {
+     "symbol": "F",
+     "stoichiometry": 6.0,
+     "fraction": 0.75
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "molecular_weight",
+     "value": 151.91,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "electrolyte salt",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:mol:litfsi",
+   "formula": "LiC2F6NO4S2",
+   "reduced_formula": "LiC2S2N(O2F3)2",
+   "kind": "molecule",
+   "common_name": "LiTFSI",
+   "smiles": "[Li+].C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F",
+   "inchikey": "QSZMZKBZAYQGRS-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Thermally stable imide salt; corrodes aluminium above ~3.8 V.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.0625
+    },
+    {
+     "symbol": "C",
+     "stoichiometry": 2.0,
+     "fraction": 0.125
+    },
+    {
+     "symbol": "F",
+     "stoichiometry": 6.0,
+     "fraction": 0.375
+    },
+    {
+     "symbol": "N",
+     "stoichiometry": 1.0,
+     "fraction": 0.0625
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 4.0,
+     "fraction": 0.25
+    },
+    {
+     "symbol": "S",
+     "stoichiometry": 2.0,
+     "fraction": 0.125
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "molecular_weight",
+     "value": 287.09,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "electrolyte salt",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:mol:lifsi",
+   "formula": "LiF2NO4S2",
+   "reduced_formula": "LiS2N(O2F)2",
+   "kind": "molecule",
+   "common_name": "LiFSI",
+   "smiles": "[Li+].FS(=O)(=O)[N-]S(=O)(=O)F",
+   "inchikey": "VDVLPSWVDYJFRW-UHFFFAOYSA-N",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Imide salt with high conductivity, popular in high-concentration electrolytes.",
+   "composition": [
+    {
+     "symbol": "Li",
+     "stoichiometry": 1.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "F",
+     "stoichiometry": 2.0,
+     "fraction": 0.2
+    },
+    {
+     "symbol": "N",
+     "stoichiometry": 1.0,
+     "fraction": 0.1
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 4.0,
+     "fraction": 0.4
+    },
+    {
+     "symbol": "S",
+     "stoichiometry": 2.0,
+     "fraction": 0.2
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "molecular_weight",
+     "value": 187.07,
+     "unit": "g/mol",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "",
+     "extraction_method": "sample:hand-curated"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "electrolyte salt",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": []
+  },
+  {
+   "key": "sample:mol:peo",
+   "formula": "C2H4O",
+   "reduced_formula": "H4C2O",
+   "kind": "molecule",
+   "common_name": "PEO",
+   "smiles": "C(CO)O",
+   "license": "illustrative-not-for-citation",
+   "blurb": "Polymer host for solid polymer electrolytes; conducts well only above its melting point.",
+   "composition": [
+    {
+     "symbol": "C",
+     "stoichiometry": 2.0,
+     "fraction": 0.28571
+    },
+    {
+     "symbol": "H",
+     "stoichiometry": 4.0,
+     "fraction": 0.57143
+    },
+    {
+     "symbol": "O",
+     "stoichiometry": 1.0,
+     "fraction": 0.14286
+    }
+   ],
+   "properties": [
+    {
+     "property_type": "ionic_conductivity",
+     "value": 0.0001,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 333, \"salt\": \"LiTFSI\"}",
+     "extraction_method": "sample:hand-curated",
+     "note": "with LiTFSI at 60 °C"
+    },
+    {
+     "property_type": "ionic_conductivity",
+     "value": 1e-6,
+     "unit": "S/cm",
+     "source_type": "measured",
+     "confirmed": true,
+     "source_id": "sample:illustrative",
+     "conditions": "{\"temperature_K\": 298, \"salt\": \"LiTFSI\"}",
+     "extraction_method": "sample:hand-curated",
+     "note": "with LiTFSI at room temperature"
+    }
+   ],
+   "used_in": [
+    {
+     "application": "polymer electrolyte host",
+     "basis": "curated",
+     "confirmed": true,
+     "source_id": "sample:illustrative"
+    }
+   ],
+   "similar": [
+    {
+     "key": "sample:mol:dme",
+     "method": "composition_cosine_v1",
+     "score": 0.996,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:emc",
+     "method": "composition_cosine_v1",
+     "score": 0.9946,
+     "confirmed": false
+    },
+    {
+     "key": "sample:mol:dmc",
+     "method": "composition_cosine_v1",
+     "score": 0.98,
+     "confirmed": false
+    }
+   ]
+  }
+ ],
+ "gaps": [],
+ "aliases": {
+  "lifepo4": "sample:LiFePO4",
+  "lfp": "sample:LiFePO4",
+  "sample:lifepo4": "sample:LiFePO4",
+  "licoo2": "sample:LiCoO2",
+  "lco": "sample:LiCoO2",
+  "sample:licoo2": "sample:LiCoO2",
+  "lini0.8mn0.1co0.1o2": "sample:LiNi0.8Mn0.1Co0.1O2",
+  "li1mn0.1co0.1ni0.8o2": "sample:LiNi0.8Mn0.1Co0.1O2",
+  "nmc811": "sample:LiNi0.8Mn0.1Co0.1O2",
+  "sample:lini0.8mn0.1co0.1o2": "sample:LiNi0.8Mn0.1Co0.1O2",
+  "lini0.8co0.15al0.05o2": "sample:LiNi0.8Co0.15Al0.05O2",
+  "li1al0.05co0.15ni0.8o2": "sample:LiNi0.8Co0.15Al0.05O2",
+  "nca": "sample:LiNi0.8Co0.15Al0.05O2",
+  "sample:lini0.8co0.15al0.05o2": "sample:LiNi0.8Co0.15Al0.05O2",
+  "limn2o4": "sample:LiMn2O4",
+  "lmo": "sample:LiMn2O4",
+  "sample:limn2o4": "sample:LiMn2O4",
+  "lini0.5mn1.5o4": "sample:LiNi0.5Mn1.5O4",
+  "li1mn1.5ni0.5o4": "sample:LiNi0.5Mn1.5O4",
+  "lnmo": "sample:LiNi0.5Mn1.5O4",
+  "sample:lini0.5mn1.5o4": "sample:LiNi0.5Mn1.5O4",
+  "limnpo4": "sample:LiMnPO4",
+  "lmp": "sample:LiMnPO4",
+  "sample:limnpo4": "sample:LiMnPO4",
+  "na3v2(po4)3": "sample:Na3V2(PO4)3",
+  "nvp": "sample:Na3V2(PO4)3",
+  "sample:na3v2(po4)3": "sample:Na3V2(PO4)3",
+  "na0.67ni0.33mn0.67o2": "sample:Na0.67Ni0.33Mn0.67O2",
+  "na0.67mn0.67ni0.33o2": "sample:Na0.67Ni0.33Mn0.67O2",
+  "p2-nnm": "sample:Na0.67Ni0.33Mn0.67O2",
+  "sample:na0.67ni0.33mn0.67o2": "sample:Na0.67Ni0.33Mn0.67O2",
+  "li4ti5o12": "sample:Li4Ti5O12",
+  "lto": "sample:Li4Ti5O12",
+  "sample:li4ti5o12": "sample:Li4Ti5O12",
+  "c": "sample:C",
+  "graphite": "sample:C",
+  "sample:c": "sample:C",
+  "si": "sample:Si",
+  "silicon": "sample:Si",
+  "sample:si": "sample:Si",
+  "li7la3zr2o12": "sample:Li7La3Zr2O12",
+  "llzo": "sample:Li7La3Zr2O12",
+  "sample:li7la3zr2o12": "sample:Li7La3Zr2O12",
+  "li10gep2s12": "sample:Li10GeP2S12",
+  "li10ge(ps6)2": "sample:Li10GeP2S12",
+  "lgps": "sample:Li10GeP2S12",
+  "sample:li10gep2s12": "sample:Li10GeP2S12",
+  "li7p3s11": "sample:Li7P3S11",
+  "lps glass-ceramic": "sample:Li7P3S11",
+  "sample:li7p3s11": "sample:Li7P3S11",
+  "li6ps5cl": "sample:Li6PS5Cl",
+  "argyrodite": "sample:Li6PS5Cl",
+  "sample:li6ps5cl": "sample:Li6PS5Cl",
+  "li3ps4": "sample:Li3PS4",
+  "β-lps": "sample:Li3PS4",
+  "sample:li3ps4": "sample:Li3PS4",
+  "li3ycl6": "sample:Li3YCl6",
+  "lyc": "sample:Li3YCl6",
+  "sample:li3ycl6": "sample:Li3YCl6",
+  "li3incl6": "sample:Li3InCl6",
+  "lic": "sample:Li3InCl6",
+  "sample:li3incl6": "sample:Li3InCl6",
+  "li1.3al0.3ti1.7(po4)3": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+  "li1.3ti1.7al0.3p3o12": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+  "latp": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+  "sample:li1.3al0.3ti1.7(po4)3": "sample:Li1.3Al0.3Ti1.7(PO4)3",
+  "li2.9po3.3n0.46": "sample:Li2.9PO3.3N0.46",
+  "li2.9p1n0.46o3.3": "sample:Li2.9PO3.3N0.46",
+  "lipon": "sample:Li2.9PO3.3N0.46",
+  "sample:li2.9po3.3n0.46": "sample:Li2.9PO3.3N0.46",
+  "na3zr2si2po12": "sample:Na3Zr2Si2PO12",
+  "nzsp": "sample:Na3Zr2Si2PO12",
+  "sample:na3zr2si2po12": "sample:Na3Zr2Si2PO12",
+  "c3h4o3": "sample:mol:ec",
+  "h4(co)3": "sample:mol:ec",
+  "ec": "sample:mol:ec",
+  "sample:mol:ec": "sample:mol:ec",
+  "c4h6o3": "sample:mol:pc",
+  "h6c4o3": "sample:mol:pc",
+  "pc": "sample:mol:pc",
+  "sample:mol:pc": "sample:mol:pc",
+  "c3h6o3": "sample:mol:dmc",
+  "h2co": "sample:mol:dmc",
+  "dmc": "sample:mol:dmc",
+  "sample:mol:dmc": "sample:mol:dmc",
+  "c4h8o3": "sample:mol:emc",
+  "h8c4o3": "sample:mol:emc",
+  "emc": "sample:mol:emc",
+  "sample:mol:emc": "sample:mol:emc",
+  "c4h10o2": "sample:mol:dme",
+  "h5c2o": "sample:mol:dme",
+  "dme": "sample:mol:dme",
+  "sample:mol:dme": "sample:mol:dme",
+  "c3h3fo3": "sample:mol:fec",
+  "h3c3o3f": "sample:mol:fec",
+  "fec": "sample:mol:fec",
+  "sample:mol:fec": "sample:mol:fec",
+  "c3h2o3": "sample:mol:vc",
+  "h2(co)3": "sample:mol:vc",
+  "vc": "sample:mol:vc",
+  "sample:mol:vc": "sample:mol:vc",
+  "lipf6": "sample:mol:lipf6",
+  "sample:mol:lipf6": "sample:mol:lipf6",
+  "lic2f6no4s2": "sample:mol:litfsi",
+  "lic2s2n(o2f3)2": "sample:mol:litfsi",
+  "litfsi": "sample:mol:litfsi",
+  "sample:mol:litfsi": "sample:mol:litfsi",
+  "lif2no4s2": "sample:mol:lifsi",
+  "lis2n(o2f)2": "sample:mol:lifsi",
+  "lifsi": "sample:mol:lifsi",
+  "sample:mol:lifsi": "sample:mol:lifsi",
+  "c2h4o": "sample:mol:peo",
+  "h4c2o": "sample:mol:peo",
+  "peo": "sample:mol:peo",
+  "sample:mol:peo": "sample:mol:peo",
+  "lps": "sample:Li3PS4",
+  "nasicon": "sample:Na3Zr2Si2PO12",
+  "ncm811": "sample:LiNi0.8Mn0.1Co0.1O2",
+  "lnmo spinel": "sample:LiNi0.5Mn1.5O4",
+  "hard carbon": "sample:C",
+  "lithium hexafluorophosphate": "sample:mol:lipf6",
+  "lithium bis(trifluoromethanesulfonyl)imide": "sample:mol:litfsi",
+  "lithium bistriflimide": "sample:mol:litfsi",
+  "lithium bis(fluorosulfonyl)imide": "sample:mol:lifsi",
+  "ethylene carbonate": "sample:mol:ec",
+  "propylene carbonate": "sample:mol:pc",
+  "dimethyl carbonate": "sample:mol:dmc",
+  "ethyl methyl carbonate": "sample:mol:emc",
+  "fluoroethylene carbonate": "sample:mol:fec",
+  "vinylene carbonate": "sample:mol:vc",
+  "1,2-dimethoxyethane": "sample:mol:dme",
+  "dimethoxyethane": "sample:mol:dme",
+  "glyme": "sample:mol:dme",
+  "poly(ethylene oxide)": "sample:mol:peo",
+  "polyethylene oxide": "sample:mol:peo"
+ }
+}

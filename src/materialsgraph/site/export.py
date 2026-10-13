@@ -17,6 +17,7 @@ from materialsgraph.site.build import (
     reference_property_types,
 )
 from materialsgraph.site.snapshot_models import (
+    SAMPLE_KEY_PREFIX,
     SAMPLE_SOURCE_ID,
     Meta,
     Requirement,
@@ -41,7 +42,24 @@ def _requirements_from_graph(session: Session, application: str) -> list[Require
 
 
 def export_snapshot(session: Session, *, include_quotes: bool = False, max_materials: int | None = None, recompute_similar: bool = False) -> Snapshot:
-    keys = [r["k"] for r in session.run("MATCH (m:Material) RETURN m.material_key AS k ORDER BY k LIMIT $n", n=max_materials or 1_000_000)]
+    all_keys = [r["k"] for r in session.run("MATCH (m:Material) RETURN m.material_key AS k ORDER BY k")]
+    real_keys = [k for k in all_keys if not k.startswith(SAMPLE_KEY_PREFIX)]
+    if real_keys and len(real_keys) < len(all_keys):
+        # Mixed graph: never publish illustrative sample values as if they were real exports.
+        print(f"warning: skipping {len(all_keys) - len(real_keys)} illustrative sample materials; run `mg site purge-sample --yes`")
+    keys = (real_keys or all_keys)[: max_materials or None]
+    exporting_sample = not real_keys
+    exported = set(keys)
+    # Outgoing SIMILAR_TO only: material_profile matches it undirected (for display), which would list each
+    # edge under both endpoints and double the relationships on every export/import round-trip.
+    outgoing_similar: dict[str, list[Similar]] = {}
+    for r in session.run(
+        "MATCH (a:Material)-[r:SIMILAR_TO]->(b:Material) RETURN a.material_key AS a, b.material_key AS b, r.method AS method, r.score AS score, r.confirmed AS confirmed"
+    ):
+        if r["a"] in exported and r["b"] in exported:
+            outgoing_similar.setdefault(r["a"], []).append(
+                Similar(key=r["b"], method=r["method"] or "unknown", score=float(r["score"] or 0), confirmed=bool(r["confirmed"]))
+            )
     materials: list[SnapMaterial] = []
     used_sources: set[str] = set()
     for key in keys:
@@ -67,7 +85,7 @@ def export_snapshot(session: Session, *, include_quotes: bool = False, max_mater
             for a in prof["applications"]
         ]
         used_sources.update(u.source_id for u in used_in)
-        similar = [Similar(key=s["material_key"], method=s["method"] or "unknown", score=float(s["score"] or 0), confirmed=bool(s["confirmed"])) for s in prof["similar"]]
+        similar = outgoing_similar.get(key, [])
         materials.append(
             SnapMaterial(
                 key=m["material_key"], formula=m["formula"] or m["material_key"], reduced_formula=m.get("reduced_formula") or m["formula"] or "",
@@ -92,11 +110,17 @@ def export_snapshot(session: Session, *, include_quotes: bool = False, max_mater
             m.similar = []
         add_similarity(materials)
 
-    gaps = [
-        SnapGap(gap_id=g["gap_id"], description=g["description"], application=g.get("application"), status=g.get("status") or "open",
-                confirmed=bool(g.get("confirmed")), source_id=g["source_id"])
-        for g in queries.gaps_for(session, None, limit=10_000)
-    ]
+    # gaps_for returns one row per (Gap, documenting Source); keep one entry per gap_id
+    gaps: list[SnapGap] = []
+    seen_gaps: set[str] = set()
+    for g in queries.gaps_for(session, None, limit=10_000):
+        if g["gap_id"] in seen_gaps or (not exporting_sample and g["source_id"] == SAMPLE_SOURCE_ID):
+            continue
+        seen_gaps.add(g["gap_id"])
+        gaps.append(
+            SnapGap(gap_id=g["gap_id"], description=g["description"], application=g.get("application"), status=g.get("status") or "open",
+                    confirmed=bool(g.get("confirmed")), source_id=g["source_id"])
+        )
     used_sources.update(g.source_id for g in gaps)
 
     sources = []
@@ -116,7 +140,7 @@ def export_snapshot(session: Session, *, include_quotes: bool = False, max_mater
         if graph_reqs:
             app.requires = graph_reqs  # reviewer-edited targets in the graph win over reference defaults
 
-    is_sample = bool(materials) and all(m.key.startswith("sample:") for m in materials)
+    is_sample = bool(materials) and exporting_sample
     snap = Snapshot(
         meta=Meta(generated_at=now_iso(), generator="materialsgraph.site.export_snapshot", git_sha=git_sha(), sample=is_sample,
                   notice=REAL_NOTICE if not is_sample else "Illustrative sample loaded into Neo4j and re-exported. Not for citation."),

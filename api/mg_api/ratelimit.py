@@ -40,7 +40,7 @@ class RateLimiter:
         self.wall = wall
         self.max_keys = max_keys
         self._buckets: OrderedDict[str, TokenBucket] = OrderedDict()
-        self._daily: dict[str, tuple[str, int]] = {}
+        self._daily: OrderedDict[str, tuple[str, int]] = OrderedDict()
 
     def _bucket(self, key: str, per_min: int, burst: int) -> TokenBucket:
         b = self._buckets.get(key)
@@ -67,6 +67,10 @@ class RateLimiter:
             return False
         if commit:
             self._daily[key] = (today, used + cost)
+            self._daily.move_to_end(key)
+            # bounded like the buckets: oldest keys go first (they are also the most likely to be stale)
+            while len(self._daily) > self.max_keys:
+                self._daily.popitem(last=False)
         return True
 
     def seconds_to_midnight(self) -> int:
@@ -75,11 +79,25 @@ class RateLimiter:
 
 
 def client_ip(headers, peer: str | None, trust_proxy: bool) -> str:
+    """Client address for rate limiting.
+
+    Only consulted when TRUST_PROXY=1 (the Vercel default). Vercel sets x-vercel-forwarded-for itself.
+    For X-Forwarded-For we take the RIGHTMOST entry: the one appended by the proxy directly in front of
+    us. Leading entries are whatever the client sent and would let it mint a fresh bucket per request.
+    Hosts without a trusted proxy (e.g. the Docker image exposed directly) must run with TRUST_PROXY=0.
+    """
     if trust_proxy:
-        for h in ("x-vercel-forwarded-for", "x-forwarded-for", "x-real-ip"):
-            v = headers.get(h)
-            if v:
-                return v.split(",")[0].strip()
+        v = headers.get("x-vercel-forwarded-for")
+        if v:
+            return v.split(",")[0].strip()
+        v = headers.get("x-forwarded-for")
+        if v:
+            parts = [x.strip() for x in v.split(",") if x.strip()]
+            if parts:
+                return parts[-1]
+        v = headers.get("x-real-ip")
+        if v:
+            return v.strip()
     return peer or "unknown"
 
 

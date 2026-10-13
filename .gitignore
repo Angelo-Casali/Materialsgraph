@@ -13,6 +13,9 @@ venv/
 
 # Pulled/generated data (regenerable via ingestion scripts)
 data/
+# ...but the website's own data folders are source, not pipeline output
+!web/public/data/
+!web/src/data/
 
 # Jupyter
 .ipynb_checkpoints/

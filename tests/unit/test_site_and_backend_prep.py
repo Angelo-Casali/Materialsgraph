@@ -140,6 +140,10 @@ class _RateLimited(Exception):
     status_code = 429
 
 
+class _Point(__import__("pydantic").BaseModel):
+    x: int
+
+
 def test_fallback_llm_switches_on_quota(fake_llm):
     def boom(messages, rf, t):
         raise _RateLimited("429 too many requests")
@@ -148,6 +152,34 @@ def test_fallback_llm_switches_on_quota(fake_llm):
     second = fake_llm(["hello"], model="b")
     llm = FallbackLLM(first, second)
     assert llm.text("s", "u") == "hello"
+    assert llm.last_provider.endswith("#b")
+
+
+def test_complete_wraps_provider_failure_for_extraction_callers():
+    """harvest.extract catches only StructuredOutputError; a provider outage must not abort a batch."""
+    from materialsgraph.harvest.extract import extract_text
+    from materialsgraph.llm.local_client import StructuredOutputError
+
+    calls = []
+
+    def boom(messages, rf, t):
+        calls.append(1)
+        raise _RateLimited("429")
+
+    llm = StructuredLLM(model="a", raw_complete=boom, max_retries=2)
+    with pytest.raises(StructuredOutputError) as info:
+        llm.complete(_Point, "s", "u")
+    assert isinstance(info.value.__cause__, _RateLimited)
+    assert len(calls) == 3  # transient failures are retried before giving up
+    assert extract_text(StructuredLLM(model="a", raw_complete=boom), "some abstract text " * 10, source_id="s") == []
+
+
+def test_fallback_llm_switches_on_quota_for_structured_calls(fake_llm):
+    def boom(messages, rf, t):
+        raise _RateLimited("429")
+
+    llm = FallbackLLM(StructuredLLM(model="a", raw_complete=boom, max_retries=0), fake_llm(['{"x": 1}'], model="b"))
+    assert llm.complete(_Point, "s", "u").x == 1
     assert llm.last_provider.endswith("#b")
 
 
@@ -198,3 +230,101 @@ def test_resolve_for_query_by_key_and_alias():
     assert res.status == "matched" and res.material_key == "sample:Li7La3Zr2O12"
     multi = resolve_for_query(_Sess([{"k": "a", "kind": "crystal", "rf": "X", "eah": 0.0}, {"k": "b", "kind": "crystal", "rf": "X", "eah": 0.1}]), "X")
     assert multi.status == "ambiguous" and multi.candidates == ["a", "b"]
+
+
+# --- export / import sample-mixing and duplication fixes ------------------------
+
+class _ExportSession:
+    """Answers the raw queries export_snapshot runs; profile/gap/requirement helpers are monkeypatched."""
+
+    def __init__(self, keys, similar):
+        self.keys, self.similar = keys, similar
+
+    def run(self, q, **p):
+        class R(list):
+            def single(self_inner):
+                return self_inner[0] if self_inner else None
+
+        if "RETURN m.material_key AS k ORDER BY k" in q:
+            return R([{"k": k} for k in self.keys])
+        if "SIMILAR_TO]->" in q:
+            return R(self.similar)
+        if "UNWIND $ids AS id MATCH (s:Source" in q:
+            return R([{"sid": i, "title": i, "type": "database" if i.startswith("sample") else "paper", "year": None, "doi": None, "url": None, "license": None} for i in p["ids"]])
+        return R([])
+
+
+def _profile(key):
+    return {
+        "material": {"material_key": key, "formula": "LiFePO4", "reduced_formula": "LiFePO4", "kind": "crystal"},
+        "elements": [{"symbol": "Li", "stoichiometry": 1}],
+        "properties": [{"property_type": "voltage", "value": 3.4, "unit": "V", "source_type": "measured", "confirmed": True,
+                        "conditions": "", "source_id": "sample:illustrative" if key.startswith("sample:") else "doi:10.1/x"}],
+        "applications": [],
+        # undirected match: both endpoints list each other
+        "similar": [{"material_key": "mp:b" if key == "mp:a" else "mp:a", "method": "m", "score": 0.9, "confirmed": False}],
+    }
+
+
+@pytest.fixture
+def patched_queries(monkeypatch):
+    from materialsgraph.graph import queries
+
+    monkeypatch.setattr(queries, "material_profile", lambda s, k: _profile(k))
+    monkeypatch.setattr(queries, "requirements_for", lambda s, a: [])
+    monkeypatch.setattr(
+        queries, "gaps_for",
+        lambda s, a, limit=20: [
+            {"gap_id": "gap:1", "description": "open problem", "application": None, "status": "open", "confirmed": True, "source_id": "doi:10.1/x"},
+            {"gap_id": "gap:1", "description": "open problem", "application": None, "status": "open", "confirmed": True, "source_id": "doi:10.1/y"},
+        ],
+    )
+
+
+def test_export_skips_sample_materials_in_a_mixed_graph(patched_queries):
+    from materialsgraph.site.export import export_snapshot
+
+    snap = export_snapshot(_ExportSession(["mp:a", "mp:b", "sample:LiFePO4"], []))
+    assert [m.key for m in snap.materials] == ["mp:a", "mp:b"]
+    assert snap.meta.sample is False
+    assert all(s.source_id != SAMPLE_SOURCE_ID for s in snap.sources)
+
+
+def test_export_lists_each_similarity_edge_once_and_dedupes_gaps(patched_queries):
+    from materialsgraph.site.export import export_snapshot
+
+    edges = [{"a": "mp:a", "b": "mp:b", "method": "m", "score": 0.9, "confirmed": False}]
+    snap = export_snapshot(_ExportSession(["mp:a", "mp:b"], edges))
+    by_key = {m.key: m for m in snap.materials}
+    assert [s.key for s in by_key["mp:a"].similar] == ["mp:b"]
+    assert by_key["mp:b"].similar == []  # not mirrored back, so re-import cannot double the edges
+    assert [g.gap_id for g in snap.gaps] == ["gap:1"]
+
+
+def test_export_of_a_pure_sample_graph_stays_labelled_sample(patched_queries):
+    from materialsgraph.site.export import export_snapshot
+
+    snap = export_snapshot(_ExportSession(["sample:LiFePO4"], []))
+    assert snap.meta.sample is True and [m.key for m in snap.materials] == ["sample:LiFePO4"]
+
+
+class _GuardSession(RecordingSession):
+    def __init__(self, real=0, sample=0):
+        super().__init__(real_materials=real)
+        self.sample = sample
+
+    def run(self, q, **params):
+        if "WHERE m.material_key STARTS WITH" in q:
+            class R(list):
+                def single(self_inner):
+                    return self_inner[0]
+
+            return R([{"n": self.sample}])
+        return super().run(q, **params)
+
+
+def test_import_refuses_real_snapshot_into_graph_holding_the_sample():
+    snap = build_sample_snapshot()
+    snap.meta.sample = False
+    with pytest.raises(ImportRefused, match="purge-sample"):
+        import_snapshot(_GuardSession(sample=3), snap, seed_elements=False)

@@ -47,7 +47,29 @@ LLM_CALLS_PER_ASK = 2  # router + synthesis
 _driver = None
 
 
-def _default_session_factory() -> Callable[[], Any]:
+class TimeoutSession:
+    """Wraps a neo4j Session so every `run()` carries a server-side transaction timeout.
+
+    The query tools call `session.run(cypher, **params)` directly; wrapping the text in
+    `neo4j.Query(..., timeout=...)` bounds each of those reads without touching the tools.
+    """
+
+    def __init__(self, session, timeout_s: float):
+        self._s = session
+        self._timeout = timeout_s
+
+    def run(self, query, parameters=None, **kwargs):
+        import neo4j
+
+        if isinstance(query, str):
+            query = neo4j.Query(query, timeout=self._timeout)
+        return self._s.run(query, parameters, **kwargs)
+
+    def __getattr__(self, name):
+        return getattr(self._s, name)
+
+
+def _default_session_factory(timeout_s: float = 10.0) -> Callable[[], Any]:
     @contextmanager
     def factory() -> Iterator:
         global _driver
@@ -58,7 +80,7 @@ def _default_session_factory() -> Callable[[], Any]:
         if _driver is None:
             _driver = get_driver()  # module singleton: reused across warm invocations
         with _driver.session(default_access_mode=neo4j.READ_ACCESS) as s:
-            yield s
+            yield TimeoutSession(s, timeout_s)
 
     return factory
 
@@ -89,7 +111,7 @@ def create_app(
     limiter: RateLimiter | None = None,
 ) -> FastAPI:
     settings = settings or ApiSettings.from_env()
-    session_factory = session_factory or _default_session_factory()
+    session_factory = session_factory or _default_session_factory(settings.query_timeout_s)
     llm = _default_llm() if llm == "default" else llm
     embedder = _default_embedder() if embedder == "default" else embedder
     limiter = limiter or RateLimiter()

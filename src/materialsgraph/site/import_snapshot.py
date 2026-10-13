@@ -30,12 +30,20 @@ def import_snapshot(session: Session, snap: Snapshot, *, force: bool = False, se
     if nodes > AURA_FREE_MAX_NODES * 0.9 or rels > AURA_FREE_MAX_RELS * 0.9:
         if not force:
             raise ImportRefused(f"snapshot needs ~{nodes} nodes / ~{rels} relationships, close to the AuraDB Free caps; pass force=True to try anyway")
-    if snap.meta.sample and not force:
-        real = session.run(
-            "MATCH (m:Material) WHERE NOT m.material_key STARTS WITH $p RETURN count(m) AS n", p=SAMPLE_KEY_PREFIX
-        ).single()["n"]
-        if real:
-            raise ImportRefused(f"graph already holds {real} real materials; refusing to mix the illustrative sample in (use force=True)")
+    if not force:
+        # The illustrative sample must never mix with real data, in either direction (CLAUDE.md).
+        if snap.meta.sample:
+            real = session.run(
+                "MATCH (m:Material) WHERE NOT m.material_key STARTS WITH $p RETURN count(m) AS n", p=SAMPLE_KEY_PREFIX
+            ).single()["n"]
+            if real:
+                raise ImportRefused(f"graph already holds {real} real materials; refusing to mix the illustrative sample in (use force=True)")
+        else:
+            sample = session.run(
+                "MATCH (m:Material) WHERE m.material_key STARTS WITH $p RETURN count(m) AS n", p=SAMPLE_KEY_PREFIX
+            ).single()["n"]
+            if sample:
+                raise ImportRefused(f"graph still holds {sample} illustrative sample materials; run `mg site purge-sample --yes` first (or use force=True)")
 
     schema_loader.apply_schema(session)
     schema_loader.seed_reference_data(session, with_elements=seed_elements)

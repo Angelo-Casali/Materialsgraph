@@ -180,9 +180,9 @@ class StructuredLLM:
                 if self._json_schema_supported and ("response_format" in msg or "json_schema" in msg):
                     self._json_schema_supported = False
                     continue
-                if _is_provider_failure(exc):
-                    raise  # quota/outage: let FallbackLLM switch providers instead of retrying here
                 if attempt >= self.max_retries:
+                    # Always surface as StructuredOutputError so callers such as harvest.extract can skip the
+                    # source; FallbackLLM inspects __cause__ to decide whether to try the next provider.
                     raise StructuredOutputError(f"LLM call failed: {exc}") from exc
                 last_error = exc
                 continue

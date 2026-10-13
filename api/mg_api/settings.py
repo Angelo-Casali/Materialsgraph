@@ -54,4 +54,5 @@ class ApiSettings:
             daily_llm_budget=_int("DAILY_LLM_BUDGET", 800),
             trust_proxy=_bool("TRUST_PROXY", True),
             turnstile_secret=os.environ.get("TURNSTILE_SECRET") or None,
+            query_timeout_s=float(os.environ.get("QUERY_TIMEOUT_S", "10") or 10),
         )

@@ -121,7 +121,7 @@ Everything runs on free tiers with no card on file, so the bill is always zero. 
    In the Vercel project settings add: `NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD`, `QUERY_LLM_BASE_URL`, `QUERY_LLM_API_KEY`, `QUERY_LLM_MODEL`, `QUERY_LLM_MAX_TOKENS=600`, `QUERY_LLM_TIMEOUT_S=20`, `PUBLIC_MODE=1`, `EMBEDDING_BACKEND=none`, `CORS_ORIGINS=https://<user>.github.io`. Then `npx vercel deploy --prod`.
 5. **Wire it up.** In GitHub: secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` (for the manual "Deploy API" workflow) and variable `API_URL=https://<project>.vercel.app`. Re-run the Pages workflow; the Ask page now shows "Live lab awake".
 
-Safety on the public API: read-only database sessions plus a Cypher validator, no freeform Cypher in public mode, bounded tool parameters, an 8 KB body cap, per-IP token buckets and a global daily language-model budget, CORS limited to the site, optional Cloudflare Turnstile. If anything is asleep or rate-limited, the site says so and answers structured questions from the snapshot.
+Safety on the public API: read-only database sessions plus a Cypher validator, no freeform Cypher in public mode, bounded tool parameters, an 8 KB body cap, per-IP token buckets and a global daily language-model budget, CORS limited to the site, and a 10 s transaction timeout on every public read. (The API also supports a Cloudflare Turnstile check, but the site does not render the widget yet, so leave `TURNSTILE_SECRET` unset.) If anything is asleep or rate-limited, the site says so and answers structured questions from the snapshot.
 
 ## Tests
 
