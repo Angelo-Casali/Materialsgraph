@@ -2,6 +2,8 @@ import { plainMode } from './prefs';
 
 /** Every fantasy term is paired with its plain meaning; Plain mode shows only the plain one. */
 export const LEX = {
+  challenges: { plain: 'Energy-transition challenges', fancy: 'The challenge tracker' },
+  radar: { plain: 'Technology radar', fancy: 'Radar' },
   atlas: { plain: 'Element explorer', fancy: 'The Periodic Atlas' },
   passport: { plain: 'Material profile', fancy: 'Material passport' },
   stamps: { plain: 'Property values with provenance', fancy: 'Provenance stamps' },

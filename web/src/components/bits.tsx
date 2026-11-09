@@ -81,7 +81,7 @@ export function Empty({ title, children }: { title: string; children?: Component
   );
 }
 
-export function Icon({ name }: { name: 'sun' | 'moon' | 'auto' | 'compass' | 'scroll' | 'flask' | 'quest' | 'info' | 'code' }) {
+export function Icon({ name }: { name: 'sun' | 'moon' | 'auto' | 'compass' | 'scroll' | 'flask' | 'quest' | 'info' | 'code' | 'radar' }) {
   const p: Record<string, string> = {
     sun: 'M12 4V2M12 22v-2M4 12H2M22 12h-2M5.6 5.6L4.2 4.2M19.8 19.8l-1.4-1.4M5.6 18.4l-1.4 1.4M19.8 4.2l-1.4 1.4M12 7a5 5 0 100 10 5 5 0 000-10z',
     moon: 'M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z',
@@ -92,6 +92,7 @@ export function Icon({ name }: { name: 'sun' | 'moon' | 'auto' | 'compass' | 'sc
     quest: 'M4 21V4l8 3 8-3v13l-8 3-8-3',
     info: 'M12 2a10 10 0 100 20 10 10 0 000-20zM12 11v6M12 7.5v.01',
     code: 'M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16',
+    radar: 'M12 2a10 10 0 100 20 10 10 0 000-20zM12 7a5 5 0 100 10 5 5 0 000-10zM12 12l6.5-6.5',
   };
   return (
     <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

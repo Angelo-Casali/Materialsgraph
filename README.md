@@ -1,5 +1,12 @@
 # MaterialsGraph
 
+**Now:** a tracker of energy-transition challenges. One page per problem with sourced numbers, the technical
+limits, a technology radar (Adopt / Trial / Assess / Hold) and, where useful, a simulator. First challenge:
+heating and cooling homes without burning gas, with a boiler vs heat pump vs hybrid cost and CO2 simulator.
+See `docs/challenges.md`.
+
+**Also here (frozen, still working at `#/atlas`):** the original battery-materials knowledge graph described below.
+
 A personal knowledge graph over battery-materials data: Materials Project and OPTIMADE computed properties, measured solid-electrolyte conductivities, electrolyte molecules, and literature-derived application tags, property values and open-problem ("gap") statements — every value with provenance, every AI-derived edge behind a human review gate — queryable in natural language through a GraphRAG agent.
 
 Read `docs/technical_buildplan.md` first (schema, provenance semantics, harvester, query layer). `docs/strategy.md` is the committed scope; `docs/harvester_graphrag_plan.md` is the feasibility assessment and phase plan behind the current code.

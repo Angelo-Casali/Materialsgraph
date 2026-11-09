@@ -6,7 +6,8 @@ import { atlas } from '../lib/snapshot';
 import { Icon } from './bits';
 
 const NAV: { name: RouteName[]; label: string; fancy: string; link: string; icon: Parameters<typeof Icon>[0]['name'] }[] = [
-  { name: ['atlas', 'material'], label: 'Explore', fancy: 'Atlas', link: href.atlas(), icon: 'compass' },
+  { name: ['challenges', 'challenge'], label: 'Challenges', fancy: 'Tracker', link: href.challenges(), icon: 'radar' },
+  { name: ['atlas', 'material'], label: 'Materials', fancy: 'Atlas', link: href.atlas(), icon: 'compass' },
   { name: ['quests', 'quest'], label: 'Feasibility', fancy: 'Quests', link: href.quests(), icon: 'quest' },
   { name: ['ask'], label: 'Ask', fancy: 'Oracle', link: href.ask(), icon: 'flask' },
   { name: ['how'], label: 'How it works', fancy: 'The harvest', link: href.how(), icon: 'scroll' },
@@ -15,7 +16,7 @@ const NAV: { name: RouteName[]; label: string; fancy: string; link: string; icon
 
 export function Logo() {
   return (
-    <a class="logo" href={href.atlas()} aria-label="MaterialsGraph, home">
+    <a class="logo" href={href.challenges()} aria-label="MaterialsGraph, home">
       <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true" class="logo-mark">
         <circle cx="32" cy="32" r="26" class="logo-ring" />
         <circle cx="32" cy="32" r="18" class="logo-ring thin" />
@@ -25,7 +26,7 @@ export function Logo() {
       </svg>
       <span class="logo-text">
         <span class="logo-name">MaterialsGraph</span>
-        <span class="logo-sub">the periodic atlas</span>
+        <span class="logo-sub">energy-transition challenges</span>
       </span>
     </a>
   );
@@ -34,7 +35,9 @@ export function Logo() {
 export function SampleBadge() {
   const a = atlas.value;
   const ref = useRef<HTMLDialogElement>(null);
-  if (!a?.snap.meta.sample) return null;
+  const r = route.value.name;
+  // the badge describes the materials-atlas snapshot; challenge pages cite real sources
+  if (!a?.snap.meta.sample || r === 'challenges' || r === 'challenge') return null;
   return (
     <>
       <button class="sample-badge" onClick={() => ref.current?.showModal()} aria-haspopup="dialog">
@@ -117,7 +120,7 @@ export function Footer() {
     <footer class="site-footer">
       <div class="footer-inner">
         <p>
-          <strong>MaterialsGraph</strong> — a provenance-first knowledge graph of battery materials, built in the open.{' '}
+          <strong>MaterialsGraph</strong> — sourced state of the art on energy-transition challenges, plus a provenance-first battery-materials graph, built in the open.{' '}
           <a href="https://github.com/Angelo-Casali/Materialsgraph">Source on GitHub</a> · <a href={href.about()}>About &amp; licences</a>
         </p>
         {a && (
