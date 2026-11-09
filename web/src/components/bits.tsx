@@ -11,7 +11,7 @@ export function Formula({ f, class: cls }: { f: string; class?: string }) {
   );
 }
 
-/** Heading with the plain term as the accessible name and the fantasy term as a kicker. */
+/** Page or section heading; the label comes from the plain-language lexicon. */
 export function Title({ lex, level = 1, children }: { lex: LexKey; level?: 1 | 2; children?: ComponentChildren }) {
   const kicker = fancy(lex);
   const H = level === 1 ? 'h1' : 'h2';
@@ -40,26 +40,28 @@ export function StatusPill({ status, compact = false }: { status: ReqStatus; com
   );
 }
 
-export function Seal({ confirmed, size = 28 }: { confirmed: boolean; size?: number }) {
-  if (!confirmed) {
-    return (
-      <span class="seal seal-pending" title="Awaiting human review (confirmed = false)">
-        <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-          <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3" />
-          <text x="16" y="20.5" text-anchor="middle" font-size="12" fill="currentColor">?</text>
-        </svg>
-        <span class="sr-only">awaiting review</span>
-      </span>
-    );
-  }
+/** Review state as a square marker: filled = reviewed (confirmed), dashed = awaiting human review. */
+export function Seal({ confirmed, labelled = false }: { confirmed: boolean; size?: number; labelled?: boolean }) {
+  const text = confirmed ? 'reviewed' : 'pending review';
   return (
-    <span class="seal seal-ok" title="Reviewed (confirmed = true)">
-      <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M16 2l3 3.2 4.3-.8 1.2 4.2 4.1 1.6-1 4.2 2.6 3.6-3.5 2.6.3 4.4-4.4.6-2 3.9-4-1.9-4 1.9-2-3.9-4.4-.6.3-4.4L2.8 18l2.6-3.6-1-4.2 4.1-1.6 1.2-4.2 4.3.8z" class="seal-wax" />
-        <path d="M10.5 16.5l3.5 3.5 7.5-8" fill="none" class="seal-mark" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-      <span class="sr-only">reviewed</span>
+    <span class={`seal ${confirmed ? 'seal-ok' : 'seal-pending'}`} title={confirmed ? 'Reviewed by a human (confirmed = true)' : 'Awaiting human review (confirmed = false)'}>
+      <span class="seal-box" aria-hidden="true" />
+      {labelled ? <span class="seal-text">{text}</span> : <span class="sr-only">{text}</span>}
     </span>
+  );
+}
+
+/** One ruled section: a numbered label column and a body column. */
+export function Sheet({ n, title, id, children }: { n?: string; title: string; id?: string; children: ComponentChildren }) {
+  const hid = id ? `${id}-h` : undefined;
+  return (
+    <section class="sheet" id={id} aria-labelledby={hid}>
+      <h2 class="sheet-label" id={hid}>
+        {n && <span class="sheet-n">{n}</span>}
+        <span>{title}</span>
+      </h2>
+      <div class="sheet-body">{children}</div>
+    </section>
   );
 }
 

@@ -1,6 +1,5 @@
-import { plainMode } from './prefs';
-
-/** Every fantasy term is paired with its plain meaning; Plain mode shows only the plain one. */
+/** Plain-language labels used across the site. (The earlier fantasy vocabulary was retired with the 2026-11 redesign;
+ * `fancy()` stays as a no-op so call sites keep compiling.) */
 export const LEX = {
   challenges: { plain: 'Energy-transition challenges', fancy: 'The challenge tracker' },
   radar: { plain: 'Technology radar', fancy: 'Radar' },
@@ -20,8 +19,8 @@ export const LEX = {
 
 export type LexKey = keyof typeof LEX;
 
-export function fancy(key: LexKey): string | null {
-  return plainMode.value ? null : LEX[key].fancy;
+export function fancy(_key: LexKey): string | null {
+  return null;
 }
 export function plain(key: LexKey): string {
   return LEX[key].plain;

@@ -47,6 +47,15 @@ touching graph or ingestion code.
 - Keep web/src/lib/engine/* in parity with src/materialsgraph/query/tools.py (shared fixtures in
   tests/fixtures/feasibility_cases.json); the public API stays read-only and free-tier only
 
+## Site design rules
+
+- Datasheet style, defined in web/src/styles/main.css: ink on paper, 1px rules, IBM Plex Sans + Plex Mono (self-hosted
+  via @fontsource), no gradients, shadows or rounded cards. Plain language only; no fantasy vocabulary
+- Colour only where it encodes data (provenance types, verdicts, simulator results); validate any new data palette
+  for colour-blind separation and give every colour cue a text label
+- Keep e2e green: axe WCAG 2.2 AA on every route in both themes, and no page may scroll sideways on a phone.
+  If the preinstalled Chromium differs from the pinned Playwright, run with PW_CHROMIUM_PATH=/path/to/chrome
+
 ## Challenge tracker rules
 
 - Every figure and technology in web/src/data/challenges/*.json cites a source id; unsourced statements carry

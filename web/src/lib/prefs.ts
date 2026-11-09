@@ -30,7 +30,7 @@ export function startPrefs(): void {
     else root.setAttribute('data-theme', t);
     write('mg.theme', t === 'system' ? null : t);
     const dark = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#121829' : '#fbf6ea');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0d0e0f' : '#f4f3ef');
   });
   effect(() => {
     if (plainMode.value) document.documentElement.setAttribute('data-plain', '1');

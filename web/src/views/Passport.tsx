@@ -2,7 +2,7 @@ import { useMemo } from 'preact/hooks';
 import { Constellation } from '../components/Constellation';
 import { Formula, Pill, Seal, Title } from '../components/bits';
 import { CompositionPanel, VerdictBanner } from '../components/Results';
-import { Stamp, StampLegend } from '../components/Stamp';
+import { PvLegend, PvTable } from '../components/Stamp';
 import { analyse } from '../lib/engine/composition';
 import { assess } from '../lib/engine/feasibility';
 import { BASIS_LABEL } from '../lib/format';
@@ -60,14 +60,13 @@ export function Passport({ atlas, materialKey }: { atlas: Atlas; materialKey: st
 
       <section aria-labelledby="stamps-h">
         <Title lex="stamps" level={2}><span id="stamps-h">Property values and where they come from</span></Title>
-        <StampLegend />
+        <PvLegend />
         {m.properties.length ? (
-          <div class="stamp-grid">
-            {m.properties.map((pv, i) => <Stamp key={i} pv={pv} sample={sample} sourceTitle={atlas.sources.get(pv.source_id)?.title} />)}
-          </div>
+          <PvTable values={m.properties} sourceTitle={(id) => atlas.sources.get(id)?.title} />
         ) : (
           <p class="muted">No property values recorded yet.</p>
         )}
+        {sample && <p class="small muted">Illustrative sample: rounded, commonly reported values, not for citation.</p>}
       </section>
 
       <div class="two-col">

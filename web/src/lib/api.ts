@@ -89,11 +89,11 @@ export function wake(): Promise<ApiState> {
 }
 
 export const STATE_LABEL: Record<ApiState, string> = {
-  unconfigured: 'Static atlas (no live server configured)',
-  unknown: 'Live lab not contacted yet',
-  waking: 'Waking the lab…',
-  awake: 'Live lab awake',
-  sealed: 'Graph database asleep — answering from the static atlas',
-  offline: 'Live lab unreachable — answering from the static atlas',
-  rate_limited: 'Too many requests — please wait a moment',
+  unconfigured: 'Static mode: no live API configured',
+  unknown: 'Live API not contacted yet',
+  waking: 'Connecting to the live API…',
+  awake: 'Live API connected',
+  sealed: 'Graph database asleep: answering from the snapshot',
+  offline: 'Live API unreachable: answering from the snapshot',
+  rate_limited: 'Too many requests: please wait a moment',
 };

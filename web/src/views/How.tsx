@@ -13,7 +13,7 @@ const STEPS = [
     body: 'The quote must appear word for word in the text. Units are normalised (mS/cm becomes S/cm). Values outside a plausible range are flagged. Formulas resolve through an alias table and pymatgen; doped variants are linked to their parent phase.' },
   { id: 'stage', station: 'Stage', title: 'A queue, not the graph',
     body: 'Candidates wait in a reviewable queue on disk. Nothing has touched the knowledge graph yet.' },
-  { id: 'review', station: 'Review gate', title: 'The portcullis only a human can open',
+  { id: 'review', station: 'Review gate', title: 'Nothing is confirmed without a person',
     body: 'A person accepts, rejects or edits each candidate. There is deliberately no auto-accept. AI-derived links that are written before review carry confirmed = false and are shown as “awaiting review” everywhere on this site.' },
   { id: 'commit', station: 'Commit', title: 'Into the graph, with provenance',
     body: 'Accepted candidates become graph facts with their source, source type, conditions and quote. They are also mirrored to a git-tracked file, which makes the curated dataset itself reviewable.' },
@@ -86,7 +86,7 @@ export function How() {
         </ol>
       </div>
       <div class="cta-band">
-        <p>See the result: every value on this site wears its provenance stamp.</p>
+        <p>See the result: every value on this site shows its source, its type and whether a person has reviewed it.</p>
         <a class="btn" href={href.atlas()}>Open the atlas</a>
       </div>
     </div>

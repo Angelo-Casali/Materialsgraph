@@ -17,8 +17,8 @@ const About = lazy(() => import('./views/About').then((m) => ({ default: m.About
 function Loading() {
   return (
     <div class="loading" role="status">
-      <svg width="48" height="48" viewBox="0 0 64 64" aria-hidden="true" class="spin"><circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="20 12" /></svg>
-      <span>Unrolling the atlas…</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" class="spin"><rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="14 4" /></svg>
+      <span>Loading</span>
     </div>
   );
 }
@@ -46,7 +46,6 @@ function Outlet() {
 export function App() {
   return (
     <>
-      <div class="sky" aria-hidden="true" />
       <Header />
       <main id="main" tabIndex={-1}>
         <Suspense fallback={<Loading />}>
