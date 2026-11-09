@@ -30,7 +30,7 @@ async function apiAwake(page: Page) {
 }
 
 const ROUTES: [string, string, RegExp][] = [
-  ['challenges', '#/', /Energy-transition challenges/],
+  ['challenges', '#/', /Energy-transition problems, measured and sourced/],
   ['challenge', '#/c/home-heating', /Heating and cooling homes without burning gas/],
   ['atlas', '#/atlas', /Explore battery materials/],
   ['atlas-selected', '#/atlas?el=Li,O', /materials? containing Li \+ O/],
@@ -41,7 +41,7 @@ const ROUTES: [string, string, RegExp][] = [
   ['ask', '#/ask', /Ask the graph/],
   ['how', '#/how', /How the data is gathered/],
   ['about', '#/about', /About this project/],
-  ['notfound', '#/nowhere', /Uncharted territory/],
+  ['notfound', '#/nowhere', /Page not found/],
 ];
 
 for (const theme of ['light', 'dark'] as const) {
@@ -97,12 +97,14 @@ test('quest: test any material and see the assessment', async ({ page }) => {
   await expect(page.getByRole('heading', { name: /Assessment:/ })).toContainText('LiFePO');
 });
 
-test('passport stamps expose provenance', async ({ page }) => {
+test('material datasheet lists every value with its provenance', async ({ page }) => {
   await apiDown(page);
   await page.goto('#/m/sample%3ALi7La3Zr2O12');
-  await expect(page.locator('.stamp')).toHaveCount(3);
-  await page.getByRole('button', { name: 'Provenance' }).first().click();
-  await expect(page.getByText('MaterialsGraph illustrative sample (hand-curated, approximate, not for citation)')).toBeVisible();
+  const rows = page.locator('.pv-table tbody tr');
+  await expect(rows).toHaveCount(3);
+  await expect(rows.first()).toContainText('Measured');
+  await expect(rows.first()).toContainText('pending review');
+  await expect(page.locator('.pv-table')).toContainText('MaterialsGraph illustrative sample (hand-curated, approximate, not for citation)');
 });
 
 test('ask: API down -> guided builder answers from the static atlas', async ({ page }) => {
@@ -116,7 +118,7 @@ test('ask: API down -> guided builder answers from the static atlas', async ({ p
 test('ask: API awake -> live tool answer and cited free-text answer', async ({ page }, info) => {
   await apiAwake(page);
   await page.goto('#/ask');
-  await expect(page.getByText('Live lab awake')).toBeVisible();
+  await expect(page.getByText('Live API connected')).toBeVisible();
   await page.getByRole('button', { name: 'Answer' }).click();
   await expect(page.getByText(/Answered live by the graph API in 87 ms/)).toBeVisible();
   await page.getByRole('button', { name: /Show the spell|Show query used/ }).click();
@@ -127,13 +129,24 @@ test('ask: API awake -> live tool answer and cited free-text answer', async ({ p
   await page.screenshot({ path: `${SHOTS}/${info.project.name}-light-ask-live.png`, fullPage: true });
 });
 
-test('plain mode removes fantasy vocabulary', async ({ page }, info) => {
+test('theme switch cycles auto, dark and light', async ({ page }, info) => {
   test.skip(info.project.name === 'mobile', 'header layout differs on mobile');
   await apiDown(page);
-  await page.goto('#/quests');
-  await expect(page.locator('.kicker').first()).toBeVisible();
-  await page.getByRole('button', { name: 'Plain language mode' }).click();
-  await expect(page.locator('.kicker')).toHaveCount(0);
+  await page.goto('#/');
+  const btn = page.getByRole('button', { name: /^Theme:/ });
+  await btn.click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await btn.click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+});
+
+test('home lists the published challenge first and links to it', async ({ page }) => {
+  await apiDown(page);
+  await page.goto('#/');
+  await page.getByRole('link', { name: /Heating and cooling homes without burning gas/ }).click();
+  await expect(page).toHaveURL(/#\/c\/home-heating/);
+  await page.getByRole('button', { name: 'Sources' }).click();
+  await expect(page.getByRole('heading', { name: /Sources/ })).toBeInViewport();
 });
 
 test('challenge: radar opens a technology and the simulator reacts to prices', async ({ page }) => {
@@ -141,13 +154,26 @@ test('challenge: radar opens a technology and the simulator reacts to prices', a
   await page.goto('#/c/home-heating');
   await page.getByRole('button', { name: /Hydrogen boilers for homes/ }).click();
   await expect(page.getByText(/32 independent studies/)).toBeVisible();
-  await expect(page.getByText(/heat pump is cheaper to run/)).toBeVisible();
+  const verdict = page.locator('.sim-verdict');
+  await expect(verdict).toContainText(/heat pump is cheaper to run/);
+  await expect(page.locator('.sim-break-v')).toHaveText('0.42');
   await page.getByRole('spinbutton', { name: 'Electricity (€/kWh)' }).fill('0.9');
-  await expect(page.getByText(/heat pump is more expensive to run/)).toBeVisible();
+  await expect(verdict).toContainText(/heat pump is more expensive to run/);
 });
 
 test('legacy atlas links still open the atlas', async ({ page }) => {
   await apiDown(page);
   await page.goto('#/?el=Li,O');
   await expect(page.locator('main')).toContainText(/containing Li \+ O/);
+});
+
+test('no page scrolls sideways on a phone', async ({ page }, info) => {
+  test.skip(info.project.name !== 'mobile', 'phone layout only');
+  await apiDown(page);
+  for (const [, hash] of ROUTES) {
+    await page.goto(hash);
+    await page.waitForTimeout(150);
+    const [vw, sw] = await page.evaluate(() => [document.documentElement.clientWidth, document.documentElement.scrollWidth]);
+    expect(sw, `${hash} is ${sw}px wide on a ${vw}px screen`).toBeLessThanOrEqual(vw);
+  }
 });

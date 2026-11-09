@@ -89,7 +89,7 @@ export function PeriodicTable({ atlas, overlay, fogProperty, selected, onToggle,
             const parts = [`${el.symbol}, ${el.name}`, `${mats.length} material${mats.length === 1 ? '' : 's'}`];
             if (flags?.eu_crm_2023) parts.push('EU critical raw material');
             if (flags?.usgs_2022) parts.push('US critical mineral');
-            if (overlay === 'fog') parts.push(f && f.coverage !== null ? `${Math.round(f.coverage * 100)}% have ${fogProperty.replace(/_/g, ' ')} data` : 'uncharted');
+            if (overlay === 'fog') parts.push(f && f.coverage !== null ? `${Math.round(f.coverage * 100)}% have ${fogProperty.replace(/_/g, ' ')} data` : 'no materials');
             if (isSel) parts.push('selected');
             return (
               <div role="gridcell" key={el.symbol} class="ptable-cell" style={{ gridRow: el.row >= 9 ? el.row + 1 : el.row, gridColumn: el.col }} aria-selected={isSel}>
@@ -159,7 +159,7 @@ export function OverlayLegend({ overlay, fogProperty }: { overlay: Overlay; fogP
         <span class="legend-title">Share of materials with {fogProperty.replace(/_/g, ' ')} data</span>
         <span class="legend-item"><span class="legend-swatch fog-0" /><span class="legend-label">all charted</span></span>
         <span class="legend-item"><span class="legend-swatch fog-50" /><span class="legend-label">half</span></span>
-        <span class="legend-item"><span class="legend-swatch fog-100" /><span class="legend-label">no data / uncharted</span></span>
+        <span class="legend-item"><span class="legend-swatch fog-100" /><span class="legend-label">no data</span></span>
       </div>
     );
   }

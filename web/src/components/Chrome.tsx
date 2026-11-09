@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { API_BASE, apiState, STATE_LABEL, wake } from '../lib/api';
-import { cycleTheme, plainMode, theme } from '../lib/prefs';
+import { cycleTheme, theme } from '../lib/prefs';
 import { href, route, type RouteName } from '../lib/router';
 import { atlas } from '../lib/snapshot';
 import { Icon } from './bits';
@@ -10,23 +10,22 @@ const NAV: { name: RouteName[]; label: string; fancy: string; link: string; icon
   { name: ['atlas', 'material'], label: 'Materials', fancy: 'Atlas', link: href.atlas(), icon: 'compass' },
   { name: ['quests', 'quest'], label: 'Feasibility', fancy: 'Quests', link: href.quests(), icon: 'quest' },
   { name: ['ask'], label: 'Ask', fancy: 'Oracle', link: href.ask(), icon: 'flask' },
-  { name: ['how'], label: 'How it works', fancy: 'The harvest', link: href.how(), icon: 'scroll' },
+  { name: ['how'], label: 'Method', fancy: 'The harvest', link: href.how(), icon: 'scroll' },
   { name: ['about'], label: 'About', fancy: 'Colophon', link: href.about(), icon: 'info' },
 ];
 
+/** MaterialsGraph abbreviates to Mg: magnesium, element 12. The mark is its periodic-table cell. */
 export function Logo() {
   return (
     <a class="logo" href={href.challenges()} aria-label="MaterialsGraph, home">
-      <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true" class="logo-mark">
-        <circle cx="32" cy="32" r="26" class="logo-ring" />
-        <circle cx="32" cy="32" r="18" class="logo-ring thin" />
-        <path d="M32 4 L36.5 32 L32 60 L27.5 32 Z" class="logo-needle" />
-        <path d="M4 32 L32 27.5 L60 32 L32 36.5 Z" class="logo-needle alt" />
-        <circle cx="32" cy="32" r="4" class="logo-hub" />
-      </svg>
+      <span class="logo-cell" aria-hidden="true">
+        <span class="z">12</span>
+        <span class="sym">Mg</span>
+        <span class="w">24.305</span>
+      </span>
       <span class="logo-text">
         <span class="logo-name">MaterialsGraph</span>
-        <span class="logo-sub">energy-transition challenges</span>
+        <span class="logo-sub">energy transition · materials</span>
       </span>
     </a>
   );
@@ -81,7 +80,7 @@ export function Header() {
       <div class="header-inner">
         <Logo />
         <button class="menu-toggle btn-ghost" aria-expanded={menu} aria-controls="site-nav" onClick={() => setMenu(!menu)}>
-          <span aria-hidden="true">☰</span><span class="sr-only">Menu</span>
+          <span aria-hidden="true">Menu</span><span class="sr-only">Open the menu</span>
         </button>
         <nav id="site-nav" class={`site-nav ${menu ? 'is-open' : ''}`} aria-label="Main">
           {NAV.map((n) => (
@@ -92,20 +91,14 @@ export function Header() {
               aria-current={n.name.includes(r) ? 'page' : undefined}
               onMouseEnter={n.name.includes('ask') && API_BASE ? () => void wake() : undefined}
             >
-              <Icon name={n.icon} />
               <span>{n.label}</span>
-              {!plainMode.value && <span class="nav-fancy" aria-hidden="true">{n.fancy}</span>}
             </a>
           ))}
         </nav>
         <div class="header-tools">
           <SampleBadge />
-          <button class="icon-btn" onClick={() => (plainMode.value = !plainMode.value)} aria-pressed={plainMode.value} title="Plain mode removes the fantasy vocabulary">
-            <span aria-hidden="true">{plainMode.value ? 'Aa' : '✒'}</span>
-            <span class="sr-only">Plain language mode</span>
-          </button>
-          <button class="icon-btn" onClick={cycleTheme} title={`Theme: ${t}`}>
-            <Icon name={t === 'dark' ? 'moon' : t === 'light' ? 'sun' : 'auto'} />
+          <button class="icon-btn" onClick={cycleTheme} title="Colour theme: auto follows your system">
+            <span aria-hidden="true">{t === 'system' ? 'Auto' : t === 'dark' ? 'Dark' : 'Light'}</span>
             <span class="sr-only">Theme: {t}. Activate to change.</span>
           </button>
         </div>
@@ -119,14 +112,15 @@ export function Footer() {
   return (
     <footer class="site-footer">
       <div class="footer-inner">
+        <p class="label">MaterialsGraph · built in the open · free tiers only</p>
         <p>
-          <strong>MaterialsGraph</strong> — sourced state of the art on energy-transition challenges, plus a provenance-first battery-materials graph, built in the open.{' '}
-          <a href="https://github.com/Angelo-Casali/Materialsgraph">Source on GitHub</a> · <a href={href.about()}>About &amp; licences</a>
+          Sourced state of the art on energy-transition problems, and a provenance-first knowledge graph of battery materials.{' '}
+          <a href="https://github.com/Angelo-Casali/Materialsgraph">Source on GitHub</a> · <a href={href.about()}>About and licences</a>
         </p>
         {a && (
-          <p class="muted small">
-            Snapshot {a.snap.meta.generated_at.slice(0, 10)}{a.snap.meta.git_sha ? ` · ${a.snap.meta.git_sha}` : ''} · {a.snap.meta.counts.materials} materials ·{' '}
-            {a.snap.meta.counts.property_values} values{a.snap.meta.sample ? ' · illustrative sample' : ''} · runs on free tiers only
+          <p class="muted small mono">
+            atlas snapshot {a.snap.meta.generated_at.slice(0, 10)}{a.snap.meta.git_sha ? ` · ${a.snap.meta.git_sha}` : ''} · {a.snap.meta.counts.materials} materials ·{' '}
+            {a.snap.meta.counts.property_values} values{a.snap.meta.sample ? ' · illustrative sample' : ''}
           </p>
         )}
       </div>

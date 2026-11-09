@@ -82,10 +82,12 @@ export function HeatingSimulator() {
       </form>
 
       <div class="sim-out" aria-live="polite">
+        <p class="sim-break">
+          <span class="sim-break-v">{nf2.format(breakEven)}</span>
+          <span class="sim-break-l">€/kWh: the electricity price below which the heat pump is cheaper to run than the boiler</span>
+        </p>
         <p class={`sim-verdict ${hpCheaper ? 'is-good' : 'is-bad'}`}>
-          <span aria-hidden="true">{hpCheaper ? '✓' : '!'}</span>{' '}
-          With these numbers the heat pump is {hpCheaper ? 'cheaper' : 'more expensive'} to run than the boiler. Break-even: electricity at{' '}
-          <strong>{nf2.format(breakEven)} €/kWh</strong>.
+          At {nf2.format(inp.electricityPricePerKWh)} €/kWh the heat pump is <strong>{hpCheaper ? 'cheaper' : 'more expensive'}</strong> to run than the boiler.
         </p>
         <div class="table-scroll" tabIndex={0} role="region" aria-label="Results table (scrollable)">
           <table class="sim-table">
@@ -109,15 +111,15 @@ export function HeatingSimulator() {
         <div class="sim-bars" aria-hidden="true">
           {(['cost', 'co2'] as const).map((k) => (
             <div key={k} class="sim-bar-group">
-              <p class="small muted">{k === 'cost' ? 'Running cost per year' : 'CO2 per year'}</p>
+              <p>{k === 'cost' ? 'Running cost per year' : 'CO2 per year'}</p>
               {results.map((r) => {
                 const v = k === 'cost' ? r.costEur : r.co2Kg;
                 const w = (v / (k === 'cost' ? maxCost : maxCo2)) * 100;
+                const best = v === Math.min(...results.map((x) => (k === 'cost' ? x.costEur : x.co2Kg)));
                 return (
                   <div key={r.id} class="sim-bar-row">
-                    <span class="sim-bar-label">{r.label}</span>
-                    <span class="sim-bar-track"><span class={`sim-bar sim-bar-${r.id}`} style={{ width: `${w}%` }} /></span>
-                    <span class="sim-bar-val">{nf0.format(v)} {k === 'cost' ? '€' : 'kg'}</span>
+                    <span class="sim-bar-label"><span>{r.label}{best ? ' · lowest' : ''}</span><span class="sim-bar-val">{nf0.format(v)} {k === 'cost' ? '€' : 'kg'}</span></span>
+                    <span class="sim-bar-track"><span class={`sim-bar sim-bar-${r.id} ${best ? 'is-min' : ''}`} style={{ width: `${w}%` }} /></span>
                   </div>
                 );
               })}

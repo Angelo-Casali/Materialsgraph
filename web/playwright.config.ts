@@ -2,13 +2,15 @@ import { defineConfig, devices } from '@playwright/test';
 
 // The e2e build points VITE_API_BASE at a fake host so tests can mock every API state with page.route().
 export const MOCK_API = 'https://mg-api.mock';
+// Optional: point at a preinstalled Chromium when it differs from the pinned Playwright's own build.
+const executablePath = process.env.PW_CHROMIUM_PATH || undefined;
 
 export default defineConfig({
   testDir: './e2e',
   timeout: 45_000,
   fullyParallel: true,
   reporter: [['list']],
-  use: { baseURL: 'http://localhost:4173/Materialsgraph/', trace: 'off' },
+  use: { baseURL: 'http://localhost:4173/Materialsgraph/', trace: 'off', launchOptions: { executablePath } },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 860 } } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },

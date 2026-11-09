@@ -55,7 +55,7 @@ export function AtlasView({ atlas, query }: { atlas: Atlas; query: URLSearchPara
           <h1>Explore battery materials, element by element</h1>
           <p class="lede">
             A knowledge graph that remembers <em>where every number came from</em>: measured or computed, reviewed by a human or still awaiting review.
-            Pick elements to chart the materials they form, then open a material's passport or run a feasibility study.
+            Pick elements to chart the materials they form, then open a material's datasheet or run a feasibility study.
           </p>
           <div class="hero-stats" aria-label="Snapshot statistics">
             <span class="stat"><strong>{counts.materials}</strong> materials</span>
@@ -121,7 +121,7 @@ export function AtlasView({ atlas, query }: { atlas: Atlas; query: URLSearchPara
             {matches.length ? (
               <div class="card-grid">{matches.map((m) => <MaterialCard key={m.key} m={m} />)}</div>
             ) : (
-              <p class="muted">No charted material contains all of {selected.join(', ')}. Uncharted territory, so far.</p>
+              <p class="muted">No material in the snapshot contains all of {selected.join(', ')}.</p>
             )}
           </>
         ) : (
