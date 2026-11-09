@@ -1,10 +1,12 @@
 import { signal } from '@preact/signals';
 
-export type RouteName = 'atlas' | 'material' | 'quests' | 'quest' | 'ask' | 'how' | 'about' | 'notfound';
+export type RouteName = 'challenges' | 'challenge' | 'atlas' | 'material' | 'quests' | 'quest' | 'ask' | 'how' | 'about' | 'notfound';
 export interface Route { name: RouteName; params: Record<string, string>; query: URLSearchParams }
 
 const TABLE: [RegExp, RouteName, string[]][] = [
-  [/^\/?$/, 'atlas', []],
+  [/^\/?$/, 'challenges', []],
+  [/^\/c\/(.+)$/, 'challenge', ['slug']],
+  [/^\/atlas\/?$/, 'atlas', []],
   [/^\/m\/(.+)$/, 'material', ['key']],
   [/^\/quests\/?$/, 'quests', []],
   [/^\/q\/(.+)$/, 'quest', ['app']],
@@ -17,6 +19,8 @@ export function parseHash(hash: string): Route {
   const raw = hash.replace(/^#/, '') || '/';
   const [path, qs = ''] = raw.split('?');
   const query = new URLSearchParams(qs);
+  // links shared before the atlas moved to #/atlas (e.g. "#/?el=Li,O") still open the atlas
+  if ((path === '/' || path === '') && query.has('el')) return { name: 'atlas', params: {}, query };
   for (const [re, name, keys] of TABLE) {
     const m = path.match(re);
     if (m) {
@@ -47,7 +51,9 @@ export function startRouter(): void {
 }
 
 export const href = {
-  atlas: (elements: string[] = []) => (elements.length ? `#/?el=${elements.join(',')}` : '#/'),
+  challenges: () => '#/',
+  challenge: (slug: string) => `#/c/${encodeURIComponent(slug)}`,
+  atlas: (elements: string[] = []) => (elements.length ? `#/atlas?el=${elements.join(',')}` : '#/atlas'),
   material: (key: string) => `#/m/${encodeURIComponent(key)}`,
   quests: () => '#/quests',
   quest: (app: string, material?: string) => `#/q/${encodeURIComponent(app)}${material ? `?m=${encodeURIComponent(material)}` : ''}`,

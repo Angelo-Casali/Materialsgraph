@@ -30,8 +30,10 @@ async function apiAwake(page: Page) {
 }
 
 const ROUTES: [string, string, RegExp][] = [
-  ['atlas', '#/', /Explore battery materials/],
-  ['atlas-selected', '#/?el=Li,O', /materials? containing Li \+ O/],
+  ['challenges', '#/', /Energy-transition challenges/],
+  ['challenge', '#/c/home-heating', /Heating and cooling homes without burning gas/],
+  ['atlas', '#/atlas', /Explore battery materials/],
+  ['atlas-selected', '#/atlas?el=Li,O', /materials? containing Li \+ O/],
   ['passport', '#/m/sample%3ALi7La3Zr2O12', /LLZO/],
   ['passport-molecule', '#/m/sample%3Amol%3Aec', /EC/],
   ['quests', '#/quests', /Feasibility studies/],
@@ -64,7 +66,7 @@ for (const theme of ['light', 'dark'] as const) {
 test('periodic table: keyboard navigation and selection', async ({ page }, info) => {
   test.skip(info.project.name === 'mobile', 'keyboard test runs on desktop');
   await apiDown(page);
-  await page.goto('#/');
+  await page.goto('#/atlas');
   const li = page.getByRole('button', { name: /^Li, Lithium/ });
   await li.focus();
   await page.keyboard.press('ArrowRight');
@@ -79,7 +81,7 @@ test('periodic table: keyboard navigation and selection', async ({ page }, info)
 
 test('overlays switch and fog legend appears', async ({ page }) => {
   await apiDown(page);
-  await page.goto('#/');
+  await page.goto('#/atlas');
   await page.getByRole('radio', { name: /Fog of war|Data coverage/ }).click();
   await expect(page.getByText(/Share of materials with ionic conductivity data/)).toBeVisible();
   await page.getByRole('radio', { name: 'Criticality' }).click();
@@ -132,4 +134,20 @@ test('plain mode removes fantasy vocabulary', async ({ page }, info) => {
   await expect(page.locator('.kicker').first()).toBeVisible();
   await page.getByRole('button', { name: 'Plain language mode' }).click();
   await expect(page.locator('.kicker')).toHaveCount(0);
+});
+
+test('challenge: radar opens a technology and the simulator reacts to prices', async ({ page }) => {
+  await apiDown(page);
+  await page.goto('#/c/home-heating');
+  await page.getByRole('button', { name: /Hydrogen boilers for homes/ }).click();
+  await expect(page.getByText(/32 independent studies/)).toBeVisible();
+  await expect(page.getByText(/heat pump is cheaper to run/)).toBeVisible();
+  await page.getByRole('spinbutton', { name: 'Electricity (€/kWh)' }).fill('0.9');
+  await expect(page.getByText(/heat pump is more expensive to run/)).toBeVisible();
+});
+
+test('legacy atlas links still open the atlas', async ({ page }) => {
+  await apiDown(page);
+  await page.goto('#/?el=Li,O');
+  await expect(page.locator('main')).toContainText(/containing Li \+ O/);
 });

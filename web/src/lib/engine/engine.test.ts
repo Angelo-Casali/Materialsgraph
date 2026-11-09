@@ -110,8 +110,12 @@ describe('format', () => {
 
 describe('router', () => {
   it('parses routes and params', () => {
-    expect(parseHash('#/').name).toBe('atlas');
-    expect(parseHash('#/?el=Li,Co').query.get('el')).toBe('Li,Co');
+    expect(parseHash('#/').name).toBe('challenges');
+    expect(parseHash('#/c/home-heating').params.slug).toBe('home-heating');
+    expect(parseHash('#/atlas').name).toBe('atlas');
+    expect(parseHash('#/atlas?el=Li,Co').query.get('el')).toBe('Li,Co');
+    // legacy atlas links keep working
+    expect(parseHash('#/?el=Li,Co').name).toBe('atlas');
     const m = parseHash('#/m/sample%3ANa3V2(PO4)3');
     expect(m.name).toBe('material');
     expect(m.params.key).toBe('sample:Na3V2(PO4)3');

@@ -5,6 +5,8 @@ import { atlas, loadError } from './lib/snapshot';
 import { AtlasView } from './views/Atlas';
 import { NotFound } from './views/NotFound';
 
+const Challenges = lazy(() => import('./views/Challenges').then((m) => ({ default: m.Challenges })));
+const ChallengeView = lazy(() => import('./views/Challenge').then((m) => ({ default: m.ChallengeView })));
 const Passport = lazy(() => import('./views/Passport').then((m) => ({ default: m.Passport })));
 const Quests = lazy(() => import('./views/Quests').then((m) => ({ default: m.Quests })));
 const Quest = lazy(() => import('./views/Quest').then((m) => ({ default: m.Quest })));
@@ -25,7 +27,9 @@ function Outlet() {
   const r = route.value;
   const a = atlas.value;
   if (loadError.value) return <div class="error-box" role="alert">{loadError.value}</div>;
-  // How and About don't need the data
+  // Challenges, How and About don't need the atlas snapshot
+  if (r.name === 'challenges') return <Challenges />;
+  if (r.name === 'challenge') return <ChallengeView slug={r.params.slug} />;
   if (r.name === 'how') return <How />;
   if (r.name === 'about') return <About />;
   if (!a) return <Loading />;

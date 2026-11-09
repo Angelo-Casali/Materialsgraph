@@ -2,7 +2,10 @@
 
 ## What this is
 
-Personal knowledge graph over battery-materials data. Full context in docs/ —
+Two parts, one site:
+- **Challenge tracker (front page, active):** sourced state of the art on energy-transition challenges,
+  each with a technology radar and optional simulator. Pure static content in web/; see docs/challenges.md.
+- **Battery-materials graph (frozen, still working at #/atlas):** personal knowledge graph over battery-materials data. Full context in docs/ —
 read docs/technical_buildplan.md first for schema/stack decisions before
 touching graph or ingestion code.
 
@@ -44,7 +47,16 @@ touching graph or ingestion code.
 - Keep web/src/lib/engine/* in parity with src/materialsgraph/query/tools.py (shared fixtures in
   tests/fixtures/feasibility_cases.json); the public API stays read-only and free-tier only
 
+## Challenge tracker rules
+
+- Every figure and technology in web/src/data/challenges/*.json cites a source id; unsourced statements carry
+  "editorial": true. Enforced by web/src/lib/challenges/challenges.test.ts — keep it green
+- Simulator prices are examples, never presented as current tariffs; official factors cite their source
+
 ## Scope right now
+
+Challenge tracker: home heating published; ceramic kilns, thermal storage and batteries planned (docs/challenges.md).
+Battery graph (below) is frozen: keep it building and tested, no new features unless asked.
 
 Stage 1 (docs/strategy.md): data pipeline -> schema -> graph -> enrichment -> NL query layer,
 plus the public showcase: static site (web/) and the free-tier read-only API (api/).
