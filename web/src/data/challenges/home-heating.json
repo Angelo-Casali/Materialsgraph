@@ -18,12 +18,12 @@
     },
     {
       "value": "3–5×",
-      "label": "more energy-efficient than fossil fuel boilers",
+      "label": "more energy-efficient than natural gas boilers",
       "sources": ["iea-future-hp"]
     },
     {
       "value": "≥20% → ~80%",
-      "label": "CO2 cut of a heat pump versus a gas boiler, from an emissions-intensive grid to a clean one",
+      "label": "greenhouse-gas cut of a heat pump versus a gas boiler: at least 20% on an emissions-intensive grid, up to 80% where electricity is cleaner",
       "sources": ["iea-future-hp"]
     },
     {
@@ -73,7 +73,7 @@
       "short": "Air-water HP",
       "ring": "adopt",
       "summary": "Extracts heat from outdoor air and delivers it to a water circuit for heating and hot water. The central technology for low-carbon heating.",
-      "why": "Mature, mass-produced, 3–5 times more efficient than a boiler and growing again in Europe.",
+      "why": "Mature, mass-produced, 3–5 times more efficient than a gas boiler and growing again in Europe.",
       "limits": [
         "Efficiency drops with high flow temperatures (old radiators) and very cold weather",
         "Outdoor unit: space, noise and condominium rules",
@@ -188,7 +188,8 @@
   ],
   "simulator": "home-heating",
   "changelog": [
-    { "date": "2026-11-09", "text": "First version: 8 technologies, 7 key figures, running-cost and CO2 simulator." }
+    { "date": "2026-11-09", "text": "First version: 8 technologies, 7 key figures, running-cost and CO2 simulator." },
+    { "date": "2026-11-09", "text": "IEA figures now cite the IEA executive summary directly instead of a press summary; wording aligned with the report (natural gas boilers, greenhouse-gas emissions)." }
   ],
   "sources": [
     {
@@ -201,10 +202,10 @@
     {
       "id": "iea-future-hp",
       "title": "The Future of Heat Pumps",
-      "publisher": "International Energy Agency (summary by Carbon Brief)",
-      "date": "2022-12-02",
-      "url": "https://www.carbonbrief.org/heat-pumps-are-the-central-technology-for-low-carbon-heating-concludes-iea/",
-      "note": "Full report: https://www.iea.org/reports/the-future-of-heat-pumps"
+      "publisher": "International Energy Agency",
+      "date": "2022",
+      "url": "https://www.iea.org/reports/the-future-of-heat-pumps/executive-summary",
+      "note": "Executive summary of the full report (https://www.iea.org/reports/the-future-of-heat-pumps)."
     },
     {
       "id": "fgas-2024",
