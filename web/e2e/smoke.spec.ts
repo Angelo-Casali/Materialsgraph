@@ -54,7 +54,7 @@ for (const theme of ['light', 'dark'] as const) {
         await page.goto(hash);
         await expect(page.locator('main')).toContainText(heading);
         await page.waitForTimeout(name === 'lab' ? 2500 : 150);
-        await page.screenshot({ path: `${SHOTS}/${info.project.name}-${theme}-${name}.png`, fullPage: name !== 'how' });
+        await page.screenshot({ path: `${SHOTS}/${info.project.name}-${theme}-${name}.png`, fullPage: name !== 'how' && name !== 'lab' });
         // cast: @axe-core/playwright types its own playwright-core copy
         const axe = await new AxeBuilder({ page: page as unknown as ConstructorParameters<typeof AxeBuilder>[0]['page'] }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
         const serious = axe.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');

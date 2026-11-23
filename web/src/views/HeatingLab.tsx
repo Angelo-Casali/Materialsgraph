@@ -132,15 +132,12 @@ export function HeatingLab() {
   // day playback
   useEffect(() => {
     if (!playing) return;
-    let raf = 0;
-    let last = 0;
-    const tick = (now: number) => {
-      if (last) setHour((h) => (h + ((now - last) / 1000) * 1.2) % 24);
-      last = now;
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    // a quarter of an hour every 200 ms: smooth enough with interpolation, and the page re-renders
+    // five times a second instead of every frame
+    const id = setInterval(() => {
+      if (!document.hidden) setHour((h) => (h + 0.25) % 24);
+    }, 200);
+    return () => clearInterval(id);
   }, [playing]);
 
   const update = (patch: Partial<Scenario>) =>

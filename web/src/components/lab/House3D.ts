@@ -163,6 +163,7 @@ export class House3D {
   private raf = 0;
   private last = 0;
   private ro: ResizeObserver;
+  private io: IntersectionObserver;
   private labelAnchors: { id: string; pos: THREE.Vector3; text: () => string }[] = [];
   private tmpRgb: [number, number, number] = [0, 0, 0];
   private loopPt = { a: 0, y: 0, seg: 0, f: 0 };
@@ -187,6 +188,7 @@ export class House3D {
     this.controls.minDistance = 8;
     this.controls.maxDistance = 40;
     this.controls.maxPolarAngle = Math.PI * 0.47;
+    this.controls.addEventListener('change', () => (this.dirty = true));
     this.controls.update();
     this.scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a84, 1.6));
     this.sunLight.position.set(5, 10, 8);
@@ -196,6 +198,11 @@ export class House3D {
     this.scene.add(this.root);
     this.ro = new ResizeObserver(() => this.resize());
     this.ro.observe(host);
+    this.io = new IntersectionObserver((entries) => {
+      this.visible = entries.some((e) => e.isIntersecting);
+      this.dirty = true;
+    });
+    this.io.observe(host);
     this.resize();
     this.loop = this.loop.bind(this);
     this.raf = requestAnimationFrame(this.loop);
@@ -220,6 +227,7 @@ export class House3D {
     }
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
+    this.dirty = true;
   }
 
   private portrait = false;
@@ -364,6 +372,7 @@ export class House3D {
       this.particles.push({ zone: e.zone, points: pts, u, w, e });
     }
     if (this.frame) this.setFrame(this.frame);
+    this.dirty = true;
   }
 
   private addCompass(frontFacing: number) {
@@ -670,7 +679,7 @@ export class House3D {
       this.sunLight.intensity = 0.15;
       this.sunDisc.visible = false;
     }
-    if (!this.motion) this.render(0);
+    this.dirty = true;
   }
 
   private faceExposed(side: Side) {
@@ -741,9 +750,18 @@ export class House3D {
   private loop(now: number) {
     const dt = this.last ? Math.min(0.1, (now - this.last) / 1000) : 0;
     this.last = now;
-    this.render(this.motion ? dt : 0);
+    // draw only when it shows: offscreen or in a hidden tab the scene is left alone
+    if (this.visible && !document.hidden) {
+      // damping keeps the camera gliding after a drag: update() fires 'change' while it moves
+      this.controls.update();
+      const moving = this.motion && this.particles.length > 0;
+      if (moving || this.dirty) this.render(this.motion ? dt : 0);
+    }
     this.raf = requestAnimationFrame(this.loop);
   }
+
+  private visible = true;
+  private dirty = true;
 
   private render(dt: number) {
     const f = this.frame;
@@ -795,29 +813,33 @@ export class House3D {
       }
       if (this.fan) this.fan.rotation.z += dt * (f.mode !== 0 ? 4 + 10 * f.load : 0);
     }
-    this.controls.update();
     this.renderer.render(this.scene, this.camera);
+    this.dirty = false;
     this.emitLabels();
   }
 
-  private labelTick = 0;
+  private labelKey = '';
+  /** Projects the label anchors and reports them only when they moved on screen (camera, resize, layout). */
   private emitLabels() {
     if (!this.onLabels) return;
-    if (++this.labelTick % 3 !== 0) return;
     const w = this.host.clientWidth;
     const h = this.host.clientHeight;
     const out: Label[] = [];
     const v = new THREE.Vector3();
     for (const a of this.labelAnchors) {
       v.copy(a.pos).project(this.camera);
-      out.push({ id: a.id, text: a.text(), x: ((v.x + 1) / 2) * w, y: ((1 - v.y) / 2) * h, visible: v.z < 1 && v.z > -1 });
+      out.push({ id: a.id, text: a.text(), x: Math.round(((v.x + 1) / 2) * w), y: Math.round(((1 - v.y) / 2) * h), visible: v.z < 1 && v.z > -1 });
     }
+    const key = out.map((l) => `${l.id}${l.x},${l.y},${l.visible}`).join('|');
+    if (key === this.labelKey) return;
+    this.labelKey = key;
     this.onLabels(out);
   }
 
   dispose() {
     cancelAnimationFrame(this.raf);
     this.ro.disconnect();
+    this.io.disconnect();
     this.controls.dispose();
     this.clear();
     this.renderer.dispose();
