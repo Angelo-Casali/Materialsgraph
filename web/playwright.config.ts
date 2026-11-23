@@ -10,7 +10,12 @@ export default defineConfig({
   timeout: 45_000,
   fullyParallel: true,
   reporter: [['list']],
-  use: { baseURL: 'http://localhost:4173/Materialsgraph/', trace: 'off', launchOptions: { executablePath } },
+  use: {
+    baseURL: 'http://localhost:4173/Materialsgraph/',
+    trace: 'off',
+    // SwiftShader gives headless Chromium a software WebGL for the 3D lab
+    launchOptions: { executablePath, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] },
+  },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 860 } } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },

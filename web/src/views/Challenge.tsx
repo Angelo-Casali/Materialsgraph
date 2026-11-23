@@ -140,7 +140,14 @@ export function ChallengeView({ slug }: { slug: string }) {
 
       {c.simulator === 'home-heating' && (
         <Sheet n={n('sim')} title="Simulator: boiler, heat pump or hybrid?" id="sim">
-          <p class="muted" style={{ marginTop: 0 }}>Change any number. Defaults: a 10,000 kWh home, ISPRA emission factors, example prices.</p>
+          <div class="lab-cta">
+            <p>
+              <b>Home heating and cooling lab.</b> A whole year, hour by hour, in a 3D flat: pick the town, the insulation, the system and how you live, and
+              compare up to four scenarios on comfort, energy, cost and CO2.
+            </p>
+            <a class="btn" href={href.lab('home-heating')}>Open the lab</a>
+          </div>
+          <p class="muted" style={{ marginTop: 0 }}>Or the quick version: change any number. Defaults: a 10,000 kWh home, ISPRA emission factors, example prices.</p>
           <HeatingSimulator />
         </Sheet>
       )}

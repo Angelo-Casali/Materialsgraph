@@ -1,0 +1,156 @@
+[
+ {
+  "id": "palermo",
+  "name": "Palermo",
+  "country": "IT",
+  "lat": 38.116,
+  "lon": 13.361,
+  "zone": "B",
+  "meanC": 17.0,
+  "minC": 2.1,
+  "maxC": 33.5
+ },
+ {
+  "id": "cagliari",
+  "name": "Cagliari",
+  "country": "IT",
+  "lat": 39.224,
+  "lon": 9.122,
+  "zone": "C",
+  "meanC": 17.6,
+  "minC": 2.8,
+  "maxC": 34.7
+ },
+ {
+  "id": "napoli",
+  "name": "Napoli",
+  "country": "IT",
+  "lat": 40.852,
+  "lon": 14.268,
+  "zone": "C",
+  "meanC": 17.4,
+  "minC": 4.4,
+  "maxC": 30.0
+ },
+ {
+  "id": "bari",
+  "name": "Bari",
+  "country": "IT",
+  "lat": 41.117,
+  "lon": 16.872,
+  "zone": "C",
+  "meanC": 17.5,
+  "minC": 2.4,
+  "maxC": 38.7
+ },
+ {
+  "id": "roma",
+  "name": "Roma",
+  "country": "IT",
+  "lat": 41.893,
+  "lon": 12.483,
+  "zone": "D",
+  "meanC": 15.9,
+  "minC": -0.4,
+  "maxC": 34.1
+ },
+ {
+  "id": "firenze",
+  "name": "Firenze",
+  "country": "IT",
+  "lat": 43.77,
+  "lon": 11.256,
+  "zone": "D",
+  "meanC": 14.2,
+  "minC": -4.1,
+  "maxC": 35.7
+ },
+ {
+  "id": "bologna",
+  "name": "Bologna",
+  "country": "IT",
+  "lat": 44.494,
+  "lon": 11.343,
+  "zone": "E",
+  "meanC": 14.0,
+  "minC": -16.0,
+  "maxC": 35.7
+ },
+ {
+  "id": "milano",
+  "name": "Milano",
+  "country": "IT",
+  "lat": 45.464,
+  "lon": 9.19,
+  "zone": "E",
+  "meanC": 13.4,
+  "minC": -4.7,
+  "maxC": 35.0
+ },
+ {
+  "id": "torino",
+  "name": "Torino",
+  "country": "IT",
+  "lat": 45.07,
+  "lon": 7.687,
+  "zone": "E",
+  "meanC": 12.2,
+  "minC": -6.1,
+  "maxC": 32.1
+ },
+ {
+  "id": "venezia",
+  "name": "Venezia Mestre",
+  "country": "IT",
+  "lat": 45.49,
+  "lon": 12.242,
+  "zone": "E",
+  "meanC": 15.1,
+  "minC": -7.0,
+  "maxC": 32.8
+ },
+ {
+  "id": "madrid",
+  "name": "Madrid",
+  "country": "ES",
+  "lat": 40.417,
+  "lon": -3.704,
+  "zone": null,
+  "meanC": 14.7,
+  "minC": -2.6,
+  "maxC": 40.1
+ },
+ {
+  "id": "paris",
+  "name": "Paris",
+  "country": "FR",
+  "lat": 48.857,
+  "lon": 2.352,
+  "zone": null,
+  "meanC": 11.8,
+  "minC": -5.5,
+  "maxC": 32.7
+ },
+ {
+  "id": "berlin",
+  "name": "Berlin",
+  "country": "DE",
+  "lat": 52.52,
+  "lon": 13.405,
+  "zone": null,
+  "meanC": 10.3,
+  "minC": -14.9,
+  "maxC": 36.0
+ },
+ {
+  "id": "stockholm",
+  "name": "Stockholm",
+  "country": "SE",
+  "lat": 59.329,
+  "lon": 18.069,
+  "zone": null,
+  "meanC": 8.2,
+  "minC": -8.2,
+  "maxC": 26.9
+ }
+]
