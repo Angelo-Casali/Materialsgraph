@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { CHALLENGES } from './index';
+import { decodeLab } from '../sim/scenario';
+import { labLink } from './lablink';
 import { RINGS } from './types';
 
 const RING_IDS = new Set(RINGS.map((r) => r.id));
@@ -29,7 +31,7 @@ describe.each(CHALLENGES.map((c) => [c.slug, c] as const))('challenge %s', (_slu
   });
 
   it('every statement is either sourced or marked editorial', () => {
-    for (const p of [...c.whyHard, ...c.aiAngle]) {
+    for (const p of [...c.whyHard, ...c.aiAngle, ...c.technologies.flatMap((t) => t.experience ?? []), ...(c.stories ?? []).flatMap((st) => st.points)]) {
       const sourced = (p.sources ?? []).length > 0;
       expect(sourced || p.editorial === true, p.text).toBe(true);
       for (const s of p.sources ?? []) expect(ids.has(s), `${p.text} -> ${s}`).toBe(true);
@@ -44,7 +46,22 @@ describe.each(CHALLENGES.map((c) => [c.slug, c] as const))('challenge %s', (_slu
   });
 
   it('every source is used somewhere', () => {
-    const used = new Set([...c.figures.flatMap((f) => f.sources), ...c.technologies.flatMap((t) => t.sources), ...[...c.whyHard, ...c.aiAngle].flatMap((p) => p.sources ?? [])]);
+    const points = [...c.whyHard, ...c.aiAngle, ...c.technologies.flatMap((t) => t.experience ?? []), ...(c.stories ?? []).flatMap((st) => st.points)];
+    const used = new Set([...c.figures.flatMap((f) => f.sources), ...c.technologies.flatMap((t) => t.sources), ...points.flatMap((p) => p.sources ?? [])]);
     for (const s of c.sources) expect(used.has(s.id), s.id).toBe(true);
+  });
+
+  it('every story opens the lab with valid scenarios', () => {
+    for (const st of c.stories ?? []) {
+      if (!st.lab) continue;
+      const code = labLink(st.lab).split('?s=')[1];
+      const lab = decodeLab(code);
+      expect(lab, st.id).not.toBeNull();
+      expect(lab!.scenarios.length, st.id).toBe(st.lab.scenarios.length);
+      expect(lab!.place, st.id).toBe(st.lab.place);
+      st.lab.scenarios.forEach((sc, i) => {
+        for (const [k, v] of Object.entries(sc)) if (typeof v !== 'object') expect((lab!.scenarios[i] as unknown as Record<string, unknown>)[k], `${st.id}.${k}`).toEqual(v);
+      });
+    }
   });
 });

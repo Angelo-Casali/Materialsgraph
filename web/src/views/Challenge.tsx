@@ -3,6 +3,7 @@ import { Sheet } from '../components/bits';
 import { HeatingSimulator } from '../components/HeatingSimulator';
 import { blipPositions, Radar } from '../components/Radar';
 import { findChallenge } from '../lib/challenges';
+import { labLink } from '../lib/challenges/lablink';
 import { RINGS, type Challenge, type Point } from '../lib/challenges/types';
 import { href } from '../lib/router';
 import { NotFound } from './NotFound';
@@ -53,7 +54,7 @@ function PointList({ points, c }: { points: Point[]; c: Challenge }) {
 }
 
 const SECTIONS = [
-  ['fig', 'Numbers'], ['hard', 'Why hard'], ['radar', 'Radar'], ['sim', 'Simulator'], ['ai', 'AI'], ['oq', 'Open questions'], ['src', 'Sources'],
+  ['fig', 'Numbers'], ['hard', 'Why hard'], ['radar', 'Radar'], ['live', 'Living with it'], ['sim', 'Simulator'], ['ai', 'AI'], ['oq', 'Open questions'], ['src', 'Sources'],
 ] as const;
 
 export function ChallengeView({ slug }: { slug: string }) {
@@ -62,7 +63,7 @@ export function ChallengeView({ slug }: { slug: string }) {
   if (!c) return <NotFound />;
   const pos = blipPositions(c.technologies);
   const ordered = [...c.technologies].sort((a, b) => pos.get(a.id)!.n - pos.get(b.id)!.n);
-  const n = (id: string) => String(SECTIONS.filter(([k]) => k !== 'sim' || c.simulator).findIndex(([k]) => k === id) + 1).padStart(2, '0');
+  const n = (id: string) => String(SECTIONS.filter(([k]) => (k !== 'sim' || c.simulator) && (k !== 'live' || c.stories?.length)).findIndex(([k]) => k === id) + 1).padStart(2, '0');
 
   const select = (id: string) => {
     setSel(id);
@@ -83,7 +84,7 @@ export function ChallengeView({ slug }: { slug: string }) {
         <h1>{c.title}</h1>
         <p class="lede">{c.subtitle}</p>
         <nav class="toc" aria-label="On this page">
-          {SECTIONS.filter(([k]) => k !== 'sim' || c.simulator).map(([k, label]) => (
+          {SECTIONS.filter(([k]) => (k !== 'sim' || c.simulator) && (k !== 'live' || c.stories?.length)).map(([k, label]) => (
             <button key={k} type="button" onClick={() => jump(k)}>{label}</button>
           ))}
         </nav>
@@ -130,6 +131,12 @@ export function ChallengeView({ slug }: { slug: string }) {
                     <p><strong>Why this ring:</strong> {t.why} <Refs ids={t.sources} c={c} /></p>
                     <p class="small"><strong>Limits</strong></p>
                     <ul class="small">{t.limits.map((l) => <li key={l}>{l}</li>)}</ul>
+                    {t.experience?.length ? (
+                      <>
+                        <p class="small"><strong>Living with it</strong></p>
+                        <PointList points={t.experience} c={c} />
+                      </>
+                    ) : null}
                   </div>
                 )}
               </li>
@@ -137,6 +144,25 @@ export function ChallengeView({ slug }: { slug: string }) {
           </ol>
         </div>
       </Sheet>
+
+      {c.stories?.length ? (
+        <Sheet n={n('live')} title="Living with it: household situations" id="live">
+          <ol class="stories" role="list">
+            {c.stories.map((st) => (
+              <li key={st.id} class="story">
+                <h3>{st.title}</h3>
+                <p class="muted small">{st.situation}</p>
+                <PointList points={st.points} c={c} />
+                {st.lab && (
+                  <a class="btn btn-ghost small" href={labLink(st.lab)}>
+                    Try it in the lab<span class="sr-only">: {st.title}</span>
+                  </a>
+                )}
+              </li>
+            ))}
+          </ol>
+        </Sheet>
+      ) : null}
 
       {c.simulator === 'home-heating' && (
         <Sheet n={n('sim')} title="Simulator: boiler, heat pump or hybrid?" id="sim">

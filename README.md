@@ -11,11 +11,21 @@ where every number came from.
 
 | Part | What it does | Status |
 |---|---|---|
-| **Challenge tracker** | One page per problem: the key figures, why it is hard, a technology radar (Adopt, Trial, Assess, Hold) and, where it helps, a simulator. First challenge: heating homes without burning gas. | Active |
+| **Challenge tracker** | One page per problem: the key figures, why it is hard, a technology radar (Adopt, Trial, Assess, Hold) with what living with each option is like, household stories and, where it helps, a simulator. First challenge: heating homes without burning gas. | Active |
+| **Heating lab** | An 80 m² flat simulated hour by hour for a whole year, in any town: insulation, heat pump or boiler, radiators or underfloor, cooling, solar, hot water. A 3D cut-away shows temperatures and heat flows; up to four scenarios compare comfort, energy, cost and CO2. | Active |
 | **Battery-materials atlas** | A periodic table, a datasheet per material and feasibility checks against an application's targets. Every value records its source, whether it was measured or computed, and whether a human reviewed it. | Frozen: maintained, not extended |
 
 Two rules hold everywhere: every figure links to a source, and every judgement or machine suggestion is
 labelled as such.
+
+## The heating lab
+
+![3D cut-away flat on the coldest day of a typical Milan year, rooms and radiators coloured by simulated temperature](docs/site/lab.png)
+
+Temperatures, energy and costs come from a simplified building-physics model of the kind used for
+energy certificates (EN ISO 13790 / 52016-1 family) with real weather: PVGIS typical years for 14
+cities, or any place via Open-Meteo. The moving air is drawn from the results, not solved: see
+[docs/heating-lab.md](docs/heating-lab.md) for the model, its checks and its limits.
 
 ## A closer look
 
@@ -30,7 +40,8 @@ labelled as such.
 ```mermaid
 flowchart LR
   subgraph tracker [Challenge tracker]
-    J["challenges/*.json<br/>figures, radar, sources"] --> C["tests: every figure<br/>cites a source"]
+    J["challenges/*.json<br/>figures, radar, stories, sources"] --> C["tests: every figure<br/>cites a source"]
+    P["PVGIS / Open-Meteo<br/>weather"] --> L["Heating lab<br/>hourly model + 3D"]
   end
   subgraph materials [Battery-materials graph]
     S["Licensed sources<br/>Materials Project, OPTIMADE,<br/>OpenAlex, arXiv, PubChem"] --> X["Local LLM extraction<br/>(LM Studio)"]
@@ -39,6 +50,7 @@ flowchart LR
     N --> E["mg export site"]
   end
   C --> W["Static site<br/>GitHub Pages"]
+  L --> W
   E -->|snapshot.json| W
   N -.->|optional| A["Read-only API<br/>free tier"] -.-> W
 ```

@@ -64,7 +64,10 @@ touching graph or ingestion code.
 
 ## Scope right now
 
-Challenge tracker: home heating published; ceramic kilns, thermal storage and batteries planned (docs/challenges.md).
+Challenge tracker: home heating published with its heating lab (#/lab/home-heating, docs/heating-lab.md);
+ceramic kilns, thermal storage and batteries planned (docs/challenges.md).
+Heating lab: keep web/src/lib/sim/sim.test.ts green (energy balance, stability); three.js stays a lazy chunk
+loaded only by the lab (check-budget.mjs enforces separate site / lab / 3D budgets).
 Battery graph (below) is frozen: keep it building and tested, no new features unless asked.
 
 Stage 1 (docs/strategy.md): data pipeline -> schema -> graph -> enrichment -> NL query layer,

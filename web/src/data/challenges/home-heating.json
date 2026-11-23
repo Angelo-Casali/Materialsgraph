@@ -3,45 +3,104 @@
   "title": "Heating and cooling homes without burning gas",
   "subtitle": "State of the art for domestic heat pumps, boilers and new heating and cooling systems, with a running-cost and CO2 simulator.",
   "domain": "domestic",
-  "updated": "2026-11-09",
+  "updated": "2026-11-23",
   "figures": [
     {
       "value": "2.63 million",
       "label": "residential heat pumps sold in 16 European countries in 2025, up 11% on 2024",
       "note": "Preliminary EHPA figures; 12 of the 16 countries grew.",
-      "sources": ["iir-ehpa-2025"]
+      "sources": [
+        "iir-ehpa-2025"
+      ]
     },
     {
       "value": "~28 million",
       "label": "heat pumps installed in Europe",
-      "sources": ["iir-ehpa-2025"]
+      "sources": [
+        "iir-ehpa-2025"
+      ]
     },
     {
       "value": "3–5×",
       "label": "more energy-efficient than natural gas boilers",
-      "sources": ["iea-future-hp"]
+      "sources": [
+        "iea-future-hp"
+      ]
     },
     {
       "value": "≥20% → ~80%",
       "label": "greenhouse-gas cut of a heat pump versus a gas boiler: at least 20% on an emissions-intensive grid, up to 80% where electricity is cleaner",
-      "sources": ["iea-future-hp"]
+      "sources": [
+        "iea-future-hp"
+      ]
     },
     {
       "value": "~1/10",
       "label": "of global space-heating needs met by heat pumps in 2021",
-      "sources": ["iea-future-hp"]
+      "sources": [
+        "iea-future-hp"
+      ]
     },
     {
       "value": "198.9 g/kWh",
       "label": "CO2 per kWh of electricity consumed in Italy in 2024 (preliminary, grid losses and imports included)",
       "note": "234.7 g/kWh in 2023.",
-      "sources": ["ispra-elec-2025"]
+      "sources": [
+        "ispra-elec-2025"
+      ]
     },
     {
       "value": "203.5 g/kWh",
       "label": "CO2 per kWh of natural gas burnt (lower heating value)",
       "note": "Derived from the national standard factor of 56.518 tCO2/TJ.",
-      "sources": ["ispra-gas-standard"]
+      "sources": [
+        "ispra-gas-standard"
+      ]
+    },
+    {
+      "value": "2–4×",
+      "label": "upfront cost of even the cheapest air-to-water heat pumps, radiator changes included, compared with a gas boiler in most major heating markets",
+      "sources": [
+        "iea-future-hp"
+      ]
+    },
+    {
+      "value": "750,000",
+      "label": "more heat pump installers the EU needs, with at least half of today's installers to be retrained",
+      "note": "Installer shortages and long waits are among the reasons EU sales fell in 2023 and 2024.",
+      "sources": [
+        "ec-heat-pumps"
+      ]
+    },
+    {
+      "value": "65 dB(A)",
+      "label": "maximum sound power of the outdoor unit of a heat pump up to 6 kW sold in the EU (70 dB(A) up to 12 kW)",
+      "note": "Sound power, not the level heard by a neighbour, which falls with distance.",
+      "sources": [
+        "eu-813-2013"
+      ]
+    },
+    {
+      "value": "50%",
+      "label": "Italian tax deduction in 2026 for work on the main home (36% on other homes), over 10 years; stand-alone fossil boilers no longer qualify",
+      "note": "Falls to 36% / 30% in 2027.",
+      "sources": [
+        "ade-ristrutturazioni-2026"
+      ]
+    },
+    {
+      "value": "64%",
+      "label": "of Italy's fine-particulate (PM2.5) emissions in 2023 came from non-industrial combustion, mostly home heating, up about 34% since 1990",
+      "sources": [
+        "ispra-iir-2025"
+      ]
+    },
+    {
+      "value": "1.15 → 0.34",
+      "label": "typical U-value (W/m²K) of Italian external walls built before 1976 versus after 2005: about three times the heat loss per square metre",
+      "sources": [
+        "tabula-it"
+      ]
     }
   ],
   "whyHard": [
@@ -51,7 +110,9 @@
     },
     {
       "text": "The refrigerant is changing under the installer's feet: the revised F-gas Regulation bans F-gases with GWP above 150 in small monoblock heat pumps from 2027 and removes F-gases from them entirely from 2032; split systems follow by 2035.",
-      "sources": ["fgas-2024"]
+      "sources": [
+        "fgas-2024"
+      ]
     },
     {
       "text": "The natural replacement, propane (R290), is flammable, so charge limits, siting and installer training become part of the design.",
@@ -63,7 +124,44 @@
     },
     {
       "text": "Policy is moving fast: no public incentives for stand-alone fossil fuel boilers since 1 January 2025, and a fossil-boiler phase-out planned by 2040.",
-      "sources": ["ec-epbd-guidance-2024", "ec-epbd-2040"]
+      "sources": [
+        "ec-epbd-guidance-2024",
+        "ec-epbd-2040"
+      ]
+    },
+    {
+      "text": "Upfront cost is the first wall for households: heat pump equipment often costs two to three times the alternatives, and installation can cost as much again.",
+      "sources": [
+        "iea-hp-monitor-2026"
+      ]
+    },
+    {
+      "text": "Finding someone to do the job: the EU cites a long, complex customer journey, a shortage of installers and long waiting periods among the reasons heat pump sales fell in 2023 and 2024.",
+      "sources": [
+        "ec-heat-pumps"
+      ]
+    },
+    {
+      "text": "In a flat the outdoor unit needs a place: a balcony, a roof or a facade the condominium accepts, with the noise kept away from bedroom windows. EU rules allow outdoor units up to 6 kW a sound power of up to 65 dB(A).",
+      "sources": [
+        "eu-813-2013"
+      ]
+    },
+    {
+      "text": "The typical Italian household has a 3 kW electricity contract, sized for lights and appliances. A heat pump, an induction hob and a car charger can push past it, so many households electrifying their heating need a power upgrade and pay a higher fixed charge.",
+      "sources": [
+        "arera-tipo"
+      ]
+    },
+    {
+      "text": "A hot-water cylinder for the heat pump needs roughly the floor space of a fridge; combi boilers made it disappear from Italian homes, so finding that space is often the hardest part of the job in a flat.",
+      "editorial": true
+    },
+    {
+      "text": "The fuel being replaced will get dearer: from 2027 the EU emissions trading system for buildings (ETS2) puts a carbon price on heating fuels.",
+      "sources": [
+        "ec-heat-pumps"
+      ]
     }
   ],
   "technologies": [
@@ -79,7 +177,30 @@
         "Outdoor unit: space, noise and condominium rules",
         "Higher upfront cost than a boiler"
       ],
-      "sources": ["iea-future-hp", "iir-ehpa-2025"]
+      "sources": [
+        "iea-future-hp",
+        "iir-ehpa-2025"
+      ],
+      "experience": [
+        {
+          "text": "Feels different from a boiler: radiators or floors run warm rather than hot for long hours, and rooms stay at an even temperature instead of heating up fast in the morning.",
+          "editorial": true
+        },
+        {
+          "text": "The outdoor unit hums and blows cool air; place it away from bedroom windows and neighbours. EU rules cap the sound power at 65 dB(A) for units up to 6 kW.",
+          "sources": [
+            "eu-813-2013"
+          ]
+        },
+        {
+          "text": "Installing it takes a few days and space for a hot-water cylinder; expect a power-contract upgrade in many Italian flats.",
+          "editorial": true
+        },
+        {
+          "text": "Servicing is a yearly check; there is no flue and no combustion.",
+          "editorial": true
+        }
+      ]
     },
     {
       "id": "r290-monoblock",
@@ -93,7 +214,19 @@
         "Installers need specific training",
         "Fewer models for very high water temperatures"
       ],
-      "sources": ["fgas-2024"]
+      "sources": [
+        "fgas-2024"
+      ],
+      "experience": [
+        {
+          "text": "All the refrigerant stays sealed outdoors: only water pipes enter the home, which keeps flammable propane out of the flat.",
+          "editorial": true
+        },
+        {
+          "text": "Can deliver hotter water than older models, which helps when the radiators cannot be changed.",
+          "editorial": true
+        }
+      ]
     },
     {
       "id": "hp-pv",
@@ -106,7 +239,21 @@
         "Heating demand peaks in winter, when PV output is lowest",
         "Needs smart control and often a storage tank to shift loads"
       ],
-      "sources": ["ct3-2025"]
+      "sources": [
+        "ct3-2025"
+      ],
+      "experience": [
+        {
+          "text": "Works best when the heat pump and the hot-water cylinder run around midday: heating and hot water become a way to store solar power for the evening.",
+          "sources": [
+            "iea-der-2022"
+          ]
+        },
+        {
+          "text": "In a flat, panels usually mean a shared roof and a condominium agreement or an energy community.",
+          "editorial": true
+        }
+      ]
     },
     {
       "id": "hybrid-hp-boiler",
@@ -119,7 +266,20 @@
         "Two machines to buy and maintain",
         "Still burns gas: the CO2 saving depends on how much heat the heat pump covers"
       ],
-      "sources": ["ec-epbd-guidance-2024", "ct3-2025"]
+      "sources": [
+        "ec-epbd-guidance-2024",
+        "ct3-2025"
+      ],
+      "experience": [
+        {
+          "text": "A low-risk first step: the boiler stays as a safety net on the coldest days, the heat pump does most of the work, and the radiators stay as they are.",
+          "editorial": true
+        },
+        {
+          "text": "Two machines to service, and the gas contract and its fixed charges stay.",
+          "editorial": true
+        }
+      ]
     },
     {
       "id": "split-low-gwp",
@@ -132,7 +292,25 @@
         "No domestic hot water",
         "Comfort and noise depend on the room units"
       ],
-      "sources": ["fgas-2024"]
+      "sources": [
+        "fgas-2024"
+      ],
+      "experience": [
+        {
+          "text": "Heats and cools a room within minutes; air movement and the indoor unit's noise are noticeable at high fan speed.",
+          "editorial": true
+        },
+        {
+          "text": "An air-to-air unit typically costs USD 3,000–6,000 installed, often the cheapest way to add cooling and part of the heating.",
+          "sources": [
+            "iea-future-hp"
+          ]
+        },
+        {
+          "text": "Bathrooms, corridors and kitchens usually stay without a unit and rely on heat from the next room or an electric towel rail.",
+          "editorial": true
+        }
+      ]
     },
     {
       "id": "elastocaloric",
@@ -145,7 +323,15 @@
         "Material fatigue over millions of cycles",
         "Actuators and heat transfer still being engineered"
       ],
-      "sources": ["elastocaloric-review-2024"]
+      "sources": [
+        "elastocaloric-review-2024"
+      ],
+      "experience": [
+        {
+          "text": "Nothing to buy yet: a laboratory technology to watch.",
+          "editorial": true
+        }
+      ]
     },
     {
       "id": "condensing-boiler",
@@ -158,7 +344,23 @@
         "Locks in gas use and its CO2 for 15–20 years",
         "Exposed to future gas prices and carbon pricing"
       ],
-      "sources": ["ec-epbd-guidance-2024", "ec-epbd-2040", "rehva-ecodesign"]
+      "sources": [
+        "ec-epbd-guidance-2024",
+        "ec-epbd-2040",
+        "rehva-ecodesign"
+      ],
+      "experience": [
+        {
+          "text": "Familiar and compact, but it only condenses (and reaches its rated efficiency) when the return water is below about 55 °C: turning down the flow temperature often saves gas at no cost.",
+          "editorial": true
+        },
+        {
+          "text": "No longer eligible for Italian tax deductions when installed on its own.",
+          "sources": [
+            "ade-ristrutturazioni-2026"
+          ]
+        }
+      ]
     },
     {
       "id": "hydrogen-boiler",
@@ -171,25 +373,274 @@
         "Large energy losses producing hydrogen",
         "Grid, safety and supply problems"
       ],
-      "sources": ["rosenow-2022"]
+      "sources": [
+        "rosenow-2022"
+      ],
+      "experience": [
+        {
+          "text": "Not available to households: no hydrogen reaches homes, and the evidence points to heat pumps and heat networks instead.",
+          "sources": [
+            "rosenow-2022"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hp-water-heater",
+      "name": "Heat-pump water heaters",
+      "ring": "adopt",
+      "short": "HP water heater",
+      "summary": "A hot-water cylinder with a small heat pump on top, taking heat from the room or outdoor air.",
+      "why": "Uses well under half the electricity of a conventional electric water heater, even in cold climates; an easy first step that does not touch space heating.",
+      "limits": [
+        "Cools the room it stands in; better in a utility room or with ducted air",
+        "Needs floor space and a drain for condensate",
+        "Slower to reheat than a gas combi"
+      ],
+      "sources": [
+        "nrdc-hpwh"
+      ],
+      "experience": [
+        {
+          "text": "Looks like an electric boiler, sounds like a quiet fridge; hot water is stored, so a long family shower routine needs the right size.",
+          "editorial": true
+        },
+        {
+          "text": "Can be timed to run when solar panels produce or electricity is cheap.",
+          "sources": [
+            "iea-der-2022"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fabric-first",
+      "name": "Insulation and new windows (fabric first)",
+      "ring": "adopt",
+      "short": "Insulation",
+      "summary": "External wall insulation, roof and floor insulation and better windows cut the heat the home needs before choosing the system.",
+      "why": "Walls built before 1976 lose about three times more heat per square metre than walls built after 2005; insulating makes any system smaller, cheaper to run and more comfortable, and qualifies for Italian tax deductions.",
+      "limits": [
+        "Disruptive and costly; external insulation of a condominium needs a shared decision",
+        "Thermal bridges and ventilation need attention, or mould can follow airtightness"
+      ],
+      "sources": [
+        "tabula-it",
+        "ade-ristrutturazioni-2026"
+      ],
+      "experience": [
+        {
+          "text": "The most noticeable change is warmer walls and windows: no cold draught near the glass, less condensation, and rooms that stay warm when the heating stops.",
+          "editorial": true
+        },
+        {
+          "text": "Summer improves too when insulation comes with shading: the home heats up more slowly.",
+          "sources": [
+            "iea-cool-tips"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "low-temp-emitters",
+      "name": "Low-temperature emitters: underfloor heating, larger radiators, fan coils",
+      "ring": "adopt",
+      "short": "Low-temp emitters",
+      "summary": "Bigger heat-releasing surfaces let the same room be heated with 35–45 °C water instead of 60–70 °C.",
+      "why": "Heat pumps and condensing boilers are both more efficient with cooler water; the upfront cost estimates for air-to-water heat pumps already include changes to existing radiator systems.",
+      "limits": [
+        "Underfloor heating in an existing flat means new screed and raised floors",
+        "Slow response: underfloor heating suits steady temperatures, not quick boosts"
+      ],
+      "sources": [
+        "iea-future-hp"
+      ],
+      "experience": [
+        {
+          "text": "Underfloor heating feels like warmth from the ground with no visible radiators; fan coils heat quickly and can also cool and dehumidify, with some fan noise.",
+          "editorial": true
+        }
+      ]
+    },
+    {
+      "id": "weather-compensation",
+      "name": "Weather compensation and smart controls",
+      "ring": "adopt",
+      "short": "Smart controls",
+      "summary": "The controller lowers the water temperature on mild days and uses room sensors, instead of running at a fixed setting.",
+      "why": "EU energy labelling credits a weather compensator with a room sensor (class VI) with 4 percentage points of seasonal efficiency; it is often a settings change rather than new equipment.",
+      "limits": [
+        "Needs correct set-up by the installer",
+        "Gains depend on the emitters being large enough for low water temperatures"
+      ],
+      "sources": [
+        "eu-811-2013"
+      ],
+      "experience": [
+        {
+          "text": "The radiators feel lukewarm for longer instead of hot for a short time; most people only notice a lower bill.",
+          "editorial": true
+        }
+      ]
+    },
+    {
+      "id": "mvhr",
+      "name": "Mechanical ventilation with heat recovery",
+      "ring": "trial",
+      "short": "MVHR",
+      "summary": "Fans supply fresh air and extract stale air through a heat exchanger that passes most of the warmth to the incoming air.",
+      "why": "EU ecodesign rules have required at least 73% heat recovery in two-way residential ventilation units since 2018; in airtight, insulated homes it keeps air fresh without the heat loss of open windows.",
+      "limits": [
+        "Ducts are hard to fit in existing flats; single-room units are a compromise",
+        "Filters must be changed, and fans use some electricity"
+      ],
+      "sources": [
+        "eu-1253-2014"
+      ],
+      "experience": [
+        {
+          "text": "Fresh air without opening windows: less noise and pollen from outside, and no cold draught; a faint fan noise if poorly installed.",
+          "editorial": true
+        }
+      ]
+    },
+    {
+      "id": "passive-cooling",
+      "name": "Shading, night ventilation and fans",
+      "ring": "adopt",
+      "short": "Passive cooling",
+      "summary": "External shutters and blinds, opening windows at night and ceiling or desk fans before air conditioning.",
+      "why": "A fan uses roughly 25–150 W against 1,000–1,500 W for a small air conditioner, and good envelope design reduces how much cooling is needed at all.",
+      "limits": [
+        "Not enough during long heatwaves in top-floor or poorly insulated flats",
+        "Night ventilation depends on security and outdoor noise"
+      ],
+      "sources": [
+        "iea-cool-tips"
+      ],
+      "experience": [
+        {
+          "text": "Closing external shutters during the sunny hours keeps rooms several degrees cooler; the lab shows the difference on the hottest day.",
+          "editorial": true
+        }
+      ]
+    },
+    {
+      "id": "ground-source-hp",
+      "name": "Ground-source heat pumps",
+      "ring": "trial",
+      "short": "Ground source",
+      "summary": "A heat pump that takes heat from the ground through boreholes or buried pipes, which stay at a steady temperature all year.",
+      "why": "Higher and steadier efficiency than air-source units and no outdoor fan, but higher upfront costs, largely for the boreholes or buried pipes; it pays off best in larger buildings, for example shared by a condominium.",
+      "limits": [
+        "Drilling permits and space for boreholes",
+        "High upfront cost for a single flat"
+      ],
+      "sources": [
+        "iea-hp-report-2022",
+        "iea-hp-monitor-2026"
+      ],
+      "experience": [
+        {
+          "text": "Silent outside, since there is no outdoor unit; the drilling takes a few days and the underground loop outlasts several heat pumps.",
+          "editorial": true
+        }
+      ]
+    },
+    {
+      "id": "thermal-storage",
+      "name": "Thermal storage and pre-heating",
+      "ring": "trial",
+      "short": "Thermal storage",
+      "summary": "Storing heat in hot-water tanks, phase-change \"heat batteries\" or the building's own mass, to heat when power is cheap or solar.",
+      "why": "Shifting heating away from the evening peak can be cheaper than reinforcing the grid; electric water heaters with simple controls already provide this flexibility.",
+      "limits": [
+        "Needs time-of-use tariffs or own solar to pay back",
+        "Compact heat batteries are still expensive"
+      ],
+      "sources": [
+        "iea-der-2022"
+      ],
+      "experience": [
+        {
+          "text": "Mostly invisible: the house is a little warmer in the afternoon and the heat pump runs less in the evening.",
+          "editorial": true
+        }
+      ]
+    },
+    {
+      "id": "wood-stoves",
+      "name": "Wood stoves and open fireplaces as main heating",
+      "ring": "hold",
+      "short": "Wood stoves",
+      "summary": "Burning logs or pellets in stoves and fireplaces.",
+      "why": "Non-industrial combustion, mostly home heating with wood, produced 64% of Italy's fine-particulate pollution in 2023; modern certified pellet stoves are far cleaner than open fireplaces, but cleaner air in cities needs fewer of both.",
+      "limits": [
+        "Local bans on old stoves during smog episodes",
+        "Fuel handling and chimney cleaning"
+      ],
+      "sources": [
+        "ispra-iir-2025"
+      ],
+      "experience": [
+        {
+          "text": "Cosy radiant heat in one room, but uneven temperatures, daily fuel handling and smoke for the neighbours.",
+          "editorial": true
+        }
+      ]
     }
   ],
   "aiAngle": [
-    { "text": "Predictive control that heats when electricity is cheap or PV is producing, using the building's thermal mass as storage.", "editorial": true },
-    { "text": "Sizing assistants that estimate heat demand and the best flow temperature from bills, floor plans and climate data.", "editorial": true },
-    { "text": "Fault detection on connected heat pumps: spotting refrigerant leaks or poor settings from operating data.", "editorial": true },
-    { "text": "Materials discovery for solid-state heat pumping and low-GWP refrigerants.", "editorial": true }
+    {
+      "text": "Predictive control that heats when electricity is cheap or PV is producing, using the building's thermal mass as storage.",
+      "editorial": true
+    },
+    {
+      "text": "Sizing assistants that estimate heat demand and the best flow temperature from bills, floor plans and climate data.",
+      "editorial": true
+    },
+    {
+      "text": "Fault detection on connected heat pumps: spotting refrigerant leaks or poor settings from operating data.",
+      "editorial": true
+    },
+    {
+      "text": "Materials discovery for solid-state heat pumping and low-GWP refrigerants.",
+      "editorial": true
+    },
+    {
+      "text": "Pre-heating homes at midday when solar power is abundant, so heat pumps do not all switch on at the evening peak: the IEA finds this can be cheaper than reinforcing the grid.",
+      "sources": [
+        "iea-der-2022"
+      ]
+    },
+    {
+      "text": "Explaining the choice in plain words: a model that simulates the home (like the lab on this site) plus a language model that answers \"why is my bedroom cold?\" from the simulation, not from guesses.",
+      "editorial": true
+    }
   ],
   "openQuestions": [
     "How far can high-temperature heat pumps go in replacing boilers on existing radiators without renovation?",
     "What electricity-to-gas price ratio makes heat pumps the obvious choice for Italian households?",
     "Will R290 installation rules slow down adoption in apartment buildings?",
-    "When will solid-state heat pumping leave the laboratory?"
+    "When will solid-state heat pumping leave the laboratory?",
+    "How many Italian condominiums will allow outdoor units on facades and roofs, and on what rules?",
+    "Can heat-pump water heaters become the default replacement when a combi boiler breaks, even where space heating stays on gas for a while?",
+    "How fast will the 3 kW contract give way to higher contracted power without raising bills for households that electrify?"
   ],
   "simulator": "home-heating",
   "changelog": [
-    { "date": "2026-11-09", "text": "First version: 8 technologies, 7 key figures, running-cost and CO2 simulator." },
-    { "date": "2026-11-09", "text": "IEA figures now cite the IEA executive summary directly instead of a press summary; wording aligned with the report (natural gas boilers, greenhouse-gas emissions)." }
+    {
+      "date": "2026-11-09",
+      "text": "First version: 8 technologies, 7 key figures, running-cost and CO2 simulator."
+    },
+    {
+      "date": "2026-11-09",
+      "text": "IEA figures now cite the IEA executive summary directly instead of a press summary; wording aligned with the report (natural gas boilers, greenhouse-gas emissions)."
+    },
+    {
+      "date": "2026-11-23",
+      "text": "9 more technologies (heat-pump water heaters, insulation, low-temperature emitters, smart controls, ventilation with heat recovery, passive cooling, ground source, thermal storage, wood stoves), what living with each one is like, household stories that open the new heating lab, 6 new figures and 13 new sources."
+    }
   ],
   "sources": [
     {
@@ -274,6 +725,286 @@
       "publisher": "FiscoeTasse, on DM 7 August 2025 (GU n. 224, 26 September 2025)",
       "date": "2025-12",
       "url": "https://www.fiscoetasse.com/new-rassegna-stampa/2862-conto-termico-30-novita-degli-incentivi-fino-al-65-in-vigore-da-natale.html"
+    },
+    {
+      "id": "ec-heat-pumps",
+      "title": "Heat pumps (topic page: market, installers, financing)",
+      "publisher": "European Commission, DG Energy",
+      "date": "2026",
+      "url": "https://energy.ec.europa.eu/topics/energy-efficiency/heat-pumps_en",
+      "note": "Read 2026-11-23; cites JRC country fiches of June 2026"
+    },
+    {
+      "id": "iea-hp-monitor-2026",
+      "title": "Heat Pump Monitor 2026: key findings",
+      "publisher": "International Energy Agency",
+      "date": "2026",
+      "url": "https://www.iea.org/reports/heat-pump-monitor-2026/key-findings"
+    },
+    {
+      "id": "iea-hp-report-2022",
+      "title": "The Future of Heat Pumps (full report)",
+      "publisher": "International Energy Agency",
+      "date": "2022-11",
+      "url": "https://www.iea.org/files/2cf6c5c5-54d5-4a17-bfbe-8924123eebcd/TheFutureofHeatPumps.pdf"
+    },
+    {
+      "id": "iea-cool-tips",
+      "title": "10 tips to stay cool in today's heat",
+      "publisher": "International Energy Agency",
+      "date": "2018-08",
+      "url": "https://www.iea.org/commentaries/10-tips-to-stay-cool-in-todays-heat"
+    },
+    {
+      "id": "iea-der-2022",
+      "title": "Unlocking the Potential of Distributed Energy Resources: executive summary",
+      "publisher": "International Energy Agency",
+      "date": "2022-05",
+      "url": "https://www.iea.org/reports/unlocking-the-potential-of-distributed-energy-resources/executive-summary"
+    },
+    {
+      "id": "eu-813-2013",
+      "title": "Commission Regulation (EU) No 813/2013: ecodesign requirements for space heaters and combination heaters",
+      "publisher": "EUR-Lex, Official Journal of the EU",
+      "date": "2013-08-02",
+      "url": "https://eur-lex.europa.eu/eli/reg/2013/813/oj"
+    },
+    {
+      "id": "eu-811-2013",
+      "title": "Commission Delegated Regulation (EU) No 811/2013: energy labelling of space heaters, temperature controls and solar devices",
+      "publisher": "EUR-Lex, Official Journal of the EU",
+      "date": "2013-02-18",
+      "url": "https://eur-lex.europa.eu/eli/reg/2013/811/oj"
+    },
+    {
+      "id": "eu-1253-2014",
+      "title": "Commission Regulation (EU) No 1253/2014: ecodesign requirements for ventilation units",
+      "publisher": "EUR-Lex, Official Journal of the EU",
+      "date": "2014-07-07",
+      "url": "https://eur-lex.europa.eu/eli/reg/2014/1253/oj"
+    },
+    {
+      "id": "ade-ristrutturazioni-2026",
+      "title": "Agevolazioni per le ristrutturazioni edilizie",
+      "publisher": "Agenzia delle Entrate",
+      "date": "2026",
+      "url": "https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa/agevolazioni/agevolazioni-per-le-ristrutturazioni-edilizie",
+      "note": "2026: 50% on the main home, 36% otherwise; 2027: 36% / 30%"
+    },
+    {
+      "id": "arera-tipo",
+      "title": "Comunicato stampa: aggiornamento tariffe III trimestre 2018 (definition of the typical household)",
+      "publisher": "ARERA",
+      "date": "2018-06-28",
+      "url": "https://www.arera.it/allegati/com_stampa/18/180628.pdf",
+      "note": "Typical household: 2,700 kWh a year, 3 kW contracted power"
+    },
+    {
+      "id": "ispra-iir-2025",
+      "title": "Italian Emission Inventory 1990-2023, Informative Inventory Report 2025 (Rapporto 410/2025)",
+      "publisher": "ISPRA",
+      "date": "2025-04",
+      "url": "https://www.isprambiente.gov.it/files2025/pubblicazioni/rapporti/iir_2025_finale_def.pdf"
+    },
+    {
+      "id": "tabula-it",
+      "title": "Building Typology Brochure - Italy (TABULA project)",
+      "publisher": "Politecnico di Torino (Corrado, Ballarini, Corgnati, Talà)",
+      "date": "2011",
+      "url": "https://iris.polito.it/bitstream/11583/2465779/1/Italian%20Typology%20Brochure.pdf"
+    },
+    {
+      "id": "nrdc-hpwh",
+      "title": "Very Cool: Heat Pump Water Heaters Save Energy and Money",
+      "publisher": "Natural Resources Defense Council (NRDC)",
+      "date": "2016",
+      "url": "https://www.nrdc.org/experts/pierre-delforge/very-cool-heat-pump-water-heaters-save-energy-and-money"
+    }
+  ],
+  "stories": [
+    {
+      "id": "flat-1970s-milan",
+      "title": "A 1970s flat in a Milan condominium",
+      "situation": "Gas combi boiler, radiators sized for hot water, single glazing replaced in the 1990s, middle floor.",
+      "points": [
+        {
+          "text": "A heat pump on the existing radiators keeps the flat warm most of the winter, but on the coldest days the radiators need hotter water than many units deliver: rooms fall short or an electric back-up heater runs.",
+          "editorial": true
+        },
+        {
+          "text": "Larger radiators, or insulating first, bring the water temperature down and the heat pump's efficiency up.",
+          "editorial": true
+        },
+        {
+          "text": "The outdoor unit and a hot-water cylinder need space and the condominium's agreement; the 3 kW electricity contract may need an upgrade.",
+          "sources": [
+            "arera-tipo"
+          ]
+        }
+      ],
+      "lab": {
+        "place": "milano",
+        "scenarios": [
+          {
+            "name": "Today: gas boiler"
+          },
+          {
+            "name": "Heat pump, same radiators",
+            "generator": "hp-air"
+          },
+          {
+            "name": "Heat pump, larger radiators",
+            "generator": "hp-air",
+            "emitter": "radiators-large"
+          }
+        ]
+      }
+    },
+    {
+      "id": "top-floor-rome",
+      "title": "A top-floor flat in Rome that overheats",
+      "situation": "Roof above, south-facing living room, no air conditioning.",
+      "points": [
+        {
+          "text": "Under the roof the flat soaks up summer heat; external shutters and night ventilation cut the hottest hours before any machine.",
+          "sources": [
+            "iea-cool-tips"
+          ]
+        },
+        {
+          "text": "Air-to-air heat pumps then cool the main rooms and heat them in winter, often for less than a new boiler plus air conditioners.",
+          "editorial": true
+        }
+      ],
+      "lab": {
+        "place": "roma",
+        "scenarios": [
+          {
+            "name": "Shutters open, no cooling",
+            "above": "roof",
+            "shutters": false,
+            "nightVent": false
+          },
+          {
+            "name": "Shutters and night air",
+            "above": "roof"
+          },
+          {
+            "name": "Splits for heating and cooling",
+            "above": "roof",
+            "generator": "split",
+            "cooling": "system"
+          }
+        ]
+      }
+    },
+    {
+      "id": "insulate-or-hp-first",
+      "title": "Insulate first, or heat pump first?",
+      "situation": "A leaky flat built before 1976 with a gas boiler and limited budget.",
+      "points": [
+        {
+          "text": "Insulation lowers the heat the home needs in every scenario and makes walls and windows warmer, which is what most people notice as comfort.",
+          "sources": [
+            "tabula-it"
+          ]
+        },
+        {
+          "text": "A heat pump alone cuts CO2 at once but works at high water temperature in a leaky home; the order often depends on which works the condominium can agree on.",
+          "editorial": true
+        }
+      ],
+      "lab": {
+        "place": "bologna",
+        "scenarios": [
+          {
+            "name": "Today: gas boiler",
+            "envelopeId": "pre1976",
+            "env": {
+              "uWall": 1.15,
+              "uRoof": 1.85,
+              "uFloor": 1.3,
+              "uWindow": 4.9,
+              "gWindow": 0.85,
+              "ach": 0.7
+            }
+          },
+          {
+            "name": "Insulate only",
+            "envelopeId": "2006",
+            "env": {
+              "uWall": 0.34,
+              "uRoof": 0.3,
+              "uFloor": 0.33,
+              "uWindow": 2.2,
+              "gWindow": 0.67,
+              "ach": 0.3
+            }
+          },
+          {
+            "name": "Heat pump only",
+            "envelopeId": "pre1976",
+            "env": {
+              "uWall": 1.15,
+              "uRoof": 1.85,
+              "uFloor": 1.3,
+              "uWindow": 4.9,
+              "gWindow": 0.85,
+              "ach": 0.7
+            },
+            "generator": "hp-air",
+            "emitter": "radiators-large"
+          },
+          {
+            "name": "Both",
+            "envelopeId": "2006",
+            "env": {
+              "uWall": 0.34,
+              "uRoof": 0.3,
+              "uFloor": 0.33,
+              "uWindow": 2.2,
+              "gWindow": 0.67,
+              "ach": 0.3
+            },
+            "generator": "hp-air"
+          }
+        ]
+      }
+    },
+    {
+      "id": "renter",
+      "title": "Renting: what can you change?",
+      "situation": "No say on the boiler or the walls.",
+      "points": [
+        {
+          "text": "One degree lower on the thermostat, a night set-back and lower radiator water temperature on a condensing boiler cost nothing.",
+          "editorial": true
+        },
+        {
+          "text": "Closing shutters on summer afternoons and using fans before air conditioning keeps rooms cooler and bills lower.",
+          "sources": [
+            "iea-cool-tips"
+          ]
+        },
+        {
+          "text": "The Social Climate Fund will support heating upgrades for vulnerable households across the EU from 2026.",
+          "sources": [
+            "ec-heat-pumps"
+          ]
+        }
+      ],
+      "lab": {
+        "place": "napoli",
+        "scenarios": [
+          {
+            "name": "As it is"
+          },
+          {
+            "name": "19 °C and set-back",
+            "heatSet": 19
+          }
+        ]
+      }
     }
   ]
 }

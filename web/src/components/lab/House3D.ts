@@ -336,7 +336,7 @@ export class House3D {
       r.position.set(0, HEIGHT * 1.5 + 0.3, 0);
       this.edges(r, this.colors.rule, 0.9);
       r.geometry.dispose();
-      this.labelAnchors.push({ id: 'above', pos: new THREE.Vector3(-W2, HEIGHT * 2, -D2), text: () => 'Heated flat above' });
+      this.labelAnchors.push({ id: 'above', pos: new THREE.Vector3(-W2 + 1.5, HEIGHT + 1.4, -D2), text: () => 'Heated flat above' });
     }
 
     // emitters

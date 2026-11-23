@@ -146,7 +146,7 @@ test('home lists the published challenge first and links to it', async ({ page }
   await page.goto('#/');
   await page.getByRole('link', { name: /Heating and cooling homes without burning gas/ }).click();
   await expect(page).toHaveURL(/#\/c\/home-heating/);
-  await page.getByRole('button', { name: 'Sources' }).click();
+  await page.getByRole('navigation', { name: 'On this page' }).getByRole('button', { name: 'Sources', exact: true }).click();
   await expect(page.getByRole('heading', { name: /Sources/ })).toBeInViewport();
 });
 
@@ -180,6 +180,16 @@ test('no page scrolls sideways on a phone', async ({ page }, info) => {
 });
 
 test.describe('heating lab', () => {
+  test('a household story opens the lab with its scenarios', async ({ page }) => {
+    await apiDown(page);
+    await page.goto('#/c/home-heating');
+    await page.getByRole('link', { name: /Try it in the lab\s*:\s*A 1970s flat in a Milan condominium/ }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Home heating and cooling lab');
+    await expect(page.getByRole('tab')).toHaveCount(3);
+    await expect(page.getByRole('tab', { name: /Heat pump, larger radiators/ })).toBeVisible();
+    await expect(page.locator('.lab-compare')).toBeVisible({ timeout: 20_000 });
+  });
+
   test('simulates three scenarios and compares them', async ({ page }) => {
     await apiDown(page);
     await page.goto('#/lab/home-heating');
