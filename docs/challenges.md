@@ -2,20 +2,23 @@
 
 The site's front page is now a tracker of energy-transition challenges. Each challenge is one
 JSON file rendered as a page with: the problem in numbers, why it is hard, a technology radar
-(Adopt / Trial / Assess / Hold), where AI can help, open questions, a changelog, the sources
-and, optionally, a simulator. The battery-materials atlas moved to `#/atlas` and keeps working.
+(Adopt / Trial / Assess / Hold) with what living with each technology is like, household
+stories, where AI can help, open questions, a changelog, the sources and, optionally, a simulator. The battery-materials atlas moved to `#/atlas` and keeps working.
 
 ## Published
 
 | Slug | Title | Simulator |
 |---|---|---|
-| `home-heating` | Heating and cooling homes without burning gas | boiler vs heat pump vs hybrid: yearly cost and CO2 |
+| `home-heating` | Heating and cooling homes without burning gas | quick boiler vs heat pump vs hybrid calculator, plus the [heating lab](heating-lab.md) at `#/lab/home-heating` |
 
 Planned next: ceramic kilns (cutting gas in tile firing), thermal storage, domestic and community batteries.
 
 ## Rules
 
 - Every figure and every technology cites at least one source id from the file's `sources` list.
+- Technology `experience` points and household `stories` follow the same rule as every other statement:
+  sourced or `"editorial": true`. A story's `lab` preset (a built-in climate id plus partial scenarios)
+  must decode in the lab; the tests check it.
 - Statements without a source carry `"editorial": true`: they are the author's judgement and the page labels them.
 - Sources need an https URL and a date (`YYYY`, `YYYY-MM` or `YYYY-MM-DD`); unused sources fail the tests.
 - Ring meanings: **Adopt** mature and the default where it fits; **Trial** works, results depend on context;
@@ -40,3 +43,5 @@ These rules are enforced by `web/src/lib/challenges/challenges.test.ts`.
 - `web/src/lib/challenges/heating-sim.ts`: home heating simulator (Carnot-based SCOP estimate, cost, CO2, break-even price)
 - `web/src/views/Challenges.tsx`, `web/src/views/Challenge.tsx`: list and detail pages
 - `web/src/components/Radar.tsx`, `web/src/components/HeatingSimulator.tsx`
+- `web/src/lib/challenges/lablink.ts`: share links from a story into the lab
+- The heating lab: see [heating-lab.md](heating-lab.md)

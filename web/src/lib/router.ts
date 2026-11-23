@@ -1,11 +1,12 @@
 import { signal } from '@preact/signals';
 
-export type RouteName = 'challenges' | 'challenge' | 'atlas' | 'material' | 'quests' | 'quest' | 'ask' | 'how' | 'about' | 'notfound';
+export type RouteName = 'challenges' | 'challenge' | 'lab' | 'atlas' | 'material' | 'quests' | 'quest' | 'ask' | 'how' | 'about' | 'notfound';
 export interface Route { name: RouteName; params: Record<string, string>; query: URLSearchParams }
 
 const TABLE: [RegExp, RouteName, string[]][] = [
   [/^\/?$/, 'challenges', []],
   [/^\/c\/(.+)$/, 'challenge', ['slug']],
+  [/^\/lab\/([a-z-]+)\/?$/, 'lab', ['slug']],
   [/^\/atlas\/?$/, 'atlas', []],
   [/^\/m\/(.+)$/, 'material', ['key']],
   [/^\/quests\/?$/, 'quests', []],
@@ -53,6 +54,7 @@ export function startRouter(): void {
 export const href = {
   challenges: () => '#/',
   challenge: (slug: string) => `#/c/${encodeURIComponent(slug)}`,
+  lab: (slug: string) => `#/lab/${encodeURIComponent(slug)}`,
   atlas: (elements: string[] = []) => (elements.length ? `#/atlas?el=${elements.join(',')}` : '#/atlas'),
   material: (key: string) => `#/m/${encodeURIComponent(key)}`,
   quests: () => '#/quests',

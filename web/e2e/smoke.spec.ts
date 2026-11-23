@@ -32,6 +32,7 @@ async function apiAwake(page: Page) {
 const ROUTES: [string, string, RegExp][] = [
   ['challenges', '#/', /Energy-transition problems, measured and sourced/],
   ['challenge', '#/c/home-heating', /Heating and cooling homes without burning gas/],
+  ['lab', '#/lab/home-heating', /Home heating and cooling lab/],
   ['atlas', '#/atlas', /Explore battery materials/],
   ['atlas-selected', '#/atlas?el=Li,O', /materials? containing Li \+ O/],
   ['passport', '#/m/sample%3ALi7La3Zr2O12', /LLZO/],
@@ -52,8 +53,8 @@ for (const theme of ['light', 'dark'] as const) {
         await apiDown(page);
         await page.goto(hash);
         await expect(page.locator('main')).toContainText(heading);
-        await page.waitForTimeout(150);
-        await page.screenshot({ path: `${SHOTS}/${info.project.name}-${theme}-${name}.png`, fullPage: name !== 'how' });
+        await page.waitForTimeout(name === 'lab' ? 2500 : 150);
+        await page.screenshot({ path: `${SHOTS}/${info.project.name}-${theme}-${name}.png`, fullPage: name !== 'how' && name !== 'lab' });
         // cast: @axe-core/playwright types its own playwright-core copy
         const axe = await new AxeBuilder({ page: page as unknown as ConstructorParameters<typeof AxeBuilder>[0]['page'] }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
         const serious = axe.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
@@ -145,7 +146,7 @@ test('home lists the published challenge first and links to it', async ({ page }
   await page.goto('#/');
   await page.getByRole('link', { name: /Heating and cooling homes without burning gas/ }).click();
   await expect(page).toHaveURL(/#\/c\/home-heating/);
-  await page.getByRole('button', { name: 'Sources' }).click();
+  await page.getByRole('navigation', { name: 'On this page' }).getByRole('button', { name: 'Sources', exact: true }).click();
   await expect(page.getByRole('heading', { name: /Sources/ })).toBeInViewport();
 });
 
@@ -176,4 +177,69 @@ test('no page scrolls sideways on a phone', async ({ page }, info) => {
     const [vw, sw] = await page.evaluate(() => [document.documentElement.clientWidth, document.documentElement.scrollWidth]);
     expect(sw, `${hash} is ${sw}px wide on a ${vw}px screen`).toBeLessThanOrEqual(vw);
   }
+});
+
+test.describe('heating lab', () => {
+  test('a household story opens the lab with its scenarios', async ({ page }) => {
+    await apiDown(page);
+    await page.goto('#/c/home-heating');
+    await page.getByRole('link', { name: /Try it in the lab\s*:\s*A 1970s flat in a Milan condominium/ }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Home heating and cooling lab');
+    await expect(page.getByRole('tab')).toHaveCount(3);
+    await expect(page.getByRole('tab', { name: /Heat pump, larger radiators/ })).toBeVisible();
+    await expect(page.locator('.lab-compare')).toBeVisible({ timeout: 20_000 });
+  });
+
+  test('simulates three scenarios and compares them', async ({ page }) => {
+    await apiDown(page);
+    await page.goto('#/lab/home-heating');
+    const compare = page.locator('.lab-compare');
+    await expect(compare).toBeVisible({ timeout: 20_000 });
+    await expect(compare.locator('thead th')).toHaveCount(4);
+    await expect(compare).toContainText('Running cost');
+    await expect(page.locator('.lab-year')).toContainText('Space heating');
+    // the 3D view or its text fallback is there, and the room readout always is
+    await expect(page.locator('.lab-rooms tbody tr')).toHaveCount(5);
+  });
+
+  test('editing a scenario re-simulates it and the link keeps it', async ({ page }) => {
+    await apiDown(page);
+    await page.goto('#/lab/home-heating');
+    await expect(page.locator('.lab-compare')).toBeVisible({ timeout: 20_000 });
+    await page.getByRole('tab', { name: /Heat pump, same radiators/ }).click();
+    await page.getByLabel('Heat source').selectOption('hp-ground');
+    await page.getByLabel('In the rooms').selectOption('underfloor');
+    await page.getByRole('button', { name: '+ Copy as new scenario' }).click();
+    await expect(page.getByRole('tab')).toHaveCount(4);
+    await expect(page.locator('.lab-compare thead th')).toHaveCount(5, { timeout: 20_000 });
+    await page.waitForFunction(() => location.hash.includes('?s='));
+    await page.reload();
+    await expect(page.getByRole('tab')).toHaveCount(4);
+    await page.getByRole('tab', { name: /Heat pump, same radiators \(copy\)/ }).click();
+    await expect(page.getByLabel('Heat source')).toHaveValue('hp-ground');
+  });
+
+  test('any place: searches Open-Meteo and simulates a real year', async ({ page }) => {
+    await apiDown(page);
+    await page.route('https://geocoding-api.open-meteo.com/**', (r) =>
+      r.fulfill({ json: { results: [{ name: 'Sassuolo', admin1: 'Emilia-Romagna', country: 'Italy', latitude: 44.55, longitude: 10.78 }] } }),
+    );
+    await page.route('https://archive-api.open-meteo.com/**', (r) => {
+      const time: string[] = [];
+      const t: number[] = [];
+      const start = Date.UTC(2025, 0, 1);
+      for (let i = 0; i < 8760; i++) {
+        time.push(new Date(start + i * 3600e3).toISOString().slice(0, 16));
+        t.push(13 - 11 * Math.cos((2 * Math.PI * (i / 24 - 20)) / 365) + 4 * Math.sin((2 * Math.PI * (i % 24 - 9)) / 24));
+      }
+      const zero = time.map(() => 0);
+      return r.fulfill({ json: { utc_offset_seconds: 0, hourly: { time, temperature_2m: t, relative_humidity_2m: time.map(() => 70), shortwave_radiation: zero, direct_normal_irradiance: zero, diffuse_radiation: zero, wind_speed_10m: zero } } });
+    });
+    await page.goto('#/lab/home-heating');
+    await page.getByLabel('Or any place (real weather of one year)').fill('Sassuolo');
+    await page.getByRole('button', { name: 'Find' }).click();
+    await page.getByRole('button', { name: /Sassuolo, Emilia-Romagna, Italy/ }).click();
+    await expect(page.locator('.lab-facts')).toContainText('Open-Meteo', { timeout: 20_000 });
+    await expect(page.locator('.lab-compare')).toBeVisible({ timeout: 20_000 });
+  });
 });

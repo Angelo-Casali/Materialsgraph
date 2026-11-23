@@ -54,6 +54,18 @@ export interface Technology {
   why: string;
   limits: string[];
   sources: string[];
+  /** what living with it is like: comfort, noise, space, works, servicing */
+  experience?: Point[];
+}
+
+/** A household situation, told with sourced or editorial points, optionally opening the lab pre-set. */
+export interface Story {
+  id: string;
+  title: string;
+  situation: string;
+  points: Point[];
+  /** lab preset: a built-in climate id and up to four partial scenarios (missing fields take the lab defaults) */
+  lab?: { place: string; scenarios: Record<string, unknown>[] };
 }
 
 export interface ChangelogEntry {
@@ -72,6 +84,7 @@ export interface Challenge {
   technologies: Technology[];
   aiAngle: Point[];
   openQuestions: string[];
+  stories?: Story[];
   simulator?: 'home-heating';
   changelog: ChangelogEntry[];
   sources: Source[];

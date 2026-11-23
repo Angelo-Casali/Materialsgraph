@@ -7,6 +7,7 @@ import { NotFound } from './views/NotFound';
 
 const Challenges = lazy(() => import('./views/Challenges').then((m) => ({ default: m.Challenges })));
 const ChallengeView = lazy(() => import('./views/Challenge').then((m) => ({ default: m.ChallengeView })));
+const HeatingLab = lazy(() => import('./views/HeatingLab').then((m) => ({ default: m.HeatingLab })));
 const Passport = lazy(() => import('./views/Passport').then((m) => ({ default: m.Passport })));
 const Quests = lazy(() => import('./views/Quests').then((m) => ({ default: m.Quests })));
 const Quest = lazy(() => import('./views/Quest').then((m) => ({ default: m.Quest })));
@@ -30,6 +31,7 @@ function Outlet() {
   // Challenges, How and About don't need the atlas snapshot
   if (r.name === 'challenges') return <Challenges />;
   if (r.name === 'challenge') return <ChallengeView slug={r.params.slug} />;
+  if (r.name === 'lab') return r.params.slug === 'home-heating' ? <HeatingLab /> : <NotFound />;
   if (r.name === 'how') return <How />;
   if (r.name === 'about') return <About />;
   if (!a) return <Loading />;

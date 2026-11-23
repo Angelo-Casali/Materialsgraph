@@ -5,6 +5,8 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   base: process.env.VITE_BASE ?? '/Materialsgraph/',
   plugins: [preact()],
-  build: { target: 'es2020', sourcemap: false, cssCodeSplit: true },
+  // the 3D view (three.js) is a separate chunk loaded only by the heating lab
+  build: { target: 'es2020', sourcemap: false, cssCodeSplit: true, chunkSizeWarningLimit: 650 },
+  worker: { format: 'es' },
   test: { environment: 'node', include: ['src/**/*.test.ts'] },
 });
